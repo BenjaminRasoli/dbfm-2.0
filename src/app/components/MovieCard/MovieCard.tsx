@@ -1,3 +1,4 @@
+import { MovieTypes } from "@/app/Types/MovieTypes";
 import Image from "next/image";
 import React from "react";
 import { FaRegBookmark } from "react-icons/fa";

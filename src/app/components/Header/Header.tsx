@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 
 function Header() {
   const [searchWord, setSearchWord] = useState("");
-  const [movies, setMovies] = useState<MovieTypes[]>([]);
   const router = useRouter();
 
   const handleSearch = async (e: React.FormEvent) => {

@@ -1,7 +1,10 @@
 import MovieCard from "@/app/components/MovieCard/MovieCard";
 
-const page = async ({ params }: { params: { slug: string } }) => {
-  const genreSlug = params.slug;
+type Params = Promise<{ slug: string }>;
+
+const page = async ({ params }: { params: Params }) => {
+  const { slug } = await params;
+  const genreSlug = slug;
 
   const movieRes = await fetch(
     `http://localhost:3000/api/genreMovies?genre=${genreSlug}`

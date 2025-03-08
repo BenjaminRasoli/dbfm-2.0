@@ -1,6 +1,4 @@
-import { fetchFilter } from "@/app/Page.Functions";
 import clsx from "clsx";
-import React, { useState } from "react";
 import { filterOptions } from "./FilterOptions";
 
 const FilterButton = ({

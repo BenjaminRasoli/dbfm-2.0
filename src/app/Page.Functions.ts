@@ -1,3 +1,5 @@
+import { MovieTypes } from "./Types/MovieTypes";
+
 export const fetchFilter = async (
   filter: string,
   setMovies: React.Dispatch<React.SetStateAction<MovieTypes[]>>,

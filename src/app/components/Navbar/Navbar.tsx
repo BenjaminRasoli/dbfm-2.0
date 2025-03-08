@@ -1,8 +1,7 @@
 import Image from "next/image";
-import DBFMLogoWhite from "../../images/DATABASEFORMOVIES-logos_white.png";
 import DBFMLogoBlack from "../../images/DATABASEFORMOVIES-logos_black.png";
-import DBFMLogoPink from "../../images/DATABASEFORMOVIES-logos_pink-red.png";
 import Link from "next/link";
+import { GenresType } from "./Genres.Types";
 
 async function Navbar() {
   const getGenres = async () => {

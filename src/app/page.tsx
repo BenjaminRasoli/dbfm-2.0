@@ -1,9 +1,11 @@
 "use client";
-
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 import { useEffect, useState } from "react";
 import { fetchFilter } from "./Page.Functions";
 import FilterButtons from "./components/FilterButtons/FilterButtons";
 import MovieCard from "./components/MovieCard/MovieCard";
+import { MovieTypes } from "./Types/MovieTypes";
 
 function Home() {
   const [movies, setMovies] = useState<MovieTypes[]>([]);

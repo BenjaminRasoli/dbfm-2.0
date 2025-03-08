@@ -3,7 +3,8 @@ import { Roboto, Cinzel } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar/Navbar";
 import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer";
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 
 const roboto = Roboto({
   variable: "--font-roboto",

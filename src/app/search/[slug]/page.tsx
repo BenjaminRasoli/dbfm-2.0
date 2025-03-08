@@ -1,7 +1,11 @@
 import MovieCard from "@/app/components/MovieCard/MovieCard";
 
-const page = async ({ params }: { params: { slug: string } }) => {
-  const searchWord = params.slug;
+type Params = Promise<{ slug: string }>;
+
+const page = async ({ params }: { params: Params }) => {
+  const { slug } = await params;
+  const searchWord = slug;
+
   const movieRes = await fetch(
     `http://localhost:3000/api/searched?searchWord=${searchWord}`
   );
