@@ -5,7 +5,7 @@ import { GenresType } from "./Genres.Types";
 
 async function Navbar() {
   const getGenres = async () => {
-    const res = await fetch(`http://localhost:3000/api/genres`);
+    const res = await fetch(`https://dbfm-2-0.vercel.app/api/genres`);
     return res.json();
   };
 

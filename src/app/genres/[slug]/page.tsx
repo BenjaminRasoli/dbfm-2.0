@@ -7,11 +7,11 @@ const page = async ({ params }: { params: Params }) => {
   const genreSlug = slug;
 
   const movieRes = await fetch(
-    `http://localhost:3000/api/genreMovies?genre=${genreSlug}`
+    `https://dbfm-2-0.vercel.app/api/genreMovies?genre=${genreSlug}`
   );
   const movies = await movieRes.json();
 
-  const genreRes = await fetch("http://localhost:3000/api/genres");
+  const genreRes = await fetch("https://dbfm-2-0.vercel.app/api/genres");
   const genres = await genreRes.json();
   const genre = genres.genres.find(
     (genre: { id: number }) => genre.id === parseInt(genreSlug)

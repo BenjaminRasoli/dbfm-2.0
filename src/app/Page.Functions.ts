@@ -7,14 +7,16 @@ export const fetchFilter = async (
 ) => {
   switch (filter) {
     case "all":
-      const res = await fetch("http://localhost:3000/api/movies?type=all");
+      const res = await fetch(
+        "https://dbfm-2-0.vercel.app/api/movies?type=all"
+      );
       const data = await res.json();
       setMovies(data.results);
       setActiveFilter("all");
       break;
     case "movies":
       const resMovies = await fetch(
-        "http://localhost:3000/api/movies?type=movie"
+        "https://dbfm-2-0.vercel.app/api/movies?type=movie"
       );
       const dataMovies = await resMovies.json();
       setMovies(dataMovies.results);
@@ -22,7 +24,9 @@ export const fetchFilter = async (
 
       break;
     case "tv":
-      const resSeries = await fetch("http://localhost:3000/api/movies?type=tv");
+      const resSeries = await fetch(
+        "https://dbfm-2-0.vercel.app/api/movies?type=tv"
+      );
       const dataSeries = await resSeries.json();
       setMovies(dataSeries.results);
       setActiveFilter("tv");
@@ -32,5 +36,3 @@ export const fetchFilter = async (
       break;
   }
 };
-
-

@@ -7,7 +7,7 @@ const page = async ({ params }: { params: Params }) => {
   const searchWord = slug;
 
   const movieRes = await fetch(
-    `http://localhost:3000/api/searched?searchWord=${searchWord}`
+    `https://dbfm-2-0.vercel.app/api/searched?searchWord=${searchWord}`
   );
   const movies = await movieRes.json();
 

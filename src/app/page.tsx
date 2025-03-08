@@ -12,7 +12,7 @@ function Home() {
   const [activeFilter, setActiveFilter] = useState<string>("all");
   useEffect(() => {
     const getMovies = async () => {
-      const res = await fetch("http://localhost:3000/api/movies");
+      const res = await fetch("https://dbfm-2-0.vercel.app/api/movies");
       const data = await res.json();
       setMovies(data.results);
     };
