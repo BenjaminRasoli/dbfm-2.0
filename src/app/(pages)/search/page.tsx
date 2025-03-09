@@ -5,6 +5,7 @@ import MovieFilters from "@/app/components/FilterAndDropDown/FilterAndDropDown";
 import MovieCard from "@/app/components/MovieCard/MovieCard";
 import { MovieTypes } from "@/app/Types/MovieTypes";
 import PageSelector from "@/app/components/PageSelector/PageSelector";
+import { sortMovie } from "@/app/components/DropDown/DropDown";
 
 const Page = () => {
   const [movies, setMovies] = useState<MovieTypes[]>([]);
@@ -12,7 +13,8 @@ const Page = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [activeFilter, setActiveFilter] = useState<string>("multi");
   const [page, setPage] = useState<number>(1);
-  const [sortOption, setSortOption] = useState<string>("Sort by");
+  const [sortOption, setSortOption] = useState<string>("standard");
+  const [sortedMovies, setSortedMovies] = useState<MovieTypes[]>([]);
 
   const searchWord = useSearchParams().get("query");
 
@@ -30,7 +32,6 @@ const Page = () => {
       );
       const data = await movieRes.json();
       setTotalResults(data.total_results);
-      console.log(data);
       setTotalPages(data.total_pages);
       setMovies(data.results);
     };
@@ -40,6 +41,13 @@ const Page = () => {
     }
   }, [searchWord, activeFilter, page]);
 
+  useEffect(() => {
+    if (movies.length > 0) {
+      const sorted = sortMovie(sortOption, movies);
+      setSortedMovies(sorted);
+    }
+  }, [sortOption, movies]);
+
   const handleFilterChange = (filter: string) => {
     setActiveFilter(filter);
     setPage(1);
@@ -47,6 +55,7 @@ const Page = () => {
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
+    window.scrollTo(0, 0);
   };
 
   const handleSortChange = (sort: string) => {
@@ -70,7 +79,7 @@ const Page = () => {
           handleSortChange={handleSortChange}
         />
       </section>
-      <MovieCard movies={movies} />
+      <MovieCard movies={sortedMovies} />
       <div>
         <PageSelector
           currentPage={page}

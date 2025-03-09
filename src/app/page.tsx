@@ -11,7 +11,7 @@ function Home() {
   const [totalPages, setTotalPages] = useState(1);
   const [movies, setMovies] = useState<MovieTypes[]>([]);
   const [activeFilter, setActiveFilter] = useState<string>("all");
-  const [sortOption, setSortOption] = useState<string>("Sort by");
+  const [sortOption, setSortOption] = useState<string>("standard");
   const [sortedMovies, setSortedMovies] = useState<MovieTypes[]>([]);
 
   useEffect(() => {
