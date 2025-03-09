@@ -7,13 +7,22 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "background-dark": "var(--background-dark)",
-        "primary-gold": "var(--primary-gold)",
-        "secondary-red": "var(--secondary-red)",
-        "text-light": "var(--text-light)",
-        "text-muted": "var(--text-muted)",
-        "button-blue": "var(--button-blue)",
-        "border-light": "var(--border-light)",
+        white: "var(--white)",
+        gray: {
+          300: "var(--gray-300)",
+          500: "var(--gray-500)",
+          600: "var(--gray-600)",
+        },
+        dark: {
+          100: "var(--dark-100)",
+          200: "var(--dark-200)",
+        },
+        blue: "var(--blue)",
+        orange: "var(--orange)",
+        text: "var(--text)",
+        background: "var(--background)",
+        headline: "var(--headline)",
+        border: "var(--border)",
       },
     },
   },

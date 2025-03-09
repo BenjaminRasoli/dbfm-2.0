@@ -1,38 +1,67 @@
 "use client";
-export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
 import { useEffect, useState } from "react";
-import { fetchFilter } from "./Page.Functions";
-import FilterButtons from "./components/FilterButtons/FilterButtons";
 import MovieCard from "./components/MovieCard/MovieCard";
 import { MovieTypes } from "./Types/MovieTypes";
+import { sortMovie } from "./components/DropDown/DropDown";
+import PageSelector from "./components/PageSelector/PageSelector";
+import MovieFilters from "./components/FilterAndDropDown/FilterAndDropDown";
 
 function Home() {
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [movies, setMovies] = useState<MovieTypes[]>([]);
   const [activeFilter, setActiveFilter] = useState<string>("all");
+  const [sortOption, setSortOption] = useState<string>("Sort by");
+  const [sortedMovies, setSortedMovies] = useState<MovieTypes[]>([]);
+
   useEffect(() => {
     const getMovies = async () => {
-      const res = await fetch("https://dbfm-2-0.vercel.app/api/movies");
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_REACT_LOCAL_SERVER}/api/movies?type=${activeFilter}&page=${page}`
+      );
       const data = await res.json();
       setMovies(data.results);
+      setTotalPages(data.total_pages);
     };
     getMovies();
-  }, []);
+  }, [page, activeFilter]);
+
+  useEffect(() => {
+    if (movies.length > 0) {
+      const sorted = sortMovie(sortOption, movies);
+      setSortedMovies(sorted);
+    }
+  }, [sortOption, movies]);
 
   const handleFilterChange = (filter: string) => {
-    fetchFilter(filter, setMovies, setActiveFilter);
+    setActiveFilter(filter);
+    setPage(1);
+  };
+
+  const handleSortChange = (sort: string) => {
+    setSortOption(sort);
+  };
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+    window.scrollTo(0, 0);
   };
 
   return (
     <div className="p-7">
-      <h1 className="text-xl">Trending</h1>
-      <section className="border-b-1 border-light  pt-5">
-        <FilterButtons
-          activeFilter={activeFilter}
-          handleFilterChange={handleFilterChange}
-        />
-      </section>
-      <MovieCard movies={movies} />
+      <h1 className="text-3xl text-blue">Trending</h1>
+      <MovieFilters
+        activeFilter={activeFilter}
+        handleFilterChange={handleFilterChange}
+        sortOption={sortOption}
+        handleSortChange={handleSortChange}
+      />
+      <MovieCard movies={sortedMovies} />
+      <PageSelector
+        currentPage={page}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 }

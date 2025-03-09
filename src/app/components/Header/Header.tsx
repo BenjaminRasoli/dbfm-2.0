@@ -13,13 +13,13 @@ function Header() {
     e.preventDefault();
 
     if (searchWord.trim() !== "") {
-      router.push(`/search/${encodeURIComponent(searchWord)}`);
+      router.push(`/search?query=${encodeURIComponent(searchWord)}`);
     }
     setSearchWord("");
   };
 
   return (
-    <header className="p-4 border-b-1 border-light text-dark">
+    <header className=" p-4 border-b-1 border-gray-600 text-dark">
       <div className="flex items-center justify-between">
         <form className="flex items-center gap-5">
           <button type="submit" onClick={handleSearch}>
