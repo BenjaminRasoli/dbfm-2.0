@@ -3,7 +3,6 @@
 import type { Metadata } from "next";
 import { Roboto, Cinzel } from "next/font/google";
 import { Suspense } from "react";
-
 import Navbar from "./components/Navbar/Navbar";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";

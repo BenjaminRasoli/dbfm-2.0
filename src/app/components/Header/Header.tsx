@@ -19,7 +19,7 @@ function Header() {
   };
 
   return (
-    <header className=" p-4 border-b-1 border-gray-600 text-dark">
+    <header className=" p-4 border-b-1 border-gray-600 text-dark sticky top-0 z-20 bg-white">
       <div className="flex items-center justify-between">
         <form className="flex items-center gap-5">
           <button type="submit" onClick={handleSearch}>
