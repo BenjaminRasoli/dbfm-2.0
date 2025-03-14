@@ -10,13 +10,13 @@ import personPoster from "../../images/personPlaceHolder.jpg";
 
 function MovieCard({ movies, loading }: MovieCardTypes) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 pt-10">
+    <div className="grid grid-cols-1 place-items-center md:place-items-stretch sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8 pt-10">
       {loading || loading === null
         ? Array.from({ length: 6 }, (_, index) => (
             <SkeletonLoader key={index} />
           ))
         : movies?.map((movie: MovieTypes) => (
-            <div key={movie.id} className="rounded-lg max-w-[300px]">
+            <div key={movie.id} className="rounded-lg w-[300px]">
               <div className="relative">
                 <Image
                   src={

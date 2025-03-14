@@ -1,6 +1,6 @@
 function SkeletonLoader() {
   return (
-    <div className="rounded-lg max-w-[300px] bg-gray-300 animate-pulse">
+    <div className="rounded-lg w-[300px] bg-gray-300 animate-pulse">
       <div className="relative">
         <div className="bg-gray-400 w-full h-[450px] rounded-lg"></div>
         <div className="absolute top-0 left-0 rounded-tl-lg z-10 p-2 bg-gray-400"></div>
