@@ -23,7 +23,7 @@ function PageSelector({
       onClick={() => handlePageChange(page)}
       disabled={isDisabled}
       className={clsx(
-        "px-6 py-3 bg-blue text-white font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:bg-blue-hover ring-2 ring-white ring-opacity-50", // white outline
+        "px-2 lg:px-6 py-1 lg:py-3 bg-blue text-white font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:bg-blue-hover ring-2 ring-white ring-opacity-50", // white outline
         {
           "cursor-not-allowed bg-red hover:bg-red ring-0 ": isDisabled,
           "bg-blue hover:bg-blue-hover cursor-pointer hover:scale-105":
