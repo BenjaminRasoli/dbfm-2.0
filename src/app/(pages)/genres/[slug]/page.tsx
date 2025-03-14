@@ -1,32 +1,112 @@
+"use client";
+import CustomDropdown from "@/app/components/DropDown/DropDown";
 import MovieCard from "@/app/components/MovieCard/MovieCard";
+import { sortMovie } from "@/app/components/DropDown/DropDown";
+import { useState, useEffect } from "react";
+import { MovieTypes } from "@/app/Types/MovieTypes";
+import PageSelector from "@/app/components/PageSelector/PageSelector";
+import QueryParams from "@/app/hooks/QueryParams";
+import { handleStateChange } from "@/app/utils/HandleStateChange";
 
-type Params = Promise<{ slug: string }>;
+function Page({ params }: { params: Promise<{ slug: string }> }) {
+  const [totalPages, setTotalPages] = useState(1);
+  const [movies, setMovies] = useState<MovieTypes[]>([]);
+  const [genreName, setGenreName] = useState<string>("");
+  const [sortedMovies, setSortedMovies] = useState<MovieTypes[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [genreSlug, setGenreSlug] = useState<string>("");
 
-const page = async ({ params }: { params: Params }) => {
-  const { slug } = await params;
-  const genreSlug = slug;
+  const { page, sortOption, setPage, setSortOption } = QueryParams();
 
-  const movieRes = await fetch(
-    `${process.env.NEXT_PUBLIC_REACT_LOCAL_SERVER}/api/genreMovies?genre=${genreSlug}`
-  );
-  const movies = await movieRes.json();
+  const delay = (ms: number) =>
+    new Promise((resolve) => setTimeout(resolve, ms));
 
-  const genreRes = await fetch(
-    `${process.env.NEXT_PUBLIC_REACT_LOCAL_SERVER}/api/genres`
-  );
-  const genres = await genreRes.json();
-  const genre = genres.genres.find(
-    (genre: { id: number }) => genre.id === parseInt(genreSlug)
-  );
+  useEffect(() => {
+    const resolveParams = async () => {
+      const resolvedParams = await params;
+      setGenreSlug(resolvedParams.slug);
+    };
 
-  const genreName = genre ? genre.name : "Unknown Genre";
+    resolveParams();
+  }, [params]);
+
+  useEffect(() => {
+    if (!genreSlug) return;
+
+    setLoading(true);
+    const fetchData = async () => {
+      try {
+        const movieRes = await fetch(
+          `${process.env.NEXT_PUBLIC_REACT_LOCAL_SERVER}/api/genreMovies?genre=${genreSlug}&page=${page}`
+        );
+        const data = await movieRes.json();
+        setMovies(data.results);
+        setTotalPages(data.total_pages);
+
+        const genreRes = await fetch(
+          `${process.env.NEXT_PUBLIC_REACT_LOCAL_SERVER}/api/genres`
+        );
+        const genreData = await genreRes.json();
+
+        const genre = genreData.genres.find(
+          (genre: { id: number }) => genre.id === parseInt(genreSlug)
+        );
+        setGenreName(genre.name);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        await delay(1000);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [genreSlug, page]);
+
+  useEffect(() => {
+    if (movies?.length > 0) {
+      const sorted = sortMovie({ sortType: sortOption, movies });
+      setSortedMovies(sorted);
+    }
+  }, [sortOption, movies]);
 
   return (
     <div className="p-7">
-      <h1 className="text-3xl text-blue">{genreName} Movies</h1>
-      <MovieCard movies={movies.results} />
+      <section className="border-b-1 border-gray-600">
+        {genreName && (
+          <h1 className="text-3xl text-blue">{genreName} Movies</h1>
+        )}
+        <div className="flex justify-end">
+          {movies?.length === 0 ? null : (
+            <CustomDropdown
+              options={["A-Z", "Date", "Rating"]}
+              selectedOption={
+                sortOption === "standard"
+                  ? "Sort by"
+                  : sortOption === "Date"
+                  ? "Date"
+                  : sortOption === "Rating"
+                  ? "Rating"
+                  : "A-Z"
+              }
+              onSelect={(newSort) => setSortOption(newSort)}
+              sortOption={sortOption}
+            />
+          )}
+        </div>
+      </section>
+      <MovieCard movies={sortedMovies} loading={loading} />
+      {movies?.length === 0 || loading ? null : (
+        <PageSelector
+          currentPage={page}
+          totalPages={totalPages}
+          onPageChange={(newPage) =>
+            handleStateChange(setPage, false)(newPage, setPage)
+          }
+        />
+      )}
     </div>
   );
-};
+}
 
-export default page;
+export default Page;

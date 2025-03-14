@@ -1,4 +1,3 @@
-import React from "react";
 import CustomDropdown from "../DropDown/DropDown";
 import FilterButtons from "../FilterButtons/FilterButtons";
 import { MovieFiltersProps } from "./FilterAndDropDown.Types";

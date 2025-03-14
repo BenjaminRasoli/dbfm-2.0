@@ -1,17 +1,13 @@
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
+import { FilterButtonsTypes, FilterButtonTypes } from "./FilterButtons.Types";
 
 const FilterButton = ({
   label,
   filterValue,
   activeFilter,
   handleFilterChange,
-}: {
-  label: string;
-  filterValue: string;
-  activeFilter: string;
-  handleFilterChange: (filter: string) => void;
-}) => (
+}: FilterButtonTypes) => (
   <button
     className={clsx(
       "cursor-pointer relative border-transparent transition-all duration-300 ease-in-out",
@@ -28,10 +24,7 @@ const FilterButton = ({
 function FilterButtons({
   activeFilter,
   handleFilterChange,
-}: {
-  activeFilter: string;
-  handleFilterChange: (filter: string) => void;
-}) {
+}: FilterButtonsTypes) {
   const pathname = usePathname();
 
   const filterOptions = [

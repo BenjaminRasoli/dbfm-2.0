@@ -1,10 +1,13 @@
+// export const dynamic = "force-dynamic";
+// export const fetchCache = "force-no-store";
 import type { Metadata } from "next";
 import { Roboto, Cinzel } from "next/font/google";
-import "./globals.css";
+import { Suspense } from "react";
+
 import Navbar from "./components/Navbar/Navbar";
 import Header from "./components/Header/Header";
-export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
+import Footer from "./components/Footer/Footer";
+import "./globals.css";
 
 const roboto = Roboto({
   variable: "--font-roboto",
@@ -17,9 +20,9 @@ const cinzel = Cinzel({
 });
 
 export const metadata: Metadata = {
-  title: "DBFM",
+  title: "DBFM | Home",
   description:
-    "DBFM is a movies website where you can check out the latest movies and TV shows.",
+    "DBFM is a movies website where you can check out the latest Movies and TV shows.",
 };
 
 export default function RootLayout({
@@ -35,11 +38,13 @@ export default function RootLayout({
 
           <div className="flex flex-col">
             <Header />
-            <main className="flex-1 overflow-y-auto">{children}</main>
+            <main className="flex-1 overflow-y-auto">
+              <Suspense fallback={null}>{children}</Suspense>
+            </main>
           </div>
         </div>
 
-        {/* <Footer /> */}
+        <Footer />
       </body>
     </html>
   );

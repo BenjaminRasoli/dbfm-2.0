@@ -1,4 +1,6 @@
-import { PageSelectorProps } from "./PaceSelector.Types";
+import { JSX } from "react";
+import { PageSelectorProps, RenderButtons } from "./PaceSelector.Types";
+import clsx from "clsx";
 
 function PageSelector({
   currentPage,
@@ -7,15 +9,27 @@ function PageSelector({
 }: PageSelectorProps) {
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
+      window.scroll(0, 0);
       onPageChange(page);
     }
   };
 
-  const renderButton = (label: string, page: number, isDisabled: boolean) => (
+  const renderButton = ({
+    label,
+    page,
+    isDisabled,
+  }: RenderButtons): JSX.Element => (
     <button
       onClick={() => handlePageChange(page)}
       disabled={isDisabled}
-      className="px-4 py-2 bg-blue text-white rounded cursor-pointer hover:bg-blue-hover"
+      className={clsx(
+        "px-6 py-3 bg-blue text-white font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:bg-blue-hover ring-2 ring-white ring-opacity-50", // white outline
+        {
+          "cursor-not-allowed bg-red hover:bg-red ring-0 ": isDisabled,
+          "bg-blue hover:bg-blue-hover cursor-pointer hover:scale-105":
+            !isDisabled,
+        }
+      )}
     >
       {label}
     </button>
@@ -23,11 +37,23 @@ function PageSelector({
 
   return (
     <div className="flex justify-center space-x-2 mt-4">
-      {renderButton("First", 1, currentPage === 1)}
-      {renderButton("Prev", currentPage - 1, currentPage === 1)}
+      {renderButton({ label: "First", page: 1, isDisabled: currentPage === 1 })}
+      {renderButton({
+        label: "Prev",
+        page: currentPage - 1,
+        isDisabled: currentPage === 1,
+      })}
       <span className="px-4 py-2">{`Page ${currentPage} of ${totalPages}`}</span>
-      {renderButton("Next", currentPage + 1, currentPage === totalPages)}
-      {renderButton("Last", totalPages, currentPage === totalPages)}
+      {renderButton({
+        label: "Next",
+        page: currentPage + 1,
+        isDisabled: currentPage === totalPages,
+      })}
+      {renderButton({
+        label: "Last",
+        page: totalPages,
+        isDisabled: currentPage === totalPages,
+      })}
     </div>
   );
 }

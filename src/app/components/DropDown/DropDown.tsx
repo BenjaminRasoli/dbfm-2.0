@@ -1,12 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
-import { CustomDropdownProps } from "./DropDownTypes";
+import { useState, useEffect, useRef } from "react";
+import { CustomDropdownProps, SortMoviesTypes } from "./DropDownTypes";
 import { MovieTypes } from "@/app/Types/MovieTypes";
 import { FaChevronDown } from "react-icons/fa";
 
-export function sortMovie(
-  sortType: string,
-  movies: MovieTypes[]
-): MovieTypes[] {
+export function sortMovie({ sortType, movies }: SortMoviesTypes): MovieTypes[] {
   const sortedMovies = [...movies].sort((a, b) => {
     switch (sortType) {
       case "A-Z":

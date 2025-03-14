@@ -5,6 +5,7 @@ export interface MovieTypes {
   original_title: string;
   overview: string;
   poster_path: string;
+  profile_path: string;
   media_type: string;
   adult: boolean;
   original_language: string;

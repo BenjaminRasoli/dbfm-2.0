@@ -1,12 +1,12 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import { useState } from "react";
 import { IoIosSearch } from "react-icons/io";
-import avatar from "../../images/avatar.svg";
 import { useRouter } from "next/navigation";
+import avatar from "../../images/avatar.svg";
 
 function Header() {
-  const [searchWord, setSearchWord] = useState("");
+  const [searchWord, setSearchWord] = useState<string>("");
   const router = useRouter();
 
   const handleSearch = async (e: React.FormEvent) => {
@@ -30,6 +30,7 @@ function Header() {
             className="outline-none w-96 text-dark"
             placeholder="Search anything..."
             value={searchWord}
+            maxLength={50}
             onChange={(e) => setSearchWord(e.target.value)}
           />
         </form>
