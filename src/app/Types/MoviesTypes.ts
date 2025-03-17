@@ -1,4 +1,4 @@
-export interface MovieTypes {
+export interface MoviesTypes {
   backdrop_path: string;
   id: number;
   title: string;

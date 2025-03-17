@@ -1,6 +1,6 @@
-import { MovieTypes } from "@/app/Types/MovieTypes";
+import { MoviesTypes } from "@/app/Types/MoviesTypes";
 
 export interface MovieCardTypes {
-  movies: MovieTypes[];
+  movies: MoviesTypes[];
   loading: boolean | null;
 }

@@ -16,7 +16,7 @@ function Header() {
     e.preventDefault();
 
     if (searchWord.trim() !== "") {
-      router.push(`/search`);
+      router.push(`/search?query=${encodeURIComponent(searchWord)}`);
     }
     setSearchWord("");
   };

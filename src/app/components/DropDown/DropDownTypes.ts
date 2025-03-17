@@ -1,4 +1,4 @@
-import { MovieTypes } from "@/app/Types/MovieTypes";
+import { MoviesTypes } from "@/app/Types/MoviesTypes";
 
 export interface CustomDropdownProps {
   options: string[];
@@ -9,5 +9,5 @@ export interface CustomDropdownProps {
 
 export interface SortMoviesTypes {
   sortType: string;
-  movies: MovieTypes[];
+  movies: MoviesTypes[];
 }

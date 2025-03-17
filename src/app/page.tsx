@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { MovieTypes } from "./Types/MovieTypes";
+import { MoviesTypes } from "./Types/MoviesTypes";
 import { sortMovie } from "./components/DropDown/DropDown";
 import { handleStateChange } from "./utils/HandleStateChange";
 import QueryParams from "./hooks/QueryParams";
@@ -10,8 +10,8 @@ import MovieCard from "./components/MovieCard/MovieCard";
 
 function Home() {
   const [totalPages, setTotalPages] = useState<number>(1);
-  const [movies, setMovies] = useState<MovieTypes[]>([]);
-  const [sortedMovies, setSortedMovies] = useState<MovieTypes[]>([]);
+  const [movies, setMovies] = useState<MoviesTypes[]>([]);
+  const [sortedMovies, setSortedMovies] = useState<MoviesTypes[]>([]);
   const [loading, setLoading] = useState<boolean | null>(null);
   const [error, setError] = useState<unknown>("");
   const {
