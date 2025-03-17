@@ -1,17 +1,17 @@
 "use client";
 import { useEffect, useState } from "react";
-import { MoviesTypes } from "./Types/MoviesTypes";
-import { sortMovie } from "./components/DropDown/DropDown";
+import { MediaTypes } from "./Types/MediaTypes";
 import { handleStateChange } from "./utils/HandleStateChange";
 import QueryParams from "./hooks/QueryParams";
 import PageSelector from "./components/PageSelector/PageSelector";
 import MovieFilters from "./components/FilterAndDropDown/FilterAndDropDown";
-import MovieCard from "./components/MovieCard/MovieCard";
+import { sortMedia } from "./components/DropDown/DropDown";
+import MediaCard from "./components/MediaCard/MediaCard";
 
 function Home() {
   const [totalPages, setTotalPages] = useState<number>(1);
-  const [movies, setMovies] = useState<MoviesTypes[]>([]);
-  const [sortedMovies, setSortedMovies] = useState<MoviesTypes[]>([]);
+  const [media, setMedia] = useState<MediaTypes[]>([]);
+  const [sortedMedia, setSortedMedia] = useState<MediaTypes[]>([]);
   const [loading, setLoading] = useState<boolean | null>(null);
   const [error, setError] = useState<unknown>("");
   const {
@@ -32,10 +32,10 @@ function Home() {
     const getMovies = async () => {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_REACT_LOCAL_SERVER}/api/movies?type=${activeFilter}&page=${page}`
+          `${process.env.NEXT_PUBLIC_REACT_LOCAL_SERVER}/api/getMedias?type=${activeFilter}&page=${page}`
         );
         const data = await res.json();
-        setMovies(data.results);
+        setMedia(data.results);
         setTotalPages(data.total_pages);
       } catch (error) {
         setError(error);
@@ -49,11 +49,11 @@ function Home() {
   }, [page, activeFilter]);
 
   useEffect(() => {
-    if (movies?.length > 0) {
-      const sorted = sortMovie({ sortType: sortOption, movies });
-      setSortedMovies(sorted);
+    if (media?.length > 0) {
+      const sorted = sortMedia({ sortType: sortOption, media });
+      setSortedMedia(sorted);
     }
-  }, [sortOption, movies]);
+  }, [sortOption, media]);
 
   if (error) {
     return (
@@ -76,7 +76,7 @@ function Home() {
           handleStateChange(setSortOption)(value, setPage)
         }
       />
-      <MovieCard movies={sortedMovies} loading={loading} />
+      <MediaCard media={sortedMedia} loading={loading} />
       <PageSelector
         currentPage={page}
         totalPages={totalPages}

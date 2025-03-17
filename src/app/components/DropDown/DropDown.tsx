@@ -1,13 +1,10 @@
 import { useState, useEffect, useRef } from "react";
-import { CustomDropdownProps, SortMoviesTypes } from "./DropDownTypes";
-import { MoviesTypes } from "@/app/Types/MoviesTypes";
 import { FaChevronDown } from "react-icons/fa";
+import { CustomDropdownPropsTypes, SortMediaTypes } from "@/app/Types/DropDownTypes";
+import { MediaTypes } from "@/app/Types/MediaTypes";
 
-export function sortMovie({
-  sortType,
-  movies,
-}: SortMoviesTypes): MoviesTypes[] {
-  const sortedMovies = [...movies].sort((a, b) => {
+export function sortMedia({ sortType, media }: SortMediaTypes): MediaTypes[] {
+  const sortedMovies = [...media].sort((a, b) => {
     switch (sortType) {
       case "A-Z":
         return (a.title || a.name).localeCompare(b.title || b.name);
@@ -29,7 +26,7 @@ function CustomDropdown({
   options,
   selectedOption,
   onSelect,
-}: CustomDropdownProps) {
+}: CustomDropdownPropsTypes) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 

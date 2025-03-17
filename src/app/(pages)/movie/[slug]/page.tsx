@@ -1,5 +1,4 @@
 "use client";
-import { Actor, Movie, Review, Video } from "@/app/Types/MovieType";
 import { useEffect, useState } from "react";
 import { FaWindowClose } from "react-icons/fa";
 import { LiaStarSolid } from "react-icons/lia";
@@ -10,6 +9,10 @@ import Image from "next/image";
 import SingleSkeletonLoader from "../../../components/SingleMovieSkeletonLoader/SingleSkeletonLoader";
 import poster from "../../../images/poster-image.png";
 import personPoster from "../../../images/personPlaceHolder.jpg";
+import { MovieTypes } from "@/app/Types/MovieType";
+import { VideoTypes } from "@/app/Types/VideoTypes";
+import { ActorTypes } from "@/app/Types/ActorTypes";
+import { ReviewTypes } from "@/app/Types/ReviewTypes";
 
 const responsive = {
   superLargeDesktop: {
@@ -31,18 +34,18 @@ const responsive = {
 };
 
 function Page({ params }: { params: Promise<{ slug: string }> }) {
-  const [movieData, setMovieData] = useState<Movie | null>(null);
-  const [video, setVideo] = useState<Video[]>([]);
-  const [actors, setActors] = useState<Actor[]>([]);
+  const [movieData, setMovieData] = useState<MovieTypes | null>(null);
+  const [video, setVideo] = useState<VideoTypes[]>([]);
+  const [actors, setActors] = useState<ActorTypes[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [trailerUrl, setTrailerUrl] = useState<string>("");
-  const [reviews, setReviews] = useState<Review[]>([]);
+  const [reviews, setReviews] = useState<ReviewTypes[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const { slug } = await params;
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_REACT_LOCAL_SERVER}/api/getSingleMovie?id=${slug}&type=movie`
+        `${process.env.NEXT_PUBLIC_REACT_LOCAL_SERVER}/api/getSingleMovieOrTv?id=${slug}&type=movie`
       );
       const data = await response.json();
       setMovieData(data.movieData);
@@ -53,7 +56,7 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
     fetchData();
   }, [params]);
 
-  const handlePlayTrailer = (video: Video[]) => {
+  const handlePlayTrailer = (video: VideoTypes[]) => {
     const trailer = video.find((vid) => vid.type === "Trailer");
     if (trailer) {
       setTrailerUrl(`https://www.youtube.com/embed/${trailer.key}`);

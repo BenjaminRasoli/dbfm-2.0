@@ -1,12 +1,15 @@
 import { JSX } from "react";
-import { PageSelectorProps, RenderButtons } from "./PaceSelector.Types";
 import clsx from "clsx";
+import {
+  PageSelectorTypes,
+  RenderButtonsTypes,
+} from "@/app/Types/PageSelectorTypes";
 
 function PageSelector({
   currentPage,
   totalPages,
   onPageChange,
-}: PageSelectorProps) {
+}: PageSelectorTypes) {
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
       window.scroll(0, 0);
@@ -18,7 +21,7 @@ function PageSelector({
     label,
     page,
     isDisabled,
-  }: RenderButtons): JSX.Element => (
+  }: RenderButtonsTypes): JSX.Element => (
     <button
       onClick={() => handlePageChange(page)}
       disabled={isDisabled}

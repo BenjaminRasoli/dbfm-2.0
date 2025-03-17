@@ -1,6 +1,6 @@
+import { FilterButtonsTypes, FilterButtonTypes } from "@/app/Types/FilterbuttonsTypes";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
-import { FilterButtonsTypes, FilterButtonTypes } from "./FilterButtons.Types";
 
 const FilterButton = ({
   label,
