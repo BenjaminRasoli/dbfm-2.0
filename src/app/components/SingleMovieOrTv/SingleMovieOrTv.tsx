@@ -52,7 +52,6 @@ function SingleMovieOrTv({ params }: { params: Promise<{ slug: string }> }) {
       setVideo(data.videoData.results);
       setActors(data.actorsData.slice(0, 10));
       setWhereToWatch(wereToWatchData.results);
-      console.log(wereToWatchData.results);
     };
     fetchData();
   }, [params]);
@@ -216,7 +215,7 @@ function SingleMovieOrTv({ params }: { params: Promise<{ slug: string }> }) {
         <WhereToWatch whereToWatch={whereToWatch!} />
         {!isMovie(mediaData) &&
           mediaData.seasons &&
-          mediaData.seasons.length > 0 && <Seasons seasons={mediaData} />}
+          mediaData.seasons.length > 0 && <Seasons mediaData={mediaData} />}
         <TopBilledActors actors={actors} />
         <Reviews reviews={reviews} />
       </div>
