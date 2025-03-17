@@ -1,18 +1,17 @@
 "use client";
-import CustomDropdown from "@/app/components/DropDown/DropDown";
-import MovieCard from "@/app/components/MovieCard/MovieCard";
-import { sortMovie } from "@/app/components/DropDown/DropDown";
+import CustomDropdown, { sortMedia } from "@/app/components/DropDown/DropDown";
 import { useState, useEffect } from "react";
-import { MoviesTypes } from "@/app/Types/MoviesTypes";
 import PageSelector from "@/app/components/PageSelector/PageSelector";
 import QueryParams from "@/app/hooks/QueryParams";
 import { handleStateChange } from "@/app/utils/HandleStateChange";
+import { MediaTypes } from "@/app/Types/MediaTypes";
+import MediaCard from "@/app/components/MediaCard/MediaCard";
 
 function Page({ params }: { params: Promise<{ slug: string }> }) {
   const [totalPages, setTotalPages] = useState(1);
-  const [movies, setMovies] = useState<MoviesTypes[]>([]);
+  const [media, setMedia] = useState<MediaTypes[]>([]);
   const [genreName, setGenreName] = useState<string>("");
-  const [sortedMovies, setSortedMovies] = useState<MoviesTypes[]>([]);
+  const [sortedMedia, setSortedMedia] = useState<MediaTypes[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [genreSlug, setGenreSlug] = useState<string>("");
 
@@ -37,14 +36,14 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
     const fetchData = async () => {
       try {
         const movieRes = await fetch(
-          `${process.env.NEXT_PUBLIC_REACT_LOCAL_SERVER}/api/genreMovies?genre=${genreSlug}&page=${page}`
+          `${process.env.NEXT_PUBLIC_REACT_LOCAL_SERVER}/api/getGenreMovies?genre=${genreSlug}&page=${page}`
         );
         const data = await movieRes.json();
-        setMovies(data.results);
+        setMedia(data.results);
         setTotalPages(data.total_pages);
 
         const genreRes = await fetch(
-          `${process.env.NEXT_PUBLIC_REACT_LOCAL_SERVER}/api/genres`
+          `${process.env.NEXT_PUBLIC_REACT_LOCAL_SERVER}/api/getNavbarGenres`
         );
         const genreData = await genreRes.json();
 
@@ -64,11 +63,11 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
   }, [genreSlug, page]);
 
   useEffect(() => {
-    if (movies?.length > 0) {
-      const sorted = sortMovie({ sortType: sortOption, movies });
-      setSortedMovies(sorted);
+    if (media?.length > 0) {
+      const sorted = sortMedia({ sortType: sortOption, media });
+      setSortedMedia(sorted);
     }
-  }, [sortOption, movies]);
+  }, [sortOption, media]);
 
   return (
     <div className="p-7">
@@ -77,7 +76,7 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
           <h1 className="text-3xl text-blue">{genreName} Movies</h1>
         )}
         <div className="flex justify-end">
-          {movies?.length === 0 ? null : (
+          {media?.length === 0 ? null : (
             <CustomDropdown
               options={["A-Z", "Date", "Rating"]}
               selectedOption={
@@ -89,14 +88,14 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
                   ? "Rating"
                   : "A-Z"
               }
-              onSelect={(newSort) => setSortOption(newSort)}
+              onSelect={(newSort: string) => setSortOption(newSort)}
               sortOption={sortOption}
             />
           )}
         </div>
       </section>
-      <MovieCard movies={sortedMovies} loading={loading} />
-      {movies?.length === 0 || loading ? null : (
+      <MediaCard media={sortedMedia} loading={loading} />
+      {media?.length === 0 || loading ? null : (
         <PageSelector
           currentPage={page}
           totalPages={totalPages}

@@ -19,7 +19,7 @@ function Navbar() {
     const getGenres = async () => {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_REACT_LOCAL_SERVER}/api/genres`
+          `${process.env.NEXT_PUBLIC_REACT_LOCAL_SERVER}/api/getNavbarGenres`
         );
         const data = await res.json();
         setGenres(data.genres);

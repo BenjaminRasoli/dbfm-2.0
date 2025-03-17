@@ -1,11 +1,11 @@
-export interface MoviesTypes {
-  backdrop_path: string;
+export interface MediaTypes {
+  backdrop_path: string | null;
   id: number;
   title: string;
   original_title: string;
   overview: string;
-  poster_path: string;
-  profile_path: string;
+  poster_path: string | null;
+  profile_path: string | null;
   media_type: string;
   adult: boolean;
   original_language: string;
@@ -19,4 +19,6 @@ export interface MoviesTypes {
   name: string;
   origin_country: string[];
   original_name: string;
+  gender?: number;
+  known_for_department?: string;
 }

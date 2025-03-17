@@ -1,8 +1,12 @@
+import { FetchSingleTypes } from "@/app/Types/FetchSingleMovieOrTvTypes";
 import { NextRequest } from "next/server";
 
-async function fetchDataFromTMDB(type: string, id: string, endpoint: string) {
-  const apiUrl = `https://api.themoviedb.org/3/${type}/${id}${endpoint}?api_key=${process.env.REACT_APP_APIKEY}&language=en-US`;
+async function fetchFromTMDB({ type, id, endpoint }: FetchSingleTypes) {
+  const apiUrl = `https://api.themoviedb.org/3/${type}/${id}/${endpoint}?api_key=${process.env.REACT_APP_APIKEY}&language=en-US`;
   const response = await fetch(apiUrl);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch from TMDB: ${response.statusText}`);
+  }
   return response.json();
 }
 
@@ -18,12 +22,10 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const [movieData, videoData, actorsData, reviewsData] = await Promise.all([
-      fetchDataFromTMDB(type, id, ""),
-      fetchDataFromTMDB(type, id, "/videos"),
-      fetchDataFromTMDB(type, id, "/credits"),
-      fetchDataFromTMDB(type, id, "/reviews"),
-    ]);
+    const movieData = await fetchFromTMDB({ type, id, endpoint: "" });
+    const videoData = await fetchFromTMDB({ type, id, endpoint: "videos" });
+    const actorsData = await fetchFromTMDB({ type, id, endpoint: "credits" });
+    const reviewsData = await fetchFromTMDB({ type, id, endpoint: "reviews" });
 
     return new Response(
       JSON.stringify({

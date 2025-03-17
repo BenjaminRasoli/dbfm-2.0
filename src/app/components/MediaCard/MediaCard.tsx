@@ -1,36 +1,36 @@
 "use client";
-import { MoviesTypes } from "../../Types/MoviesTypes";
 import { FaRegBookmark } from "react-icons/fa";
 import { RiStarSFill } from "react-icons/ri";
-import { MovieCardTypes } from "./MovieCard.Types";
 import Image from "next/image";
 import SkeletonLoader from "../SkeletonLoader/SkeletonLoader";
 import poster from "../../images/poster-image.png";
 import personPoster from "../../images/personPlaceHolder.jpg";
 import Link from "next/link";
+import { MediaTypes } from "@/app/Types/MediaTypes";
+import { MediaCardTypes } from "@/app/Types/MediaCardTypes";
 
-function MovieCard({ movies, loading }: MovieCardTypes) {
+function MediaCard({ media, loading }: MediaCardTypes) {
   return (
     <div className="grid grid-cols-1 place-items-center md:place-items-stretch sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8 pt-10">
       {loading || loading === null
         ? Array.from({ length: 6 }, (_, index) => (
             <SkeletonLoader key={index} />
           ))
-        : movies?.map((movie: MoviesTypes) => (
-            <Link key={movie.id} href={`/${movie.media_type}/${movie.id}`}>
+        : media?.map((media: MediaTypes) => (
+            <Link key={media.id} href={`/${media.media_type}/${media.id}`}>
               <div className="rounded-lg w-[300px]">
                 <div className="relative">
                   <Image
                     src={
-                      movie.media_type !== "person"
-                        ? movie.poster_path === null
+                      media.media_type !== "person"
+                        ? media.poster_path === null
                           ? poster
-                          : `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
-                        : movie.profile_path === null
+                          : `https://image.tmdb.org/t/p/w500/${media.poster_path}`
+                        : media.profile_path === null
                         ? personPoster
-                        : `https://image.tmdb.org/t/p/w500/${movie.profile_path}`
+                        : `https://image.tmdb.org/t/p/w500/${media.profile_path}`
                     }
-                    alt={movie.title || movie.name || "Unknown title"}
+                    alt={media.title || media.name || "Unknown title"}
                     width={300}
                     height={450}
                     className="w-full h-auto object-cover rounded-lg"
@@ -48,19 +48,19 @@ function MovieCard({ movies, loading }: MovieCardTypes) {
                       <RiStarSFill size={20} />
                     </span>
                     <span className="ml-1 text-sm text-dark">
-                      {movie.vote_average || 0}
+                      {media.vote_average || 0}
                     </span>
                   </div>
 
                   <div className="mt-2">
                     <h3 className="text-xl font-semibold text-dark overflow-hidden text-ellipsis whitespace-nowrap">
-                      {movie.title || movie.name || "Unknown name"}
+                      {media.title || media.name || "Unknown name"}
                     </h3>
                   </div>
 
                   <p className="text-dark">
-                    {movie.release_date ||
-                      movie.first_air_date ||
+                    {media.release_date ||
+                      media.first_air_date ||
                       "Unknown date"}
                   </p>
                 </div>
@@ -71,4 +71,4 @@ function MovieCard({ movies, loading }: MovieCardTypes) {
   );
 }
 
-export default MovieCard;
+export default MediaCard;

@@ -1,13 +1,13 @@
+import { MediaFiltersTypes } from "@/app/Types/MediaFilterTypes";
 import CustomDropdown from "../DropDown/DropDown";
 import FilterButtons from "../FilterButtons/FilterButtons";
-import { MovieFiltersProps } from "./FilterAndDropDown.Types";
 
 function MovieFilters({
   activeFilter,
   sortOption,
   handleFilterChange,
   handleSortChange,
-}: MovieFiltersProps) {
+}: MediaFiltersTypes) {
   return (
     <section className="border-b-1 border-gray-600 pt-5 flex justify-between">
       <FilterButtons
