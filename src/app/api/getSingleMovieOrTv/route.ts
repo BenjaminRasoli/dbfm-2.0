@@ -23,14 +23,14 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const movieData = await fetchFromTMDB({ type, id, endpoint: "" });
+    const mediaData = await fetchFromTMDB({ type, id, endpoint: "" });
     const videoData = await fetchFromTMDB({ type, id, endpoint: "/videos" });
     const actorsData = await fetchFromTMDB({ type, id, endpoint: "/credits" });
     const reviewsData = await fetchFromTMDB({ type, id, endpoint: "/reviews" });
 
     return new Response(
       JSON.stringify({
-        movieData,
+        mediaData,
         videoData,
         actorsData: actorsData.cast,
         reviewsData: reviewsData.results,
