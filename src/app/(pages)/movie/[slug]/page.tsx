@@ -1,37 +1,16 @@
 "use client";
 import { useEffect, useState } from "react";
 import { FaWindowClose } from "react-icons/fa";
-import { LiaStarSolid } from "react-icons/lia";
 import "react-multi-carousel/lib/styles.css";
-import Link from "next/link";
-import Carousel from "react-multi-carousel";
 import Image from "next/image";
 import SingleSkeletonLoader from "../../../components/SingleMovieSkeletonLoader/SingleSkeletonLoader";
 import poster from "../../../images/poster-image.png";
-import personPoster from "../../../images/personPlaceHolder.jpg";
 import { MovieTypes } from "@/app/Types/MovieType";
 import { VideoTypes } from "@/app/Types/VideoTypes";
 import { ActorTypes } from "@/app/Types/ActorTypes";
 import { ReviewTypes } from "@/app/Types/ReviewTypes";
-
-const responsive = {
-  superLargeDesktop: {
-    breakpoint: { max: 4000, min: 3000 },
-    items: 1,
-  },
-  desktop: {
-    breakpoint: { max: 3000, min: 1024 },
-    items: 1,
-  },
-  tablet: {
-    breakpoint: { max: 1024, min: 464 },
-    items: 1,
-  },
-  mobile: {
-    breakpoint: { max: 464, min: 0 },
-    items: 1,
-  },
-};
+import TopBilledActors from "@/app/components/TopBilledActors/TopBilledActors";
+import Reviews from "@/app/components/Reviews/Reviews";
 
 function Page({ params }: { params: Promise<{ slug: string }> }) {
   const [movieData, setMovieData] = useState<MovieTypes | null>(null);
@@ -172,117 +151,8 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
             )}
           </div>
         </div>
-
-        <div className="mt-8">
-          {actors.length > 0 && (
-            <h2 className="text-2xl font-bold text-white">Top Billed Cast</h2>
-          )}
-          <div className="flex overflow-x-auto mt-4 pb-4 space-x-4 max-w-full">
-            {actors?.map((actor) => (
-              <Link key={actor.id} href={`/actor/${actor.id}`}>
-                <div className="bg-blue rounded-lg w-40 flex flex-col h-[300px]">
-                  {actor.profile_path ? (
-                    <Image
-                      height={200}
-                      width={200}
-                      src={`https://image.tmdb.org/t/p/w500${actor.profile_path}`}
-                      alt={actor.name}
-                      className="w-full h-[200px] rounded-t-lg object-cover"
-                    />
-                  ) : (
-                    <Image
-                      height={840}
-                      width={840}
-                      src={personPoster}
-                      alt={actor.name}
-                      className="w-full h-[840px] rounded-t-lg object-cover"
-                    />
-                  )}
-                  <div className="flex flex-col pl-1 mb-7 h-full">
-                    <h3 className="text-white font-bold mt-2 text-ellipsis">
-                      {actor.name}
-                    </h3>
-                    <p className="text-white text-xs">{actor.character}</p>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-8">
-          {reviews.length > 0 && (
-            <>
-              <h2 className="text-2xl font-bold text-white">Reviews</h2>
-              <div className="mt-4 bg-blue rounded-md overflow-auto">
-                <Carousel
-                  responsive={responsive}
-                  swipeable={true}
-                  draggable={true}
-                  ssr={true}
-                  infinite={true}
-                  keyBoardControl={true}
-                  transitionDuration={500}
-                  renderButtonGroupOutside={true}
-                >
-                  {reviews?.map((review, index) => (
-                    <div
-                      key={index}
-                      className="p-5 rounded-lg text-white opacity-100 h-[300px] overflow-auto"
-                    >
-                      <div className=" flex items-center space-x-4">
-                        {review.author_details.avatar_path ? (
-                          <Image
-                            width={50}
-                            height={50}
-                            src={`https://image.tmdb.org/t/p/w500${review.author_details.avatar_path}`}
-                            alt={review.author}
-                            className="rounded-full "
-                          />
-                        ) : (
-                          <span className="text-black bg-gray-600 rounded-full p-2 w-12 h-12 flex items-center justify-center text-center">
-                            {review.author[0]}
-                          </span>
-                        )}
-                        <div className="flex flex-col justify-start">
-                          <div className="flex items-center gap-1">
-                            <h3 className="text-xl font-semibold mr-3 ">
-                              {review.author}
-                            </h3>
-                            {review.author_details.rating && (
-                              <>
-                                <LiaStarSolid className="text-yellow" />
-                                <span className="text-yellow">
-                                  {review.author_details.rating}
-                                </span>
-                              </>
-                            )}
-                          </div>
-                          <span className="text-sm text-white mt-1">
-                            Written on{" "}
-                            {new Date(review.created_at).toLocaleString(
-                              "en-US",
-                              {
-                                month: "short",
-                                day: "numeric",
-                                year: "numeric",
-                              }
-                            )}
-                          </span>
-                        </div>
-                      </div>
-
-                      <p
-                        className="mt-2 text-lg"
-                        dangerouslySetInnerHTML={{ __html: review.content }}
-                      />
-                    </div>
-                  ))}
-                </Carousel>
-              </div>
-            </>
-          )}
-        </div>
+        <TopBilledActors actors={actors} />
+        <Reviews reviews={reviews} />
       </div>
 
       {isModalOpen && trailerUrl && (
