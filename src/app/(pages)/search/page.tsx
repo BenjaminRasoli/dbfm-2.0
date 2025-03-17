@@ -1,9 +1,8 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import MovieFilters from "@/app/components/FilterAndDropDown/FilterAndDropDown";
 import MovieCard from "@/app/components/MovieCard/MovieCard";
-import { MovieTypes } from "@/app/Types/MovieTypes";
+import { MoviesTypes } from "@/app/Types/MoviesTypes";
 import PageSelector from "@/app/components/PageSelector/PageSelector";
 import { sortMovie } from "@/app/components/DropDown/DropDown";
 import Link from "next/link";
@@ -11,10 +10,10 @@ import QueryParams from "@/app/hooks/QueryParams";
 import { handleStateChange } from "@/app/utils/HandleStateChange";
 
 function Page() {
-  const [movies, setMovies] = useState<MovieTypes[]>([]);
+  const [movies, setMovies] = useState<MoviesTypes[]>([]);
   const [totalResults, setTotalResults] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
-  const [sortedMovies, setSortedMovies] = useState<MovieTypes[]>([]);
+  const [sortedMovies, setSortedMovies] = useState<MoviesTypes[]>([]);
   const [loading, setLoading] = useState<boolean | null>(null);
 
   const {

@@ -3,16 +3,16 @@ import CustomDropdown from "@/app/components/DropDown/DropDown";
 import MovieCard from "@/app/components/MovieCard/MovieCard";
 import { sortMovie } from "@/app/components/DropDown/DropDown";
 import { useState, useEffect } from "react";
-import { MovieTypes } from "@/app/Types/MovieTypes";
+import { MoviesTypes } from "@/app/Types/MoviesTypes";
 import PageSelector from "@/app/components/PageSelector/PageSelector";
 import QueryParams from "@/app/hooks/QueryParams";
 import { handleStateChange } from "@/app/utils/HandleStateChange";
 
 function Page({ params }: { params: Promise<{ slug: string }> }) {
   const [totalPages, setTotalPages] = useState(1);
-  const [movies, setMovies] = useState<MovieTypes[]>([]);
+  const [movies, setMovies] = useState<MoviesTypes[]>([]);
   const [genreName, setGenreName] = useState<string>("");
-  const [sortedMovies, setSortedMovies] = useState<MovieTypes[]>([]);
+  const [sortedMovies, setSortedMovies] = useState<MoviesTypes[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [genreSlug, setGenreSlug] = useState<string>("");
 
