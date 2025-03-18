@@ -1,17 +1,17 @@
 import Image from "next/image";
 import personPoster from "../../images/personPlaceHolder.jpg";
 import Link from "next/link";
-import { ActorTypes } from "@/app/Types/ActorTypes";
+import { ActorsTypes } from "@/app/Types/ActorsTypes";
 
-function TopBilledActors({ actors }: { actors: ActorTypes[] }) {
+function TopBilledActors({ actors }: { actors: ActorsTypes[] }) {
   return (
     <div className="mt-8">
       {actors.length > 0 && (
         <h2 className="text-2xl font-bold text-white">Top Billed Cast</h2>
       )}
       <div className="flex overflow-x-auto mt-4 pb-4 space-x-4 max-w-full">
-        {actors?.map((actor: ActorTypes) => (
-          <Link key={actor.id} href={`/actor/${actor.id}`}>
+        {actors?.map((actor: ActorsTypes) => (
+          <Link key={actor.id} href={`/person/${actor.id}`}>
             <div className="bg-blue rounded-lg w-40 flex flex-col h-[300px]">
               {actor.profile_path ? (
                 <Image

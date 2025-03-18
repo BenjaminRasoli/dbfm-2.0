@@ -6,7 +6,7 @@ import Image from "next/image";
 import SingleSkeletonLoader from "../SingleSkeletonLoader/SingleSkeletonLoader";
 import poster from "../../images/poster-image.png";
 import { VideoTypes } from "@/app/Types/VideoTypes";
-import { ActorTypes } from "@/app/Types/ActorTypes";
+import { ActorsTypes } from "@/app/Types/ActorsTypes";
 import { ReviewTypes } from "@/app/Types/ReviewTypes";
 import TopBilledActors from "@/app/components/TopBilledActors/TopBilledActors";
 import Reviews from "@/app/components/Reviews/Reviews";
@@ -14,13 +14,15 @@ import { MovieTypes } from "@/app/Types/MovieTypes";
 import { usePathname } from "next/navigation";
 import Seasons from "../Seasons/Season";
 import WhereToWatch from "../WhereToWatch/WhereToWatch";
+import { TvTypes } from "@/app/Types/TvTypes";
+import { WatchResultsTypes } from "@/app/Types/WhereToWatchTypes";
 
 type MediaTypes = MovieTypes | TvTypes;
 
-function SingleMovieOrTv({ params }: { params: Promise<{ slug: string }> }) {
+function SingleMovieOrTv({ params }: { params: { slug: string } }) {
   const [mediaData, setMediaData] = useState<MediaTypes | null>(null);
   const [video, setVideo] = useState<VideoTypes[]>([]);
-  const [actors, setActors] = useState<ActorTypes[]>([]);
+  const [actors, setActors] = useState<ActorsTypes[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [trailerUrl, setTrailerUrl] = useState<string>("");
   const [reviews, setReviews] = useState<ReviewTypes[]>([]);
@@ -54,7 +56,7 @@ function SingleMovieOrTv({ params }: { params: Promise<{ slug: string }> }) {
       setWhereToWatch(wereToWatchData.results);
     };
     fetchData();
-  }, [params]);
+  }, [params, type]);
 
   const handlePlayTrailer = (video: VideoTypes[]) => {
     const trailer = video.find((vid) => vid.type === "Trailer");

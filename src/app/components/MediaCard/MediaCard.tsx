@@ -1,13 +1,13 @@
 "use client";
 import { FaRegBookmark } from "react-icons/fa";
 import { RiStarSFill } from "react-icons/ri";
-import Image from "next/image";
-import SkeletonLoader from "../SkeletonLoader/SkeletonLoader";
-import poster from "../../images/poster-image.png";
-import personPoster from "../../images/personPlaceHolder.jpg";
-import Link from "next/link";
 import { MediaTypes } from "@/app/Types/MediaTypes";
 import { MediaCardTypes } from "@/app/Types/MediaCardTypes";
+import Image from "next/image";
+import SkeletonLoader from "../SkeletonLoader/SkeletonLoader";
+import MovieTvPlaceHolder from "../../images/poster-image.png";
+import PersonPlaceHolder from "../../images/personposter.jpg";
+import Link from "next/link";
 
 function MediaCard({ media, loading }: MediaCardTypes) {
   return (
@@ -24,10 +24,10 @@ function MediaCard({ media, loading }: MediaCardTypes) {
                     src={
                       media.media_type !== "person"
                         ? media.poster_path === null
-                          ? poster
+                          ? MovieTvPlaceHolder
                           : `https://image.tmdb.org/t/p/w500/${media.poster_path}`
                         : media.profile_path === null
-                        ? personPoster
+                        ? PersonPlaceHolder
                         : `https://image.tmdb.org/t/p/w500/${media.profile_path}`
                     }
                     alt={media.title || media.name || "Unknown title"}
@@ -36,21 +36,25 @@ function MediaCard({ media, loading }: MediaCardTypes) {
                     className="w-full h-auto object-cover rounded-lg"
                     priority
                   />
-                  <FaRegBookmark
-                    className="absolute top-0 left-0 bg-dark-100 text-white rounded-tl-lg z-10 p-2"
-                    size={50}
-                  />
+                  {media.media_type !== "person" && (
+                    <FaRegBookmark
+                      className="absolute top-0 left-0 bg-dark-100 text-white rounded-tl-lg z-10 p-2"
+                      size={50}
+                    />
+                  )}
                 </div>
 
                 <div className="pb-4">
-                  <div className="flex mt-2">
-                    <span className="text-yellow-400">
-                      <RiStarSFill size={20} />
-                    </span>
-                    <span className="ml-1 text-sm text-dark">
-                      {media.vote_average || 0}
-                    </span>
-                  </div>
+                  {media.media_type !== "person" && (
+                    <div className="flex mt-2">
+                      <span className="text-yellow-400">
+                        <RiStarSFill size={20} />
+                      </span>
+                      <span className="ml-1 text-sm text-dark">
+                        {media.vote_average || 0}
+                      </span>
+                    </div>
+                  )}
 
                   <div className="mt-2">
                     <h3 className="text-xl font-semibold text-dark overflow-hidden text-ellipsis whitespace-nowrap">
@@ -59,9 +63,10 @@ function MediaCard({ media, loading }: MediaCardTypes) {
                   </div>
 
                   <p className="text-dark">
-                    {media.release_date ||
-                      media.first_air_date ||
-                      "Unknown date"}
+                    {media.media_type !== "person" &&
+                      (media.release_date ||
+                        media.first_air_date ||
+                        "Unknown date")}
                   </p>
                 </div>
               </div>

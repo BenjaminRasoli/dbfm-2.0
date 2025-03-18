@@ -5,7 +5,7 @@ interface WatchProviderTypes {
   display_priority: number;
 }
 
-interface WatchResultsTypes {
+export interface WatchResultsTypes {
   [locale: string]: {
     link: string;
     free: WatchProviderTypes[];
@@ -13,7 +13,3 @@ interface WatchResultsTypes {
   };
 }
 
-interface MediaWatchData {
-  id: number;
-  results: WatchResultsTypes;
-}

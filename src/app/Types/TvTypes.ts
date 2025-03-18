@@ -80,7 +80,7 @@ interface SpokenLanguage {
   name: string;
 }
 
-interface TvTypes {
+export interface TvTypes {
   adult: boolean;
   backdrop_path: string;
   created_by: Creator[];

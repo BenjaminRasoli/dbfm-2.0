@@ -1,6 +1,5 @@
 import { ReviewTypes } from "@/app/Types/ReviewTypes";
 import Image from "next/image";
-import React from "react";
 import { LiaStarSolid } from "react-icons/lia";
 import Carousel from "react-multi-carousel";
 
