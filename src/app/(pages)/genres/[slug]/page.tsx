@@ -54,7 +54,7 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
-        await delay(1000);
+        //await delay(1000);
         setLoading(false);
       }
     };
