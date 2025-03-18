@@ -2,6 +2,7 @@ import Image from "next/image";
 import { LiaStarSolid } from "react-icons/lia";
 import poster from "../../images/poster-image.png";
 import Link from "next/link";
+import { TvTypes } from "@/app/Types/TvTypes";
 function Seasons({ mediaData }: { mediaData: TvTypes }) {
   return (
     <div className="mt-9">
@@ -39,7 +40,7 @@ function Seasons({ mediaData }: { mediaData: TvTypes }) {
               <p className="text-lg text-white mt-2">
                 Episodes: {season.episode_count || 0}
                 <span className="flex items-center space-x-2">
-                  Rating: <LiaStarSolid className="text-yellow-500" />
+                  Rating: <LiaStarSolid className="text-yellow" />
                   <span>{season.vote_average || 0}</span>
                 </span>
               </p>

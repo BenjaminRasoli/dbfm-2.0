@@ -1,4 +1,4 @@
-export interface ActorTypes {
+export interface ActorsTypes {
   adult: boolean;
   gender: number;
   id: number;

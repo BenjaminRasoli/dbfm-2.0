@@ -1,3 +1,6 @@
+import { WatchResultsTypes } from "@/app/Types/WhereToWatchTypes";
+import Image from "next/image";
+
 function WhereToWatch({ whereToWatch }: { whereToWatch: WatchResultsTypes }) {
   const hasWhereToWatchData = whereToWatch?.SV?.flatrate?.length > 0;
 
@@ -11,10 +14,12 @@ function WhereToWatch({ whereToWatch }: { whereToWatch: WatchResultsTypes }) {
               key={streaming.provider_id}
               className="bg-blue rounded-lg w-28 p-2 flex flex-col items-center"
             >
-              <img
+              <Image
                 src={`https://image.tmdb.org/t/p/w500${streaming.logo_path}`}
                 alt={streaming.provider_name}
                 className="w-20 h-20 object-contain mb-2 rounded-2xl"
+                height={200}
+                width={200}
               />
               <p className="text-center text-white font-semibold">
                 {streaming.provider_name}
