@@ -55,14 +55,21 @@ function Page() {
           }
         );
         const data = await movieRes.json();
-        console.log(data);
+
+        const updatedResults = data.results.map((item: any) => ({
+          ...item,
+          ...(activeFilter === "movie" || activeFilter === "tv"
+            ? { media_type: activeFilter }
+            : {}),
+        }));
+
         setTotalResults(data.total_results);
         setTotalPages(data.total_pages);
-        setMedia(data.results);
+        setMedia(updatedResults);
       } catch (error) {
         console.log(error);
       } finally {
-        await delay(1000);
+        //await delay(1000);
         setLoading(false);
       }
     };

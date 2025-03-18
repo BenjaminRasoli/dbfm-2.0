@@ -40,7 +40,7 @@ function Home() {
       } catch (error) {
         setError(error);
       } finally {
-        await delay(1000);
+        //await delay(1000);
         setLoading(false);
       }
     };
