@@ -1,16 +1,18 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { IoIosSearch } from "react-icons/io";
 import { useRouter } from "next/navigation";
-import avatar from "../../images/avatar.svg";
-import { IoMdSettings, IoIosLogOut } from "react-icons/io";
+import { IoIosLogOut } from "react-icons/io";
 import Link from "next/link";
+import { useUser } from "@/app/context/UserProvider";
 
 function Header() {
   const [searchWord, setSearchWord] = useState<string>("");
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
+  const modalRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const { user, logout } = useUser();
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,6 +26,23 @@ function Header() {
   const toggleModal = () => {
     setModalOpen(!isModalOpen);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
+        setModalOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <header className="p-4 border-b-1 border-gray-600 text-dark sticky top-0 z-20 bg-white">
@@ -43,34 +62,54 @@ function Header() {
         </form>
 
         <div className="flex items-center gap-3 relative">
-          <h3>John Doe</h3>
-          <Image
-            src={avatar}
-            height={50}
-            width={50}
-            alt="avatar"
-            onClick={toggleModal}
-            className="cursor-pointer"
-          />
-
-          {isModalOpen && (
-            <div className="absolute top-[60px] right-0 w-48 bg-white border border-gray-600 shadow-md p-4 rounded-lg">
-              <p className="bg-blue mb-4 rounded-lg p-2 text-sm">
-                <Link className="flex items-center gap-2" href="/settings">
-                  Setings <IoMdSettings />
-                </Link>
-              </p>
-              <p className="bg-red rounded-lg p-2 flex items-center gap-2 text-sm">
-                Logout <IoIosLogOut />
-              </p>
-
-              <button
-                className="mt-3 text-blue text-sm cursor-pointer"
-                onClick={() => setModalOpen(false)}
+          {user ? (
+            <>
+              <h3>{user.userName}</h3>
+              <div
+                onClick={toggleModal}
+                className="flex items-center justify-center w-12 h-12 rounded-full bg-blue text-white text-xl cursor-pointer"
               >
-                Close
-              </button>
-            </div>
+                {user.photoURL ? (
+                  <Image
+                    src={user.photoURL}
+                    height={50}
+                    width={50}
+                    alt="avatar"
+                    className="rounded-full"
+                  />
+                ) : (
+                  <span>{user.userName[0].toUpperCase()}</span>
+                )}
+              </div>
+
+              {isModalOpen && (
+                <div
+                  ref={modalRef}
+                  className="absolute top-[60px] right-0 w-48 bg-white border border-gray-600 shadow-md p-4 rounded-lg"
+                >
+                  <button
+                    onClick={() => {
+                      logout();
+                      setModalOpen(false);
+                    }}
+                    className="bg-red rounded-lg w-full p-2 flex items-center gap-2 text-sm cursor-pointer"
+                  >
+                    Logout <IoIosLogOut />
+                  </button>
+
+                  <button
+                    className="mt-3 text-blue text-sm cursor-pointer"
+                    onClick={() => setModalOpen(false)}
+                  >
+                    Close
+                  </button>
+                </div>
+              )}
+            </>
+          ) : (
+            <Link href="/login" className="hover:text-blue">
+              Login
+            </Link>
           )}
         </div>
       </div>

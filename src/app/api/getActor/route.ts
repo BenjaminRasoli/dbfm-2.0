@@ -5,7 +5,7 @@ export async function GET(req: NextRequest) {
     const url = new URL(req.url);
     const id = url.searchParams.get("id");
 
-    const apiUrl = `https://api.themoviedb.org/3/person/${id}?api_key=${process.env.REACT_APP_APIKEY}`;
+    const apiUrl = `https://api.themoviedb.org/3/person/${id}?api_key=${process.env.APIKEY}`;
 
     const res = await fetch(apiUrl);
     const data = await res.json();

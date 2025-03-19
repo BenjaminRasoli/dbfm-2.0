@@ -17,9 +17,6 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
 
   const { page, sortOption, setPage, setSortOption } = QueryParams();
 
-  const delay = (ms: number) =>
-    new Promise((resolve) => setTimeout(resolve, ms));
-
   useEffect(() => {
     const resolveParams = async () => {
       const resolvedParams = await params;
@@ -36,14 +33,14 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
     const fetchData = async () => {
       try {
         const movieRes = await fetch(
-          `${process.env.NEXT_PUBLIC_REACT_LOCAL_SERVER}/api/getGenreMovies?genre=${genreSlug}&page=${page}`
+          `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getGenreMovies?genre=${genreSlug}&page=${page}`
         );
         const data = await movieRes.json();
         setMedia(data.results);
         setTotalPages(data.total_pages);
 
         const genreRes = await fetch(
-          `${process.env.NEXT_PUBLIC_REACT_LOCAL_SERVER}/api/getNavbarGenres`
+          `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getNavbarGenres`
         );
         const genreData = await genreRes.json();
 
@@ -54,7 +51,6 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
-        //await delay(1000);
         setLoading(false);
       }
     };

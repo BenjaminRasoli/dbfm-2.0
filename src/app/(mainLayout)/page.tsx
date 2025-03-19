@@ -1,12 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
-import { MediaTypes } from "./Types/MediaTypes";
-import { handleStateChange } from "./utils/HandleStateChange";
-import QueryParams from "./hooks/QueryParams";
-import PageSelector from "./components/PageSelector/PageSelector";
-import MovieFilters from "./components/FilterAndDropDown/FilterAndDropDown";
-import { sortMedia } from "./components/DropDown/DropDown";
-import MediaCard from "./components/MediaCard/MediaCard";
+import { MediaTypes } from "../Types/MediaTypes";
+import { handleStateChange } from "../utils/HandleStateChange";
+import { sortMedia } from "../components/DropDown/DropDown";
+import QueryParams from "../hooks/QueryParams";
+import PageSelector from "../components/PageSelector/PageSelector";
+import MovieFilters from "../components/FilterAndDropDown/FilterAndDropDown";
+import MediaCard from "../components/MediaCard/MediaCard";
 
 function Home() {
   const [totalPages, setTotalPages] = useState<number>(1);
@@ -23,16 +23,13 @@ function Home() {
     setActiveFilter,
   } = QueryParams();
 
-  const delay = (ms: number) =>
-    new Promise((resolve) => setTimeout(resolve, ms));
-
   useEffect(() => {
     setLoading(true);
     setError("");
     const getMovies = async () => {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_REACT_LOCAL_SERVER}/api/getMedias?type=${activeFilter}&page=${page}`
+          `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getMedias?type=${activeFilter}&page=${page}`
         );
         const data = await res.json();
         setMedia(data.results);
@@ -40,7 +37,6 @@ function Home() {
       } catch (error) {
         setError(error);
       } finally {
-        //await delay(1000);
         setLoading(false);
       }
     };
