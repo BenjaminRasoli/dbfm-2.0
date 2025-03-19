@@ -3,7 +3,7 @@ import { ActorTypes } from "@/app/Types/ActorType";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import PersonPoster from "../../../images/personPlaceHolder.jpg";
+import PersonPoster from "../../../../images/personPlaceHolder.jpg";
 import { ActorKnownForTypes } from "@/app/Types/ActorKnownForTypes";
 
 function Page({ params }: { params: Promise<{ slug: string }> }) {
@@ -18,10 +18,10 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
 
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_REACT_LOCAL_SERVER}/api/getActor?id=${slug}`
+          `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getActor?id=${slug}`
         );
         const knownForResponse = await fetch(
-          `${process.env.NEXT_PUBLIC_REACT_LOCAL_SERVER}/api/getActorKnownFor?id=${slug}`
+          `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getActorKnownFor?id=${slug}`
         );
         const data = await response.json();
         const knownForData = await knownForResponse.json();
@@ -56,7 +56,7 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
 
   return (
     <div className="min-h-screen">
-      <div className="p-7 max-w-[300px] sm:max-w-[570px] md:max-w-[550px] custom:max-w-[950px] mx-auto bg-white rounded-lg  flex ">
+      <div className="p-7 max-w-[300px] sm:max-w-[570px] md:max-w-[550px] custom:max-w-[950px] mx-auto bg-white rounded-lg  flex flex-col lg:flex-row">
         <Image
           src={
             actor.profile_path

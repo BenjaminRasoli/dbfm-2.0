@@ -24,10 +24,10 @@ function Episodes({
       setSlug(slug);
       setCurrentSeason(seasonNumber);
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_REACT_LOCAL_SERVER}/api/getEpisodes?id=${slug}&seasonNumber=${seasonNumber}`
+        `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getEpisodes?id=${slug}&seasonNumber=${seasonNumber}`
       );
       const tvResponse = await fetch(
-        `${process.env.NEXT_PUBLIC_REACT_LOCAL_SERVER}/api/getSingleMovieOrTv?id=${slug}&type=tv`
+        `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getSingleMovieOrTv?id=${slug}&type=tv`
       );
 
       const data = await response.json();

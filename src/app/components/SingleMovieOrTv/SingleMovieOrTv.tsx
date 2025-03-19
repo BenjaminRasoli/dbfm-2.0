@@ -42,10 +42,10 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
     const fetchData = async () => {
       const { slug } = await params;
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_REACT_LOCAL_SERVER}/api/getSingleMovieOrTv?id=${slug}&type=${type}`
+        `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getSingleMovieOrTv?id=${slug}&type=${type}`
       );
       const wereToWatchResponse = await fetch(
-        `${process.env.NEXT_PUBLIC_REACT_LOCAL_SERVER}/api/getWhereToWatch?id=${slug}&type=${type}`
+        `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getWhereToWatch?id=${slug}&type=${type}`
       );
       const data = await response.json();
       const wereToWatchData = await wereToWatchResponse.json();

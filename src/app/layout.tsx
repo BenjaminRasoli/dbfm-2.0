@@ -1,12 +1,8 @@
-// export const dynamic = "force-dynamic";
-// export const fetchCache = "force-no-store";
-import type { Metadata } from "next";
 import { Roboto, Cinzel } from "next/font/google";
-import { Suspense } from "react";
-import Navbar from "./components/Navbar/Navbar";
-import Header from "./components/Header/Header";
-//import Footer from "./components/Footer/Footer";
+import { UserProvider } from "./context/UserProvider";
 import "./globals.css";
+import { Metadata } from "next";
+import { Suspense } from "react";
 
 const roboto = Roboto({
   variable: "--font-roboto",
@@ -26,24 +22,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
       <body className={`${roboto.variable} ${cinzel.variable} antialiased`}>
-        <div className="grid grid-cols-[auto_1fr] grid-rows-[auto_1fr] h-screen">
-          <Navbar />
-
-          <div className="flex flex-col">
-            <Header />
-            <main className="flex-1 overflow-y-auto">
-              <Suspense fallback={null}>{children}</Suspense>
-            </main>
-          </div>
-        </div>
-
-        {/* <Footer /> */}
+        <UserProvider>
+          <Suspense fallback={null}>{children}</Suspense>
+        </UserProvider>
       </body>
     </html>
   );

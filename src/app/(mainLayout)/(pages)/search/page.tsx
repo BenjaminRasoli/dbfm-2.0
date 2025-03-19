@@ -26,9 +26,6 @@ function Page() {
     setActiveFilter,
   } = QueryParams();
 
-  const delay = (ms: number) =>
-    new Promise((resolve) => setTimeout(resolve, ms));
-
   useEffect(() => {
     setMedia([]);
     setLoading(true);
@@ -41,7 +38,7 @@ function Page() {
       }
       try {
         const movieRes = await fetch(
-          `${process.env.NEXT_PUBLIC_REACT_LOCAL_SERVER}/api/getSearched`,
+          `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getSearched`,
           {
             method: "POST",
             headers: {
@@ -69,7 +66,6 @@ function Page() {
       } catch (error) {
         console.log(error);
       } finally {
-        //await delay(1000);
         setLoading(false);
       }
     };

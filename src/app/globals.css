@@ -9,10 +9,12 @@
   --color-dark-100: #151517;
   --color-dark-200: #1a1926;
   --color-blue: #2d99ff;
-  --color-blue-hover: #1a74cc;
+  --color-blue-hover: #1666b3;
   --color-orange: #ff9640;
   --color-red: #e53e3e;
   --color-yellow: #fbbf24;
+  --color-green: #28a745;
+  --color-gray: #f7fafc;
   --breakpoint-custom: 78rem;
 }
 

@@ -6,7 +6,7 @@ export async function GET(req: NextRequest) {
     const id = url.searchParams.get("id");
     const seasonNumber = url.searchParams.get("seasonNumber") || 1;
 
-    const apiUrl = `https://api.themoviedb.org/3/tv/${id}/season/${seasonNumber}?language=en-US&api_key=${process.env.REACT_APP_APIKEY}`;
+    const apiUrl = `https://api.themoviedb.org/3/tv/${id}/season/${seasonNumber}?language=en-US&api_key=${process.env.APIKEY}`;
 
     const res = await fetch(apiUrl);
     const data = await res.json();

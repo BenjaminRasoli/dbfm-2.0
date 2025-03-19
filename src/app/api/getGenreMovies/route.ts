@@ -6,7 +6,7 @@ export async function GET(req: NextRequest) {
     const genreId = url.searchParams.get("genre");
     const page = url.searchParams.get("page");
 
-    const apiUrl = `https://api.themoviedb.org/3/discover/movie?language=en-US&with_genres=${genreId}&page=${page}&api_key=${process.env.REACT_APP_APIKEY}`;
+    const apiUrl = `https://api.themoviedb.org/3/discover/movie?language=en-US&with_genres=${genreId}&page=${page}&api_key=${process.env.APIKEY}`;
 
     const res = await fetch(apiUrl);
     const data = await res.json();
