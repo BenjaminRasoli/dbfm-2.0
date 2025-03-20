@@ -3,12 +3,6 @@ import Navbar from "../components/Navbar/Navbar";
 import Header from "../components/Header/Header";
 import "../globals.css";
 
-export const metadata = {
-  title: "DBFM | Home",
-  description:
-    "DBFM is a movies website where you can check out the latest Movies and TV shows.",
-};
-
 export default function RootLayout({
   children,
 }: {

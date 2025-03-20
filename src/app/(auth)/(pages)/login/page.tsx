@@ -145,114 +145,118 @@ function Page() {
   };
 
   return (
-    <div className="flex items-center p-6 justify-center min-h-screen bg-gray">
-      {!user && (
-        <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-xl">
-          <div className="relative flex items-center mb-4 w-full">
-            <h3 className="text-lg  text-blue absolute left-0 hover:text-blue-hover">
-              <Link className="flex items-center" href="/">
-                <IoIosArrowRoundBack />
-                Back
-              </Link>
-            </h3>
-            <h2 className="text-2xl font-bold text-black mx-auto">Login</h2>
-          </div>
+    <>
+      <title>DBFM | Login</title>
 
-          <form onSubmit={handleLogin} noValidate>
-            <div className="mb-4">
-              <label
-                htmlFor="email"
-                className="block text-sm font-semibold text-black mb-2"
-              >
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
-                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue"
-              />
-              {emailError && (
-                <div className="my-2 text-red text-sm flex items-center gap-1">
-                  {emailError}
-                  <MdErrorOutline />
-                </div>
-              )}
+      <div className="flex items-center p-6 justify-center min-h-screen bg-gray">
+        {!user && (
+          <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-xl">
+            <div className="relative flex items-center mb-4 w-full">
+              <h3 className="text-lg  text-blue absolute left-0 hover:text-blue-hover">
+                <Link className="flex items-center" href="/">
+                  <IoIosArrowRoundBack />
+                  Back
+                </Link>
+              </h3>
+              <h2 className="text-2xl font-bold text-black mx-auto">Login</h2>
             </div>
 
-            <div className="mb-6">
-              <label
-                htmlFor="password"
-                className="block text-sm font-semibold text-black mb-2"
-              >
-                Password
-              </label>
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
-                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue"
-              />
-              {passwordError && (
-                <div className="my-2 text-red text-sm flex items-center gap-1">
-                  {passwordError}
-                  <MdErrorOutline />
-                </div>
-              )}
+            <form onSubmit={handleLogin} noValidate>
+              <div className="mb-4">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-semibold text-black mb-2"
+                >
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue"
+                />
+                {emailError && (
+                  <div className="my-2 text-red text-sm flex items-center gap-1">
+                    {emailError}
+                    <MdErrorOutline />
+                  </div>
+                )}
+              </div>
 
-              {loginText && (
-                <div className="my-2 text-green text-sm flex items-center gap-1">
-                  {loginText}
-                  <IoIosCheckbox />
-                </div>
-              )}
-              <Link
-                href="/forgotpassword"
-                className="text-sm text-blue hover:underline flex pt-2 justify-end"
+              <div className="mb-6">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-semibold text-black mb-2"
+                >
+                  Password
+                </label>
+                <input
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter your password"
+                  className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue"
+                />
+                {passwordError && (
+                  <div className="my-2 text-red text-sm flex items-center gap-1">
+                    {passwordError}
+                    <MdErrorOutline />
+                  </div>
+                )}
+
+                {loginText && (
+                  <div className="my-2 text-green text-sm flex items-center gap-1">
+                    {loginText}
+                    <IoIosCheckbox />
+                  </div>
+                )}
+                <Link
+                  href="/forgotpassword"
+                  className="text-sm text-blue hover:underline flex pt-2 justify-end"
+                >
+                  Forgot Password?
+                </Link>
+              </div>
+
+              <button
+                type="submit"
+                className="cursor-pointer w-full py-3 bg-blue hover:bg-blue-hover rounded-md text-white  transition duration-200"
               >
-                Forgot Password?
-              </Link>
+                Login
+              </button>
+            </form>
+
+            <div className="mt-4 text-center">
+              <button
+                onClick={() => handleSocialLogin(googleProvider)}
+                className="cursor-pointer w-full py-3 bg-white text-black border-2 border-gray-300 rounded-md hover:bg-gray-200 transition duration-200 flex items-center justify-center gap-2"
+              >
+                <FaGoogle /> Login with Google
+              </button>
             </div>
 
-            <button
-              type="submit"
-              className="cursor-pointer w-full py-3 bg-blue hover:bg-blue-hover rounded-md text-white  transition duration-200"
-            >
-              Login
-            </button>
-          </form>
+            <div className="mt-4 text-center">
+              <button
+                onClick={() => handleSocialLogin(githubProvider)}
+                className="cursor-pointer w-full py-3 bg-white text-black border-2 border-gray-300 rounded-md hover:bg-gray-200 transition duration-200 flex items-center justify-center gap-2"
+              >
+                <FaGithub /> Login with GitHub
+              </button>
+            </div>
 
-          <div className="mt-4 text-center">
-            <button
-              onClick={() => handleSocialLogin(googleProvider)}
-              className="cursor-pointer w-full py-3 bg-white text-black border-2 border-gray-300 rounded-md hover:bg-gray-200 transition duration-200 flex items-center justify-center gap-2"
-            >
-              <FaGoogle /> Login with Google
-            </button>
+            <div className="mt-4 text-center">
+              <span className="text-sm text-black">Dont have an account? </span>
+              <Link href="/register" className="text-blue hover:underline">
+                Sign up
+              </Link>
+            </div>
           </div>
-
-          <div className="mt-4 text-center">
-            <button
-              onClick={() => handleSocialLogin(githubProvider)}
-              className="cursor-pointer w-full py-3 bg-white text-black border-2 border-gray-300 rounded-md hover:bg-gray-200 transition duration-200 flex items-center justify-center gap-2"
-            >
-              <FaGithub /> Login with GitHub
-            </button>
-          </div>
-
-          <div className="mt-4 text-center">
-            <span className="text-sm text-black">Dont have an account? </span>
-            <Link href="/register" className="text-blue hover:underline">
-              Sign up
-            </Link>
-          </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 }
 

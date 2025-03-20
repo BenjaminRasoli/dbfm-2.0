@@ -67,25 +67,30 @@ function Home() {
     );
   }
   return (
-    <div className="p-7">
-      <h1 className="text-3xl text-blue pb-5">Trending</h1>
-      <MovieFilters
-        activeFilter={activeFilter}
-        handleFilterChange={(value) =>
-          handleStateChange(setActiveFilter, true)(value, setPage)
-        }
-        sortOption={sortOption}
-        handleSortChange={(value) =>
-          handleStateChange(setSortOption)(value, setPage)
-        }
-      />
-      <MediaCard media={sortedMedia} loading={loading} />
-      <PageSelector
-        currentPage={page}
-        totalPages={totalPages}
-        onPageChange={(newPage) => handleStateChange(setPage)(newPage, setPage)}
-      />
-    </div>
+    <>
+      <title>DBFM | Home</title>
+      <div className="p-7">
+        <h1 className="text-3xl text-blue pb-5">Trending</h1>
+        <MovieFilters
+          activeFilter={activeFilter}
+          handleFilterChange={(value) =>
+            handleStateChange(setActiveFilter, true)(value, setPage)
+          }
+          sortOption={sortOption}
+          handleSortChange={(value) =>
+            handleStateChange(setSortOption)(value, setPage)
+          }
+        />
+        <MediaCard media={sortedMedia} loading={loading} />
+        <PageSelector
+          currentPage={page}
+          totalPages={totalPages}
+          onPageChange={(newPage) =>
+            handleStateChange(setPage)(newPage, setPage)
+          }
+        />
+      </div>
+    </>
   );
 }
 
