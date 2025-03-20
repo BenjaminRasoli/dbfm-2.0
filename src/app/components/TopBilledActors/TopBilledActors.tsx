@@ -1,5 +1,5 @@
 import Image from "next/image";
-import personPoster from "../../images/personPlaceHolder.jpg";
+import personPoster from "../../images/personposter.jpg";
 import Link from "next/link";
 import { ActorsTypes } from "@/app/Types/ActorsTypes";
 
@@ -13,23 +13,17 @@ function TopBilledActors({ actors }: { actors: ActorsTypes[] }) {
         {actors?.map((actor: ActorsTypes) => (
           <Link key={actor.id} href={`/person/${actor.id}`}>
             <div className="bg-blue rounded-lg w-40 flex flex-col h-[300px]">
-              {actor.profile_path ? (
-                <Image
-                  height={200}
-                  width={200}
-                  src={`https://image.tmdb.org/t/p/w500${actor.profile_path}`}
-                  alt={actor.name}
-                  className="w-full h-[200px] rounded-t-lg object-cover"
-                />
-              ) : (
-                <Image
-                  height={840}
-                  width={840}
-                  src={personPoster}
-                  alt={actor.name}
-                  className="w-full h-[840px] rounded-t-lg object-cover"
-                />
-              )}
+              <Image
+                height={200}
+                width={200}
+                src={
+                  actor.profile_path
+                    ? `https://image.tmdb.org/t/p/w500${actor.profile_path}`
+                    : personPoster
+                }
+                alt={actor.name}
+                className="w-full h-[200px] rounded-t-lg object-cover"
+              />
               <div className="flex flex-col pl-1 mb-7 h-full">
                 <h3 className="text-white font-bold mt-2 text-ellipsis">
                   {actor.name}

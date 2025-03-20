@@ -4,7 +4,7 @@ import DBFMLogoBlack from "../../images/DATABASEFORMOVIES-logos_black.png";
 import DBFMLogoBlue from "../../images/DATABASEFORMOVIES-logos_blue.png";
 import Link from "next/link";
 import Hamburger from "hamburger-react";
-import { GenresType } from "./Genres.Types";
+import { GenresType } from "../../Types/Genres.Types";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { disableOverflow } from "@/app/utils/HandleDOM";

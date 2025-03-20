@@ -40,7 +40,7 @@ function Episodes({
     fetchData();
   }, [params]);
 
-  if (episodes === null) {
+  if (!episodes) {
     return <EpisodesSkeletonLoader />;
   }
 
