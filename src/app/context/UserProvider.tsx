@@ -9,6 +9,11 @@ import {
 import { UserContextTypes } from "../Types/UserContextTypes";
 import { UserDataSavedTypes } from "../Types/UserDataTypes";
 
+const INITIAL_STATE = {
+  currentUser: null,
+  dispatch: () => {},
+};
+
 const UserContext = createContext<UserContextTypes | null>(null);
 
 export const useUser = (): UserContextTypes => {
@@ -27,12 +32,14 @@ interface UserProviderProps {
 
 export const UserProvider = ({ children }: UserProviderProps) => {
   const [user, setUser] = useState<UserDataSavedTypes | null>(null);
+  const [isHydrating, setIsHydrating] = useState(true);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
+    setIsHydrating(false);
   }, []);
 
   const login = (userData: UserDataSavedTypes) => {
@@ -45,6 +52,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     localStorage.removeItem("favoriteMovies");
     setUser(null);
   };
+
+  if (isHydrating) {
+    return null;
+  }
 
   return (
     <UserContext.Provider value={{ user, login, logout }}>

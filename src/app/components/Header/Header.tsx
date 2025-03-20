@@ -9,7 +9,7 @@ import { useUser } from "@/app/context/UserProvider";
 
 function Header() {
   const [searchWord, setSearchWord] = useState<string>("");
-  const [isModalOpen, setModalOpen] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const modalRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const { user, logout } = useUser();
@@ -23,17 +23,13 @@ function Header() {
     setSearchWord("");
   };
 
-  const toggleModal = () => {
-    setModalOpen(!isModalOpen);
-  };
-
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
         modalRef.current &&
         !modalRef.current.contains(event.target as Node)
       ) {
-        setModalOpen(false);
+        setIsModalOpen(false);
       }
     };
 
@@ -45,7 +41,7 @@ function Header() {
   }, []);
 
   return (
-    <header className="p-4 border-b-1 border-gray-600 text-dark sticky top-0 z-20 bg-white">
+    <header className="p-6  border-b-1 border-gray-600 text-dark sticky top-0 z-20 bg-white">
       <div className="flex items-center justify-between">
         <form className="flex items-center gap-5">
           <button type="submit" onClick={handleSearch}>
@@ -66,7 +62,7 @@ function Header() {
             <>
               <h3>{user.userName}</h3>
               <div
-                onClick={toggleModal}
+                onClick={() => setIsModalOpen(true)}
                 className="flex items-center justify-center w-12 h-12 rounded-full bg-blue text-white text-xl cursor-pointer"
               >
                 {user.photoURL ? (
@@ -90,7 +86,7 @@ function Header() {
                   <button
                     onClick={() => {
                       logout();
-                      setModalOpen(false);
+                      setIsModalOpen(false);
                     }}
                     className="bg-red rounded-lg w-full p-2 flex items-center gap-2 text-sm cursor-pointer"
                   >
@@ -99,7 +95,7 @@ function Header() {
 
                   <button
                     className="mt-3 text-blue text-sm cursor-pointer"
-                    onClick={() => setModalOpen(false)}
+                    onClick={() => setIsModalOpen(false)}
                   >
                     Close
                   </button>
