@@ -15,9 +15,11 @@ const cinzel = Cinzel({
 });
 
 export const metadata: Metadata = {
-  title: "DBFM | Home",
   description:
     "DBFM is a movies website where you can check out the latest Movies and TV shows.",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default function RootLayout({

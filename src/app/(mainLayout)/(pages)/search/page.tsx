@@ -80,6 +80,12 @@ function Page() {
     }
   }, [sortOption, media]);
 
+  useEffect(() => {
+    if (searchWord) {
+      document.title = `DBFM | ${searchWord}`;
+    }
+  }, [searchWord]);
+
   return (
     <div className="p-7">
       <section className="border-b-1 border-gray-600">

@@ -11,6 +11,7 @@ import { handleStateChange } from "@/app/utils/HandleStateChange";
 import { sortMedia } from "@/app/components/DropDown/DropDown";
 import Link from "next/link";
 
+
 function Page() {
   const { user } = useUser();
   const [favorites, setFavorites] = useState<MediaTypes[]>([]);
@@ -86,57 +87,60 @@ function Page() {
   };
 
   return (
-    <div className="p-7">
-      <div className="flex flex-col md:flex-row justify-between pb-5">
-        <h1 className="text-blue text-3xl">Favorites</h1>
+    <>
+      <title>DBFM | Favorites</title>
+      <div className="p-7">
+        <div className="flex flex-col md:flex-row justify-between pb-5">
+          <h1 className="text-blue text-3xl">Favorites</h1>
+          {favorites.length > 0 && (
+            <h4 className="text-2xl">
+              You have favorited{" "}
+              <span className="text-blue">{filteredFavorites.length}</span>{" "}
+              {(() => {
+                switch (activeFilter) {
+                  case "all":
+                    return (
+                      <>
+                        <br className="block md:hidden" />
+                        Movies/Tv-Shows
+                      </>
+                    );
+                  case "movie":
+                    return "Movies";
+                  case "tv":
+                    return "Tv-Shows";
+                  default:
+                    return "Movies/Tv-Shows";
+                }
+              })()}
+            </h4>
+          )}
+        </div>
         {favorites.length > 0 && (
-          <h4 className="text-2xl">
-            You have favorited{" "}
-            <span className="text-blue">{filteredFavorites.length}</span>{" "}
-            {(() => {
-              switch (activeFilter) {
-                case "all":
-                  return (
-                    <>
-                      <br className="block md:hidden" />
-                      Movies/Tv-Shows
-                    </>
-                  );
-                case "movie":
-                  return "Movies";
-                case "tv":
-                  return "Tv-Shows";
-                default:
-                  return "Movies/Tv-Shows";
-              }
-            })()}
-          </h4>
+          <MovieFilters
+            activeFilter={activeFilter}
+            handleFilterChange={(value) =>
+              handleStateChange(setActiveFilter, true)(value)
+            }
+            sortOption={sortOption}
+            handleSortChange={(value) =>
+              handleStateChange(setSortOption, false)(value)
+            }
+          />
+        )}
+
+        {favorites.length === 0 ? (
+          <div className="text-xl text-center pt-10">
+            <p>No favorites yet. Start adding some</p>
+            <Link className="text-blue" href={"/"}>
+              Home
+            </Link>
+          </div>
+        ) : (
+          <MediaCard media={sortedMedia} loading={loading} />
         )}
       </div>
-      {favorites.length > 0 && (
-        <MovieFilters
-          activeFilter={activeFilter}
-          handleFilterChange={(value) =>
-            handleStateChange(setActiveFilter, true)(value)
-          }
-          sortOption={sortOption}
-          handleSortChange={(value) =>
-            handleStateChange(setSortOption, false)(value)
-          }
-        />
-      )}
-
-      {favorites.length === 0 ? (
-        <div className="text-xl text-center pt-10">
-          <p>No favorites yet. Start adding some</p>
-          <Link className="text-blue" href={"/"}>
-            Home
-          </Link>
-        </div>
-      ) : (
-        <MediaCard media={sortedMedia} loading={loading} />
-      )}
-    </div>
+    </>
   );
 }
 

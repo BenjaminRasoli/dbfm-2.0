@@ -89,6 +89,15 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
     return (data as MovieTypes).original_title !== undefined;
   };
 
+  useEffect(() => {
+    if (mediaData) {
+      const title = isMovie(mediaData) ? mediaData.title : mediaData.name;
+      document.title = `DBFM | ${title}`;
+    } else {
+      document.title = "DBFM | Details";
+    }
+  }, [mediaData]);
+
   if (!mediaData) {
     return <SingleSkeletonLoader mediaData={mediaData} />;
   }
