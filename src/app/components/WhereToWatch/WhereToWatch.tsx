@@ -15,11 +15,11 @@ function WhereToWatch({ whereToWatch }: { whereToWatch: WatchResultsTypes }) {
               className="bg-blue rounded-lg w-28 p-2 flex flex-col items-center"
             >
               <Image
-                src={`https://image.tmdb.org/t/p/w500${streaming.logo_path}`}
+                src={`https://image.tmdb.org/t/p/original${streaming.logo_path}`}
                 alt={streaming.provider_name}
                 className="w-20 h-20 object-contain mb-2 rounded-2xl"
-                height={200}
-                width={200}
+                height={700}
+                width={700}
               />
               <p className="text-center text-white font-semibold">
                 {streaming.provider_name}

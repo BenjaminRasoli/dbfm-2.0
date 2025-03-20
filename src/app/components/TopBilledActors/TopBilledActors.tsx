@@ -14,11 +14,11 @@ function TopBilledActors({ actors }: { actors: ActorsTypes[] }) {
           <Link key={actor.id} href={`/person/${actor.id}`}>
             <div className="bg-blue rounded-lg w-40 flex flex-col h-[300px]">
               <Image
-                height={200}
-                width={200}
+                height={700}
+                width={700}
                 src={
                   actor.profile_path
-                    ? `https://image.tmdb.org/t/p/w500${actor.profile_path}`
+                    ? `https://image.tmdb.org/t/p/original${actor.profile_path}`
                     : personPoster
                 }
                 alt={actor.name}

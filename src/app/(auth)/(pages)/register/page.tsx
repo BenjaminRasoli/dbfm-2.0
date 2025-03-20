@@ -244,6 +244,7 @@ function Page() {
                 </label>
                 <input
                   id="username"
+                  maxLength={30}
                   type="text"
                   value={userData.userName}
                   onChange={(e) =>

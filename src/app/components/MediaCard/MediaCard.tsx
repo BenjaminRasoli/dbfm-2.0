@@ -195,14 +195,14 @@ function MediaCard({ media, loading }: MediaCardTypes) {
                         media.media_type !== "person"
                           ? media.poster_path === null
                             ? MovieTvPlaceHolder
-                            : `https://image.tmdb.org/t/p/w500/${media.poster_path}`
+                            : `https://image.tmdb.org/t/p/original/${media.poster_path}`
                           : media.profile_path === null
                           ? PersonPlaceHolder
-                          : `https://image.tmdb.org/t/p/w500/${media.profile_path}`
+                          : `https://image.tmdb.org/t/p/original/${media.profile_path}`
                       }
                       alt={media.title || media.name || "Unknown title"}
-                      width={300}
-                      height={450}
+                      width={700}
+                      height={700}
                       className="w-full h-full object-cover transition-transform duration-300 ease-in-out scale-100 group-hover:scale-110"
                       priority
                     />

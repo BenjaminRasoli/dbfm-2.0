@@ -136,7 +136,7 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
               width={370}
               src={
                 mediaData.poster_path
-                  ? `https://image.tmdb.org/t/p/w500${mediaData.poster_path}`
+                  ? `https://image.tmdb.org/t/p/original${mediaData.poster_path}`
                   : poster
               }
               alt={

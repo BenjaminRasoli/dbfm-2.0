@@ -21,12 +21,12 @@ function Seasons({ mediaData }: { mediaData: TvTypes }) {
                 <Image
                   src={
                     season.poster_path
-                      ? `https://image.tmdb.org/t/p/w500${season.poster_path}`
+                      ? `https://image.tmdb.org/t/p/original${season.poster_path}`
                       : poster
                   }
                   alt={`Season ${season.season_number}`}
-                  height={300}
-                  width={200}
+                  height={700}
+                  width={700}
                   className="w-full h-[300px] object-cover rounded-lg"
                 />
                 <div className="absolute top-2 left-2 bg-black text-white py-1 px-2 rounded-lg">

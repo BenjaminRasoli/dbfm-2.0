@@ -56,7 +56,7 @@ function Header() {
         <div className="flex items-center gap-3 relative">
           {user ? (
             <>
-              <h3>{user.userName}</h3>
+              <h3 className="hidden sm:block">{user.userName}</h3>
               <div
                 onClick={() => setIsModalOpen(true)}
                 className="flex hover:border-2 hover:border-black items-center justify-center w-12 h-12 rounded-full bg-blue text-white text-xl cursor-pointer"
@@ -64,8 +64,8 @@ function Header() {
                 {user.photoURL ? (
                   <Image
                     src={user.photoURL}
-                    height={50}
-                    width={50}
+                    height={700}
+                    width={700}
                     alt="avatar"
                     className="rounded-full"
                   />
@@ -79,6 +79,8 @@ function Header() {
                   ref={modalRef}
                   className="absolute top-[60px] right-0 w-48 bg-white border border-gray-600 shadow-md p-4 rounded-lg"
                 >
+                  <h3 className="pb-4">{user.userName}</h3>
+
                   <button
                     onClick={() => {
                       logout();

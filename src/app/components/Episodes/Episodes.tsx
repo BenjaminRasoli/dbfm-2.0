@@ -114,8 +114,8 @@ function Episodes({
                 }
                 alt={episode.name}
                 className="w-full h-48 object-cover"
-                height={200}
-                width={200}
+                height={700}
+                width={700}
               />
               <div className="p-4 text-xl font-semibold text-white flex flex-col flex-grow">
                 <div className="flex justify-between items-center">

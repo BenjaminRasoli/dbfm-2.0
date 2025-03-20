@@ -64,18 +64,18 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
   }
 
   return (
-    <div className="min-h-screen">
-      <div className="p-7 max-w-[300px] sm:max-w-[570px] md:max-w-[550px] custom:max-w-[950px] mx-auto bg-white rounded-lg flex flex-col lg:flex-row">
+    <div className="min-h-screen bg-gray">
+      <div className="p-7 max-w-[300px] sm:max-w-[570px] md:max-w-[550px] custom:max-w-[950px] mx-auto rounded-lg flex flex-col lg:flex-row">
         <Image
           src={
             actor.profile_path
-              ? `https://image.tmdb.org/t/p/w500${actor.profile_path}`
+              ? `https://image.tmdb.org/t/p/original${actor.profile_path}`
               : PersonPoster
           }
           alt={actor.name}
           className="mr-6 w-[300px] h-full object-cover rounded-lg items-start flex"
-          height={200}
-          width={200}
+          height={700}
+          width={700}
         />
         <div className="flex-1">
           <h1 className="text-4xl font-bold text-black">
@@ -108,7 +108,7 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
               <Link href={`/${credit.media_type}/${credit.id}`} key={credit.id}>
                 <div className="w-40 flex-shrink-0 bg-blue min-h-[350px] text-white rounded-lg shadow-md overflow-hidden">
                   <Image
-                    src={`https://image.tmdb.org/t/p/w500${credit.poster_path}`}
+                    src={`https://image.tmdb.org/t/p/original${credit.poster_path}`}
                     alt={credit.title || credit.name}
                     className="w-full h-56 object-cover rounded-t-lg"
                     height={200}

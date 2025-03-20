@@ -47,9 +47,9 @@ function Reviews({ reviews }: { reviews: ReviewTypes[] }) {
                   <div className=" flex items-center space-x-4">
                     {review.author_details.avatar_path ? (
                       <Image
-                        width={50}
-                        height={50}
-                        src={`https://image.tmdb.org/t/p/w500${review.author_details.avatar_path}`}
+                        width={700}
+                        height={700}
+                        src={`https://image.tmdb.org/t/p/original${review.author_details.avatar_path}`}
                         alt={review.author}
                         className="rounded-full "
                       />

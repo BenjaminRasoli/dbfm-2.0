@@ -30,7 +30,7 @@ function PageSelector({
       className={clsx(
         "px-4 lg:px-6 py-2 lg:py-3 font-semibold rounded-lg transition-all duration-300 ease-in-out transform",
         page === currentPage
-          ? "bg-gray-300 text-white cursor-not-allowed"
+          ? "bg-gray-300 text-white cursor-not-allowed opacity-50"
           : "bg-blue text-white hover:bg-blue-hover cursor-pointer"
       )}
     >
@@ -48,10 +48,10 @@ function PageSelector({
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 1}
         className={clsx(
-          "hidden md:block px-2 lg:px-6 py-1 lg:py-3 font-semibold rounded-lg",
+          "text-white hidden md:block px-2 lg:px-6 py-1 lg:py-3 font-semibold rounded-lg",
           currentPage === 1
-            ? "cursor-not-allowed bg-red"
-            : "bg-blue text-white hover:bg-blue-hover cursor-pointer"
+            ? "cursor-not-allowed bg-red opacity-50"
+            : "bg-blue  hover:bg-blue-hover cursor-pointer"
         )}
       >
         Prev
@@ -82,10 +82,10 @@ function PageSelector({
         onClick={() => handlePageChange(currentPage + 1)}
         disabled={currentPage === finalTotalPages}
         className={clsx(
-          "hidden md:block px-2 lg:px-6 py-1 lg:py-3 font-semibold rounded-lg",
+          "text-white hidden md:block px-2 lg:px-6 py-1 lg:py-3 font-semibold rounded-lg",
           currentPage === finalTotalPages
-            ? "cursor-not-allowed bg-red"
-            : "bg-blue text-white hover:bg-blue-hover cursor-pointer"
+            ? "cursor-not-allowed bg-red opacity-50"
+            : "bg-blue  hover:bg-blue-hover cursor-pointer"
         )}
       >
         Next
