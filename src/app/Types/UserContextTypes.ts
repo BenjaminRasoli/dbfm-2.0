@@ -4,6 +4,7 @@ export interface UserTypes {
   lastName: string;
   userName: string;
   photoURL?: string;
+  uid: string;
 }
 
 export interface UserLoginDataTypes {

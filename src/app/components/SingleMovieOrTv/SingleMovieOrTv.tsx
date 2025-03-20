@@ -30,6 +30,18 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
     null
   );
 
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isModalOpen]);
+
   const pathname = usePathname();
   let type = "";
   if (pathname.startsWith("/movie")) {

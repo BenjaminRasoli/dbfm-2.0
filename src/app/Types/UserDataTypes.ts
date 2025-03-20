@@ -13,7 +13,5 @@ export interface UserDataSavedTypes {
   userName: string;
   firstName: string;
   lastName: string;
+  uid: string;
 }
-
-
-
