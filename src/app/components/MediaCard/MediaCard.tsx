@@ -174,15 +174,22 @@ function MediaCard({ media, loading }: MediaCardTypes) {
 
   return (
     <>
-      <div className="grid grid-cols-1 place-items-center md:place-items-stretch sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8 pt-10">
+      <div className="grid grid-cols-1 place-items-center md:grid-cols-2 custom:grid-cols-3 2xl:grid-cols-4 gap-5 pt-10">
         {loading || !media || media.length === 0
           ? Array.from({ length: 6 }, (_, index) => (
               <SkeletonLoader key={index} />
             ))
           : media?.map((media: MediaTypes) => (
-              <div key={media.id} className="rounded-lg w-[300px] relative">
-                <Link href={`/${media.media_type}/${media.id}`}>
-                  <div className="relative">
+              <div key={media.id} className="w-[300px] h-[580px] mb-3 relative">
+                <Link
+                  href={
+                    media.media_type
+                      ? `/${media.media_type}/${media.id}`
+                      : `/movie/${media.id}`
+                  }
+                  className="block w-full h-full group"
+                >
+                  <div className="relative w-full h-[400px] overflow-hidden rounded-t-lg">
                     <Image
                       src={
                         media.media_type !== "person"
@@ -196,11 +203,38 @@ function MediaCard({ media, loading }: MediaCardTypes) {
                       alt={media.title || media.name || "Unknown title"}
                       width={300}
                       height={450}
-                      className="w-full h-auto object-cover rounded-lg"
+                      className="w-full h-full object-cover transition-transform duration-300 ease-in-out scale-100 group-hover:scale-110"
                       priority
                     />
                   </div>
+
+                  <div className="pb-4 p-2 shadow-2xl rounded-b-lg h-[120px]">
+                    {media.media_type !== "person" && (
+                      <div className="flex mt-2">
+                        <span className="text-yellow-400">
+                          <RiStarSFill size={20} />
+                        </span>
+                        <span className="ml-1 text-sm text-dark">
+                          {media.vote_average || 0}
+                        </span>
+                      </div>
+                    )}
+
+                    <div className="mt-2">
+                      <h3 className="text-xl font-semibold text-dark overflow-hidden text-ellipsis whitespace-nowrap">
+                        {media.title || media.name || "Unknown name"}
+                      </h3>
+                    </div>
+
+                    <p className="text-dark">
+                      {media.media_type !== "person" &&
+                        (media.release_date ||
+                          media.first_air_date ||
+                          "Unknown date")}
+                    </p>
+                  </div>
                 </Link>
+
                 {media.media_type !== "person" && (
                   <div
                     className="absolute top-2 left-2 z-10 p-2 cursor-pointer bg-dark-100 text-white rounded-lg"
@@ -217,37 +251,12 @@ function MediaCard({ media, loading }: MediaCardTypes) {
                     )}
                   </div>
                 )}
-                <div className="pb-4">
-                  {media.media_type !== "person" && (
-                    <div className="flex mt-2">
-                      <span className="text-yellow-400">
-                        <RiStarSFill size={20} />
-                      </span>
-                      <span className="ml-1 text-sm text-dark">
-                        {media.vote_average || 0}
-                      </span>
-                    </div>
-                  )}
-
-                  <div className="mt-2">
-                    <h3 className="text-xl font-semibold text-dark overflow-hidden text-ellipsis whitespace-nowrap">
-                      {media.title || media.name || "Unknown name"}
-                    </h3>
-                  </div>
-
-                  <p className="text-dark">
-                    {media.media_type !== "person" &&
-                      (media.release_date ||
-                        media.first_air_date ||
-                        "Unknown date")}
-                  </p>
-                </div>
               </div>
             ))}
       </div>
 
       {isModalOpen && (
-        <div className="fixed inset-0 flex justify-center items-center z-50">
+        <div className="fixed inset-0 flex justify-center items-center z-[55]">
           <div
             className="absolute inset-0 bg-black"
             style={{ opacity: 0.5 }}
@@ -255,7 +264,7 @@ function MediaCard({ media, loading }: MediaCardTypes) {
 
           <div
             ref={modalRef}
-            className="bg-white w-[300px] h-[200px] flex flex-col rounded-lg shadow-lg p-6 relative z-50"
+            className="bg-white w-[300px] h-[200px] flex flex-col rounded-lg shadow-lg p-6 relative z-[55]"
           >
             <button
               onClick={() => setIsModalOpen(false)}
@@ -286,7 +295,7 @@ function MediaCard({ media, loading }: MediaCardTypes) {
       )}
 
       {isConfirmModalOpen && itemToRemove && (
-        <div className="fixed inset-0 flex justify-center items-center z-50">
+        <div className="fixed inset-0 flex justify-center items-center z-[55]">
           <div
             className="absolute inset-0 bg-black"
             style={{ opacity: 0.5 }}
@@ -294,7 +303,7 @@ function MediaCard({ media, loading }: MediaCardTypes) {
 
           <div
             ref={modalRef}
-            className="bg-white w-[300px] h-[200px] flex flex-col rounded-lg shadow-lg p-6 relative z-50"
+            className="bg-white w-[300px] h-[200px] flex flex-col rounded-lg shadow-lg p-6 relative z-[55]"
           >
             <button
               onClick={handleCancel}

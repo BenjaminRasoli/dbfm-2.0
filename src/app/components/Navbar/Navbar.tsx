@@ -13,8 +13,21 @@ function Navbar() {
   const [genres, setGenres] = useState<GenresType[]>([]);
   const [hovered, setHovered] = useState<boolean>(false);
   const [isHamburgerOpen, setIsHamburgerOpen] = useState<boolean>(false);
+  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
 
   const pathname = usePathname();
+
+  useEffect(() => {
+    const handleWindowSizeChange = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    setIsHamburgerOpen(false);
+    window.addEventListener("resize", handleWindowSizeChange);
+
+    return () => {
+      window.removeEventListener("resize", handleWindowSizeChange);
+    };
+  }, [windowWidth]);
 
   useEffect(() => {
     const getGenres = async () => {
@@ -44,7 +57,7 @@ function Navbar() {
 
   return (
     <aside className="relative border-r-1 border-gray-600">
-      <div className="bg-white lg:hidden mt-[17px] z-100 sticky top-5">
+      <div className="bg-white rounded lg:hidden mt-[17px] z-[51] sticky top-5">
         <Hamburger
           toggled={isHamburgerOpen}
           toggle={setIsHamburgerOpen}

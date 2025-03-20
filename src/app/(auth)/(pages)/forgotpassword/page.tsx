@@ -82,7 +82,7 @@ function Page() {
 
             <button
               type="submit"
-              className="cursor-pointer w-full py-3 mt-7 bg-blue text-white rounded-md hover:bg-blue-hover transition duration-200"
+              className="cursor-pointer w-full py-3 mt-7 bg-blue text-white rounded-md hover:bg-blue-hover  transition duration-200"
             >
               Send Reset Link
             </button>
