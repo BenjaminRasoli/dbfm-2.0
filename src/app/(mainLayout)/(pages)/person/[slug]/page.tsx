@@ -3,8 +3,9 @@ import { ActorTypes } from "@/app/Types/ActorType";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import PersonPoster from "../../../../images/personPlaceHolder.jpg";
+import PersonPoster from "../../../../images/personposter.jpg";
 import { ActorKnownForTypes } from "@/app/Types/ActorKnownForTypes";
+import ActorSkeletonLoader from "@/app/components/ActorSkeletonLoader/ActorSkeletonLoader";
 
 function Page({ params }: { params: Promise<{ slug: string }> }) {
   const [actor, setActor] = useState<ActorTypes | null>(null);
@@ -58,8 +59,8 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
     }
   }, [actor]);
 
-  if (actor === null) {
-    return <div className="text-center p-4 text-white">Loading...</div>;
+  if (!actor) {
+    return <ActorSkeletonLoader />;
   }
 
   return (

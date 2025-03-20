@@ -13,11 +13,11 @@ function SingleSkeletonLoader({ mediaData }: { mediaData: MediaTypes | null }) {
       ></div>
       <div className="container mx-auto relative z-10 max-w-[280px] sm:max-w-[570px] md:max-w-[550px] custom:max-w-[900px]">
         <div className="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0">
-          <div className="mb-4 md:mb-0 md:w-2/3">
+          <div className="mb-4 md:mb-0">
             <div className="w-[300px] h-[450px] bg-gray-300 animate-pulse rounded-md" />
           </div>
 
-          <div className="w-full  md:ml-4 text-white">
+          <div className="w-full  md:ml-10 text-white">
             <div className="mb-4 flex justify-between">
               <div className="w-2/4 h-8 bg-gray-300 animate-pulse rounded-md" />
               <div className="w-1/4 h-8 bg-gray-300 animate-pulse rounded-md" />

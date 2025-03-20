@@ -26,11 +26,15 @@ function EpisodesSkeletonLoader() {
             >
               <div className="bg-gray-400 rounded-t-lg h-48 w-full"></div>
               <div className="p-4">
-                <div className="bg-gray-300 h-4 w-24 mb-2 animate-pulse"></div>
-                <div className="bg-gray-300 h-4 w-48 mb-2 animate-pulse"></div>
-                <div className="bg-gray-300 h-3 w-60 mb-2 animate-pulse"></div>
-                <div className="bg-gray-300 h-3 w-40 mb-2 animate-pulse"></div>
-                <div className="bg-gray-300 h-3 w-40 animate-pulse"></div>
+                <div className="flex justify-between">
+                  <div className="bg-gray-400 rounded h-4 w-24 mb-2 animate-pulse"></div>
+                  <div className="bg-gray-400 rounded h-4 w-10 mb-2 animate-pulse"></div>
+                </div>
+
+                <div className="bg-gray-400 rounded h-3 w-48 mb-2 animate-pulse"></div>
+                <div className="bg-gray-400 rounded h-15 w-60 mb-2 animate-pulse"></div>
+                <div className="bg-gray-400 rounded h-3 w-40 mb-2 animate-pulse"></div>
+                <div className="bg-gray-400 rounded h-3 w-40 animate-pulse"></div>
               </div>
             </div>
           ))}
