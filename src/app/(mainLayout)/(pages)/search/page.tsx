@@ -83,13 +83,18 @@ function Page() {
   return (
     <div className="p-7">
       <section className="border-b-1 border-gray-600">
-        <div className="flex justify-between">
+        <div className="pb-5 flex flex-col md:flex-row max-w-[280px] md:max-w-full flex-wrap justify-between">
           <h1 className="text-blue text-3xl pb-5">Searched</h1>
-          <h4 className="text-2xl">
-            Results for <span className="text-blue">{searchWord}</span> (
-            {totalResults} found)
+          <h4 className="text-2xl max-w-[150px] md:max-w-full break-words whitespace-normal">
+            Results for{" "}
+            <span className="text-blue">
+              {searchWord}
+              <br className="block md:hidden" />
+            </span>{" "}
+            ({totalResults} found)
           </h4>
         </div>
+
         {media?.length > 0 && (
           <MovieFilters
             activeFilter={activeFilter}

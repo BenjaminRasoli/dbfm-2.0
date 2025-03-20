@@ -87,7 +87,7 @@ function Page() {
 
   return (
     <div className="p-7">
-      <div className="flex flex-col md:flex-row justify-between">
+      <div className="flex flex-col md:flex-row justify-between pb-5">
         <h1 className="text-blue text-3xl">Favorites</h1>
         {favorites.length > 0 && (
           <h4 className="text-2xl">
@@ -96,7 +96,12 @@ function Page() {
             {(() => {
               switch (activeFilter) {
                 case "all":
-                  return "Movies/Tv-Shows";
+                  return (
+                    <>
+                      <br className="block md:hidden" />
+                      Movies/Tv-Shows
+                    </>
+                  );
                 case "movie":
                   return "Movies";
                 case "tv":
