@@ -9,11 +9,6 @@ import {
 import { UserContextTypes } from "../Types/UserContextTypes";
 import { UserDataSavedTypes } from "../Types/UserDataTypes";
 
-const INITIAL_STATE = {
-  currentUser: null,
-  dispatch: () => {},
-};
-
 const UserContext = createContext<UserContextTypes | null>(null);
 
 export const useUser = (): UserContextTypes => {

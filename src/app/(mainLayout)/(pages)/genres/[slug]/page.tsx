@@ -69,7 +69,7 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
     <div className="p-7">
       <section className="border-b-1 border-gray-600">
         {genreName && (
-          <h1 className="text-3xl text-blue">{genreName} Movies</h1>
+          <h1 className="text-3xl max-w-xl text-blue pb-5">{genreName} Movies</h1>
         )}
         <div className="flex justify-end">
           {media?.length === 0 ? null : (

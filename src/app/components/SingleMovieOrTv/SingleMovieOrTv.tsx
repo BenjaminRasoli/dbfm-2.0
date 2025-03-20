@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaWindowClose } from "react-icons/fa";
 import "react-multi-carousel/lib/styles.css";
 import Image from "next/image";
@@ -16,6 +16,8 @@ import Seasons from "../Seasons/Season";
 import WhereToWatch from "../WhereToWatch/WhereToWatch";
 import { TvTypes } from "@/app/Types/TvTypes";
 import { WatchResultsTypes } from "@/app/Types/WhereToWatchTypes";
+import { disableOverflow } from "@/app/utils/HandleDOM";
+import { handleOutsideClick } from "@/app/utils/HandleOutsideClick";
 
 type MediaTypes = MovieTypes | TvTypes;
 
@@ -29,18 +31,23 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
   const [whereToWatch, setWhereToWatch] = useState<WatchResultsTypes | null>(
     null
   );
+  const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (isModalOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
+    disableOverflow(isModalOpen);
+    return () => disableOverflow(false);
+  }, [isModalOpen]);
+
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) =>
+      handleOutsideClick(e, modalRef, setIsModalOpen);
+
+    document.addEventListener("mousedown", handleClick);
 
     return () => {
-      document.body.style.overflow = "auto";
+      document.removeEventListener("mousedown", handleClick);
     };
-  }, [isModalOpen]);
+  }, []);
 
   const pathname = usePathname();
   let type = "";
@@ -97,7 +104,7 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
       ? "bg-yellow-600"
       : userScore >= 30
       ? "bg-orange-600"
-      : "bg-red-600";
+      : "bg-red";
 
   return (
     <div
@@ -237,12 +244,15 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
       {isModalOpen && trailerUrl && (
         <div className="fixed inset-0 flex justify-center items-center z-50">
           <div className="absolute inset-0 bg-black opacity-50"></div>
-          <div className="bg-white p-4 rounded-lg w-[90%] relative z-10">
+          <div
+            ref={modalRef}
+            className="bg-white p-4 rounded-lg w-[90%] relative z-10"
+          >
             <div className="flex justify-between">
               <h4 className="text-xl"> Play Trailer</h4>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="text-black text-2xl font-bold pb-5 cursor-pointer hover:text-blue"
+                className="text-black text-2xl font-bold pb-5 cursor-pointer hover:text-red-hover"
               >
                 <FaWindowClose />
               </button>

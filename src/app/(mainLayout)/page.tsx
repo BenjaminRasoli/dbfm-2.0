@@ -68,7 +68,7 @@ function Home() {
   }
   return (
     <div className="p-7">
-      <h1 className="text-3xl text-blue">Trending</h1>
+      <h1 className="text-3xl text-blue pb-5">Trending</h1>
       <MovieFilters
         activeFilter={activeFilter}
         handleFilterChange={(value) =>

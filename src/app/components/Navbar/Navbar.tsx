@@ -7,11 +7,12 @@ import Hamburger from "hamburger-react";
 import { GenresType } from "./Genres.Types";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
+import { disableOverflow } from "@/app/utils/HandleDOM";
 
 function Navbar() {
   const [genres, setGenres] = useState<GenresType[]>([]);
   const [hovered, setHovered] = useState<boolean>(false);
-  const [isOpen, setOpen] = useState<boolean>(false);
+  const [isHamburgerOpen, setIsHamburgerOpen] = useState<boolean>(false);
 
   const pathname = usePathname();
 
@@ -33,38 +34,35 @@ function Navbar() {
 
   useEffect(() => {
     window.scroll(0, 0);
-    setOpen(false);
+    setIsHamburgerOpen(false);
   }, [pathname]);
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-  }, [isOpen]);
+    disableOverflow(isHamburgerOpen);
+    return () => disableOverflow(false);
+  }, [isHamburgerOpen]);
 
   return (
     <aside className="relative border-r-1 border-gray-600">
-      <div className="lg:hidden mt-[17px] z-100 sticky top-5">
+      <div className="bg-white lg:hidden mt-[17px] z-100 sticky top-5">
         <Hamburger
-          toggled={isOpen}
-          toggle={setOpen}
+          toggled={isHamburgerOpen}
+          toggle={setIsHamburgerOpen}
           direction="left"
           size={20}
         />
       </div>
 
-      {isOpen && (
+      {isHamburgerOpen && (
         <div
           className="fixed inset-0 bg-black opacity-50 z-40"
-          onClick={() => setOpen(false)}
+          onClick={() => setIsHamburgerOpen(false)}
         ></div>
       )}
 
       <div
         className={`lg:hidden fixed top-0 left-0 w-[250px] h-full overflow-y-auto  bg-white bg-opacity-50 border-r-1 border-gray-600 transform transition-transform duration-300 ease-in-out z-50 ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
+          isHamburgerOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         <div className="p-4 text-dark-100">

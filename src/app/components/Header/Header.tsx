@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { IoIosLogOut } from "react-icons/io";
 import Link from "next/link";
 import { useUser } from "@/app/context/UserProvider";
+import { handleOutsideClick } from "@/app/utils/HandleOutsideClick";
 
 function Header() {
   const [searchWord, setSearchWord] = useState<string>("");
@@ -24,19 +25,14 @@ function Header() {
   };
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        modalRef.current &&
-        !modalRef.current.contains(event.target as Node)
-      ) {
-        setIsModalOpen(false);
-      }
+    const handleClick = (e: MouseEvent) => {
+      handleOutsideClick(e, modalRef, setIsModalOpen);
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handleClick);
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", handleClick);
     };
   }, []);
 
@@ -88,13 +84,13 @@ function Header() {
                       logout();
                       setIsModalOpen(false);
                     }}
-                    className="bg-red rounded-lg w-full p-2 flex items-center gap-2 text-sm cursor-pointer"
+                    className="bg-red hover:bg-red-hover text-white rounded-lg w-full p-2 flex items-center gap-2 text-sm cursor-pointer"
                   >
                     Logout <IoIosLogOut />
                   </button>
 
                   <button
-                    className="mt-3 text-blue text-sm cursor-pointer"
+                    className="mt-3 text-blue text-sm cursor-pointer hover:underline"
                     onClick={() => setIsModalOpen(false)}
                   >
                     Close

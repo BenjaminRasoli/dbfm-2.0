@@ -203,7 +203,7 @@ function Page() {
                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue"
               />
               {error.firstName && (
-                <div className="my-2 text-red-500 text-sm flex items-center gap-1">
+                <div className="my-2 text-red text-sm flex items-center gap-1">
                   {error.firstName} <MdErrorOutline />
                 </div>
               )}
@@ -227,7 +227,7 @@ function Page() {
                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue"
               />
               {error.lastName && (
-                <div className="my-2 text-red-500 text-sm flex items-center gap-1">
+                <div className="my-2 text-red text-sm flex items-center gap-1">
                   {error.lastName} <MdErrorOutline />
                 </div>
               )}
@@ -251,7 +251,7 @@ function Page() {
                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue"
               />
               {error.userName && (
-                <div className="my-2 text-red-500 text-sm flex items-center gap-1">
+                <div className="my-2 text-red text-sm flex items-center gap-1">
                   {error.userName} <MdErrorOutline />
                 </div>
               )}
@@ -275,7 +275,7 @@ function Page() {
                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue"
               />
               {error.email && (
-                <div className="my-2 text-red-500 text-sm flex items-center gap-1">
+                <div className="my-2 text-red text-sm flex items-center gap-1">
                   {error.email} <MdErrorOutline />
                 </div>
               )}
@@ -299,7 +299,7 @@ function Page() {
                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue"
               />
               {error.password && (
-                <div className="my-2 text-red-500 text-sm flex items-center gap-1">
+                <div className="my-2 text-red text-sm flex items-center gap-1">
                   {error.password} <MdErrorOutline />
                 </div>
               )}

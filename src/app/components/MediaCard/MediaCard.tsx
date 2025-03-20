@@ -19,6 +19,8 @@ import {
 } from "firebase/firestore";
 import { db } from "@/app/config/FireBaseConfig";
 import { useUser } from "@/app/context/UserProvider";
+import { disableOverflow } from "@/app/utils/HandleDOM";
+import { handleOutsideClick } from "@/app/utils/HandleOutsideClick";
 
 function MediaCard({ media, loading }: MediaCardTypes) {
   const [hoveredItemId, setHoveredItemId] = useState<number | null>(null);
@@ -30,32 +32,20 @@ function MediaCard({ media, loading }: MediaCardTypes) {
   const { user } = useUser();
 
   useEffect(() => {
-    if (isModalOpen || isConfirmModalOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-
-    return () => {
-      document.body.style.overflow = "auto";
-    };
+    disableOverflow(isModalOpen || isConfirmModalOpen);
+    return () => disableOverflow(false);
   }, [isModalOpen, isConfirmModalOpen]);
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        modalRef.current &&
-        !modalRef.current.contains(event.target as Node)
-      ) {
-        setIsModalOpen(false);
-        setIsConfirmModalOpen(false);
-      }
+    const handleClick = (e: MouseEvent) => {
+      handleOutsideClick(e, modalRef, setIsModalOpen);
+      handleOutsideClick(e, modalRef, setIsConfirmModalOpen);
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handleClick);
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", handleClick);
     };
   }, []);
 
@@ -269,7 +259,7 @@ function MediaCard({ media, loading }: MediaCardTypes) {
           >
             <button
               onClick={() => setIsModalOpen(false)}
-              className="absolute top-2 right-2 cursor-pointer text-black hover:text-red-500"
+              className="absolute top-2 right-2 cursor-pointer text-black hover:text-red-hover"
             >
               <FaWindowClose size={24} />
             </button>
@@ -308,19 +298,21 @@ function MediaCard({ media, loading }: MediaCardTypes) {
           >
             <button
               onClick={handleCancel}
-              className="absolute top-2 right-2 cursor-pointer text-black hover:text-red"
+              className="absolute top-2 right-2 cursor-pointer text-black hover:text-red-hover"
             >
               <FaWindowClose size={24} />
             </button>
 
             <p className="text-lg font-semibold text-center my-auto">
+              {/* eslint-disable-next-line react/no-unescaped-entities */}
               Are you sure you want to remove "
+              {/* eslint-disable-next-line react/no-unescaped-entities */}
               {itemToRemove.title || itemToRemove.name}" from your favorites?
             </p>
             <div className="flex justify-between px-5 gap-2">
               <button
                 onClick={handleRemoveConfirmation}
-                className="cursor-pointer bg-red hover:bg-red-700 rounded-lg p-2 text-white"
+                className="cursor-pointer bg-red hover:bg-red-hover rounded-lg p-2 text-white"
               >
                 Yes, Remove
               </button>
