@@ -251,7 +251,7 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
       </div>
 
       {isModalOpen && trailerUrl && (
-        <div className="fixed inset-0 flex justify-center items-center z-50">
+        <div className="fixed inset-0 flex justify-center items-center z-[55]">
           <div className="absolute inset-0 bg-black opacity-50"></div>
           <div
             ref={modalRef}

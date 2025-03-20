@@ -59,7 +59,7 @@ function Header() {
               <h3>{user.userName}</h3>
               <div
                 onClick={() => setIsModalOpen(true)}
-                className="flex items-center justify-center w-12 h-12 rounded-full bg-blue text-white text-xl cursor-pointer"
+                className="flex hover:border-2 hover:border-black items-center justify-center w-12 h-12 rounded-full bg-blue text-white text-xl cursor-pointer"
               >
                 {user.photoURL ? (
                   <Image
