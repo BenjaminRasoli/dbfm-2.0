@@ -313,14 +313,13 @@ function MediaCard({ media, loading }: MediaCardTypes) {
             </button>
 
             <p className="text-lg font-semibold text-center my-auto">
-              {/* eslint-disable-next-line react/no-unescaped-entities */}
-              Are you sure you want to remove "
-              {/* eslint-disable-next-line react/no-unescaped-entities */}
+              Are you sure you want to remove &quot;
               <span className="font-bold text-blue">
                 {itemToRemove.title || itemToRemove.name}
               </span>
-              " from your favorites?
+              &quot; from your favorites?
             </p>
+
             <div className="flex justify-between px-5 gap-2">
               <button
                 onClick={handleRemoveConfirmation}

@@ -149,7 +149,7 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
           </div>
 
           <div className="w-full md:w-2/3 md:ml-8 text-white">
-            <div className="flex justify-between items-center">
+            <div className="flex flex-col xl:flex-row xl:justify-between xl:items-center">
               <h1 className="text-4xl font-bold mb-2 max-w-[300px]">
                 {isMovie(mediaData) ? mediaData.title : mediaData.name}
               </h1>

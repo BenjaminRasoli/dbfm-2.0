@@ -9,10 +9,13 @@ import { useUser } from "@/app/context/UserProvider";
 import { handleOutsideClick } from "@/app/utils/HandleOutsideClick";
 
 import ThemeSwitch from "../ThemeSwitch/ThemeSwitch";
+import { FaWindowClose } from "react-icons/fa";
+import { disableOverflow } from "@/app/utils/HandleDOM";
 
 function Header() {
   const [searchWord, setSearchWord] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState<boolean>(false);
   const modalRef = useRef<HTMLDivElement>(null);
 
   const router = useRouter();
@@ -30,6 +33,7 @@ function Header() {
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       handleOutsideClick(e, modalRef, setIsModalOpen);
+      handleOutsideClick(e, modalRef, setIsLogoutModalOpen);
     };
 
     document.addEventListener("mousedown", handleClick);
@@ -38,6 +42,11 @@ function Header() {
       document.removeEventListener("mousedown", handleClick);
     };
   }, []);
+
+  useEffect(() => {
+    disableOverflow(isLogoutModalOpen);
+    return () => disableOverflow(false);
+  }, [isLogoutModalOpen]);
 
   return (
     <header className="py-6 px-1 border-b-1 border-gray-600 dark:border-gray-800 sticky top-0 z-20 bg-white dark:bg-dark ">
@@ -86,7 +95,7 @@ function Header() {
 
                   <button
                     onClick={() => {
-                      logout();
+                      setIsLogoutModalOpen(true);
                       setIsModalOpen(false);
                     }}
                     className="bg-red hover:bg-red-hover  rounded-lg w-full p-2 flex items-center gap-2 text-sm cursor-pointer"
@@ -111,6 +120,48 @@ function Header() {
           <ThemeSwitch />
         </div>
       </div>
+      {isLogoutModalOpen && (
+        <div className="fixed inset-0 flex justify-center items-center z-[55]">
+          <div
+            className="absolute inset-0 bg-black"
+            style={{ opacity: 0.5 }}
+          ></div>
+
+          <div
+            ref={modalRef}
+            className="bg-white dark:bg-dark w-[320px] h-[200px] flex flex-col rounded-lg shadow-lg p-6 relative z-[55]"
+          >
+            <button
+              onClick={() => setIsLogoutModalOpen(false)}
+              className="absolute top-2 right-2 cursor-pointer  hover:text-red-hover"
+            >
+              <FaWindowClose size={24} />
+            </button>
+
+            <p className="text-lg font-semibold text-center my-auto">
+              Are you sure you want to log out?
+            </p>
+
+            <div className="flex justify-between px-5 gap-2">
+              <button
+                onClick={() => {
+                  logout();
+                  setIsLogoutModalOpen(false);
+                }}
+                className="cursor-pointer bg-red hover:bg-red-hover rounded-lg p-2 text-white"
+              >
+                Yes, Logout
+              </button>
+              <button
+                onClick={() => setIsLogoutModalOpen(false)}
+                className="cursor-pointer bg-gray-300 hover:bg-gray-400 rounded-lg p-2 text-black"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
