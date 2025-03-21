@@ -255,13 +255,13 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
           <div className="absolute inset-0 bg-black opacity-50"></div>
           <div
             ref={modalRef}
-            className="bg-white p-4 rounded-lg w-[90%] relative z-10"
+            className="bg-white dark:bg-dark p-4 rounded-lg w-[90%] relative z-10"
           >
             <div className="flex justify-between">
               <h4 className="text-xl"> Play Trailer</h4>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="text-black text-2xl font-bold pb-5 cursor-pointer hover:text-red-hover"
+                className="text-2xl font-bold pb-5 cursor-pointer hover:text-red-hover"
               >
                 <FaWindowClose />
               </button>

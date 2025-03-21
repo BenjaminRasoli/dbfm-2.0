@@ -148,9 +148,9 @@ function Page() {
     <>
       <title>DBFM | Login</title>
 
-      <div className="flex items-center p-6 justify-center min-h-screen bg-gray">
+      <div className="flex items-center p-6 justify-center min-h-screen ">
         {!user && (
-          <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-xl">
+          <div className="w-full max-w-md bg-white dark:bg-dark-2 p-8 rounded-lg shadow-xl">
             <div className="relative flex items-center mb-4 w-full">
               <h3 className="text-lg  text-blue absolute left-0 hover:text-blue-hover">
                 <Link className="flex items-center" href="/">
@@ -158,14 +158,14 @@ function Page() {
                   Back
                 </Link>
               </h3>
-              <h2 className="text-2xl font-bold text-black mx-auto">Login</h2>
+              <h2 className="text-2xl font-bold  mx-auto">Login</h2>
             </div>
 
             <form onSubmit={handleLogin} noValidate>
               <div className="mb-4">
                 <label
                   htmlFor="email"
-                  className="block text-sm font-semibold text-black mb-2"
+                  className="block text-sm font-semibold  mb-2"
                 >
                   Email
                 </label>
@@ -188,7 +188,7 @@ function Page() {
               <div className="mb-6">
                 <label
                   htmlFor="password"
-                  className="block text-sm font-semibold text-black mb-2"
+                  className="block text-sm font-semibold  mb-2"
                 >
                   Password
                 </label>
@@ -223,7 +223,7 @@ function Page() {
 
               <button
                 type="submit"
-                className="cursor-pointer w-full py-3 bg-blue hover:bg-blue-hover rounded-md text-white  transition duration-200"
+                className="cursor-pointer w-full py-3 bg-blue hover:bg-blue-hover rounded-md text-white transition duration-200"
               >
                 Login
               </button>
@@ -232,7 +232,7 @@ function Page() {
             <div className="mt-4 text-center">
               <button
                 onClick={() => handleSocialLogin(googleProvider)}
-                className="cursor-pointer w-full py-3 bg-white text-black border-2 border-gray-300 rounded-md hover:bg-gray-200 transition duration-200 flex items-center justify-center gap-2"
+                className="cursor-pointer w-full py-3 bg-white dark:bg-dark border-2 border-gray-300 rounded-md dark:hover:bg-gray-700 hover:bg-gray-200 transition duration-200 flex items-center justify-center gap-2"
               >
                 <FaGoogle /> Login with Google
               </button>
@@ -241,14 +241,14 @@ function Page() {
             <div className="mt-4 text-center">
               <button
                 onClick={() => handleSocialLogin(githubProvider)}
-                className="cursor-pointer w-full py-3 bg-white text-black border-2 border-gray-300 rounded-md hover:bg-gray-200 transition duration-200 flex items-center justify-center gap-2"
+                className="cursor-pointer w-full py-3 bg-white dark:bg-dark border-2 border-gray-300 rounded-md dark:hover:bg-gray-700 hover:bg-gray-200 transition duration-200 flex items-center justify-center gap-2"
               >
                 <FaGithub /> Login with GitHub
               </button>
             </div>
 
             <div className="mt-4 text-center">
-              <span className="text-sm text-black">Dont have an account? </span>
+              <span className="text-sm">Dont have an account? </span>
               <Link href="/register" className="text-blue hover:underline">
                 Sign up
               </Link>

@@ -73,7 +73,7 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
 
   return (
     <div className="p-7">
-      <section className="border-b-1 border-gray-600">
+      <section className="border-b-1 border-gray-600 dark:border-gray-800">
         {genreName && (
           <h1 className="text-3xl max-w-xl text-blue pb-5">
             {genreName} Movies
