@@ -64,7 +64,7 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
   }
 
   return (
-    <div className="min-h-screen bg-gray">
+    <div className="min-h-screen">
       <div className="p-7 max-w-[300px] sm:max-w-[570px] md:max-w-[550px] custom:max-w-[950px] mx-auto rounded-lg flex flex-col lg:flex-row">
         <Image
           src={
@@ -78,20 +78,18 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
           width={700}
         />
         <div className="flex-1">
-          <h1 className="text-4xl font-bold text-black">
-            {actor.name || "Unknown name"}
-          </h1>
-          <p className="mt-4 text-lg text-black">
+          <h1 className="text-4xl font-bold">{actor.name || "Unknown name"}</h1>
+          <p className="mt-4 text-lg">
             <strong>Biography:</strong> {actor.biography || "Unknown biography"}
           </p>
-          <p className="mt-2 text-lg text-black">
+          <p className="mt-2 text-lg">
             <strong>Birthday:</strong> {actor.birthday || "Unknown birthday"}
           </p>
-          <p className="mt-2 text-lg text-black">
+          <p className="mt-2 text-lg">
             <strong>Place of Birth:</strong>{" "}
             {actor.place_of_birth || "Unknown place of birth"}
           </p>
-          <p className="mt-2 text-lg text-black">
+          <p className="mt-2 text-lg">
             <strong>Known For:</strong>{" "}
             {actor.known_for_department || "Unknown"}
           </p>
@@ -99,14 +97,14 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
       </div>
 
       <div className="p-7 max-w-[300px] sm:max-w-[570px] md:max-w-[550px] custom:max-w-[950px] mx-auto">
-        <h2 className="text-2xl font-semibold text-black">
+        <h2 className="text-2xl font-semibold ">
           Movies and TV Shows Featuring {actor.name}
         </h2>
         <div className="flex overflow-auto gap-6 py-6 mt-6">
           {actorKnownFor && actorKnownFor.length > 0 ? (
             actorKnownFor.map((credit: ActorKnownForTypes) => (
               <Link href={`/${credit.media_type}/${credit.id}`} key={credit.id}>
-                <div className="w-40 flex-shrink-0 bg-blue min-h-[350px] text-white rounded-lg shadow-md overflow-hidden">
+                <div className="w-40 flex-shrink-0 bg-blue min-h-[350px]  rounded-lg shadow-md overflow-hidden">
                   <Image
                     src={`https://image.tmdb.org/t/p/original${credit.poster_path}`}
                     alt={credit.title || credit.name}

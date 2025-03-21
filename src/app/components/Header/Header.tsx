@@ -8,10 +8,13 @@ import Link from "next/link";
 import { useUser } from "@/app/context/UserProvider";
 import { handleOutsideClick } from "@/app/utils/HandleOutsideClick";
 
+import ThemeSwitch from "../ThemeSwitch/ThemeSwitch";
+
 function Header() {
   const [searchWord, setSearchWord] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const modalRef = useRef<HTMLDivElement>(null);
+
   const router = useRouter();
   const { user, logout } = useUser();
 
@@ -37,7 +40,7 @@ function Header() {
   }, []);
 
   return (
-    <header className="p-6  border-b-1 border-gray-600 text-dark sticky top-0 z-20 bg-white">
+    <header className="py-6 px-1 border-b-1 border-gray-600 dark:border-gray-800 sticky top-0 z-20 bg-white dark:bg-dark ">
       <div className="flex items-center justify-between">
         <form className="flex items-center gap-5">
           <button type="submit" onClick={handleSearch}>
@@ -45,8 +48,8 @@ function Header() {
           </button>
           <input
             type="text"
-            className="outline-none w-32 lg:w-96 text-dark"
-            placeholder="Search anything..."
+            className="outline-none w-32 lg:w-96"
+            placeholder="Search..."
             value={searchWord}
             maxLength={50}
             onChange={(e) => setSearchWord(e.target.value)}
@@ -59,7 +62,7 @@ function Header() {
               <h3 className="hidden sm:block">{user.userName}</h3>
               <div
                 onClick={() => setIsModalOpen(true)}
-                className="flex hover:border-2 hover:border-black items-center justify-center w-12 h-12 rounded-full bg-blue text-white text-xl cursor-pointer"
+                className="flex hover:border-2  hover:border-dark dark:hover:border-white items-center justify-center w-12 h-12 rounded-full bg-blue text-white text-xl cursor-pointer"
               >
                 {user.photoURL ? (
                   <Image
@@ -77,7 +80,7 @@ function Header() {
               {isModalOpen && (
                 <div
                   ref={modalRef}
-                  className="absolute top-[60px] right-0 w-48 bg-white border border-gray-600 shadow-md p-4 rounded-lg"
+                  className="absolute top-[60px] right-0 w-48 bg-white dark:bg-dark shadow-md p-4 rounded-lg"
                 >
                   <h3 className="pb-4">{user.userName}</h3>
 
@@ -86,7 +89,7 @@ function Header() {
                       logout();
                       setIsModalOpen(false);
                     }}
-                    className="bg-red hover:bg-red-hover text-white rounded-lg w-full p-2 flex items-center gap-2 text-sm cursor-pointer"
+                    className="bg-red hover:bg-red-hover  rounded-lg w-full p-2 flex items-center gap-2 text-sm cursor-pointer"
                   >
                     Logout <IoIosLogOut />
                   </button>
@@ -105,6 +108,7 @@ function Header() {
               Login
             </Link>
           )}
+          <ThemeSwitch />
         </div>
       </div>
     </header>

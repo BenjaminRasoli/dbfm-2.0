@@ -214,19 +214,19 @@ function MediaCard({ media, loading }: MediaCardTypes) {
                         <span className="text-yellow-400">
                           <RiStarSFill size={20} />
                         </span>
-                        <span className="ml-1 text-sm text-dark">
+                        <span className="ml-1 text-sm ">
                           {media.vote_average || 0}
                         </span>
                       </div>
                     )}
 
                     <div className="mt-2">
-                      <h3 className="text-xl font-semibold text-dark overflow-hidden text-ellipsis whitespace-nowrap">
+                      <h3 className="text-xl font-semibold  overflow-hidden text-ellipsis whitespace-nowrap">
                         {media.title || media.name || "Unknown name"}
                       </h3>
                     </div>
 
-                    <p className="text-dark">
+                    <p className="">
                       {media.media_type !== "person" &&
                         (media.release_date ||
                           media.first_air_date ||
@@ -264,11 +264,11 @@ function MediaCard({ media, loading }: MediaCardTypes) {
 
           <div
             ref={modalRef}
-            className="bg-white w-[300px] h-[200px] flex flex-col rounded-lg shadow-lg p-6 relative z-[55]"
+            className="bg-white dark:bg-dark w-[300px] h-[200px] flex flex-col rounded-lg shadow-lg p-6 relative z-[55]"
           >
             <button
               onClick={() => setIsModalOpen(false)}
-              className="absolute top-2 right-2 cursor-pointer text-black hover:text-red-hover"
+              className="absolute top-2 right-2 cursor-pointer hover:text-red-hover"
             >
               <FaWindowClose size={24} />
             </button>
@@ -303,11 +303,11 @@ function MediaCard({ media, loading }: MediaCardTypes) {
 
           <div
             ref={modalRef}
-            className="bg-white w-[300px] h-[200px] flex flex-col rounded-lg shadow-lg p-6 relative z-[55]"
+            className="bg-white dark:bg-dark w-[300px] h-[200px] flex flex-col rounded-lg shadow-lg p-6 relative z-[55]"
           >
             <button
               onClick={handleCancel}
-              className="absolute top-2 right-2 cursor-pointer text-black hover:text-red-hover"
+              className="absolute top-2 right-2 cursor-pointer  hover:text-red-hover"
             >
               <FaWindowClose size={24} />
             </button>
@@ -316,7 +316,10 @@ function MediaCard({ media, loading }: MediaCardTypes) {
               {/* eslint-disable-next-line react/no-unescaped-entities */}
               Are you sure you want to remove "
               {/* eslint-disable-next-line react/no-unescaped-entities */}
-              {itemToRemove.title || itemToRemove.name}" from your favorites?
+              <span className="font-bold text-blue">
+                {itemToRemove.title || itemToRemove.name}
+              </span>
+              " from your favorites?
             </p>
             <div className="flex justify-between px-5 gap-2">
               <button

@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @plugin 'tailwind-scrollbar';
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   --color-white: #ffffff;
@@ -16,6 +17,8 @@
   --color-yellow: #fbbf24;
   --color-green: #28a745;
   --color-gray: #f7fafc;
+  --color-dark: #121212;
+  --color-dark-2: #1a1a1a;
   --breakpoint-custom: 78rem;
 }
 
