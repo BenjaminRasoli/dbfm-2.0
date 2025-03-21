@@ -7,7 +7,6 @@ import { IoIosLogOut } from "react-icons/io";
 import Link from "next/link";
 import { useUser } from "@/app/context/UserProvider";
 import { handleOutsideClick } from "@/app/utils/HandleOutsideClick";
-
 import ThemeSwitch from "../ThemeSwitch/ThemeSwitch";
 import { FaWindowClose } from "react-icons/fa";
 import { disableOverflow } from "@/app/utils/HandleDOM";
@@ -17,6 +16,7 @@ function Header() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState<boolean>(false);
   const modalRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const router = useRouter();
   const { user, logout } = useUser();
@@ -27,6 +27,11 @@ function Header() {
     if (searchWord.trim() !== "") {
       router.push(`/search?query=${encodeURIComponent(searchWord)}`);
     }
+
+    if (inputRef.current) {
+      inputRef.current.blur();
+    }
+
     setSearchWord("");
   };
 
@@ -49,9 +54,9 @@ function Header() {
   }, [isLogoutModalOpen]);
 
   return (
-    <header className="py-6 px-1 border-b-1 border-gray-600 dark:border-gray-800 sticky top-0 z-20 bg-white dark:bg-dark ">
+    <header className="py-6 px-3 border-b-1 border-gray-600 dark:border-gray-800 sticky top-0 z-20 bg-white dark:bg-dark">
       <div className="flex items-center justify-between">
-        <form className="flex items-center gap-5">
+        <form className="flex items-center gap-2">
           <button type="submit" onClick={handleSearch}>
             <IoIosSearch size={20} />
           </button>
@@ -60,6 +65,7 @@ function Header() {
             className="outline-none w-32 lg:w-96"
             placeholder="Search..."
             value={searchWord}
+            ref={inputRef}
             maxLength={50}
             onChange={(e) => setSearchWord(e.target.value)}
           />

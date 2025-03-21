@@ -88,7 +88,7 @@ function Page() {
 
   return (
     <div className="p-7">
-      <section className="border-b-1 border-gray-600">
+      <section className="border-b-1 border-gray-600 dark:border-gray-800">
         <div className="pb-5 flex flex-col md:flex-row max-w-[280px] md:max-w-full flex-wrap justify-between">
           <h1 className="text-blue text-3xl pb-5">Searched</h1>
           <h4 className="text-2xl max-w-[150px] md:max-w-full break-words whitespace-normal">
@@ -101,22 +101,20 @@ function Page() {
           </h4>
         </div>
 
-        {media?.length > 0 && (
-          <MovieFilters
-            activeFilter={activeFilter}
-            handleFilterChange={(value) =>
-              handleStateChange(setActiveFilter, true)(value, setPage)
-            }
-            sortOption={sortOption}
-            handleSortChange={(value) =>
-              handleStateChange(setSortOption, false)(value, setPage)
-            }
-          />
-        )}
+        <MovieFilters
+          activeFilter={activeFilter}
+          handleFilterChange={(value) =>
+            handleStateChange(setActiveFilter, true)(value, setPage)
+          }
+          sortOption={sortOption}
+          handleSortChange={(value) =>
+            handleStateChange(setSortOption, false)(value, setPage)
+          }
+        />
       </section>
       {!loading && media?.length === 0 ? (
         <div className="text-xl text-center pt-10 grid items-center justify-center">
-          <h2 className="text-dark">No Results Found</h2>
+          <h2>No Results Found</h2>
           <h2 className="text-blue">
             <Link href="/">Back Home</Link>
           </h2>

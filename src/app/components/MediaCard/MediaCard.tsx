@@ -185,6 +185,8 @@ function MediaCard({ media, loading }: MediaCardTypes) {
                   href={
                     media.media_type
                       ? `/${media.media_type}/${media.id}`
+                      : media.known_for_department
+                      ? `/person/${media.id}`
                       : `/movie/${media.id}`
                   }
                   className="block w-full h-full group"
@@ -192,13 +194,14 @@ function MediaCard({ media, loading }: MediaCardTypes) {
                   <div className="relative w-full h-[400px] overflow-hidden rounded-t-lg">
                     <Image
                       src={
-                        media.media_type !== "person"
-                          ? media.poster_path === null
-                            ? MovieTvPlaceHolder
-                            : `https://image.tmdb.org/t/p/original/${media.poster_path}`
-                          : media.profile_path === null
-                          ? PersonPlaceHolder
-                          : `https://image.tmdb.org/t/p/original/${media.profile_path}`
+                        media.media_type === "person" ||
+                        media.known_for_department
+                          ? media.profile_path === null
+                            ? PersonPlaceHolder
+                            : `https://image.tmdb.org/t/p/original/${media.profile_path}`
+                          : media.poster_path === null
+                          ? MovieTvPlaceHolder
+                          : `https://image.tmdb.org/t/p/original/${media.poster_path}`
                       }
                       alt={media.title || media.name || "Unknown title"}
                       width={700}
@@ -209,7 +212,7 @@ function MediaCard({ media, loading }: MediaCardTypes) {
                   </div>
 
                   <div className="pb-4 p-2 shadow-2xl rounded-b-lg h-[120px]">
-                    {media.media_type !== "person" && (
+                    {!media.known_for_department && (
                       <div className="flex mt-2">
                         <span className="text-yellow-400">
                           <RiStarSFill size={20} />
@@ -227,15 +230,14 @@ function MediaCard({ media, loading }: MediaCardTypes) {
                     </div>
 
                     <p className="">
-                      {media.media_type !== "person" &&
+                      {!media.known_for_department &&
                         (media.release_date ||
                           media.first_air_date ||
                           "Unknown date")}
                     </p>
                   </div>
                 </Link>
-
-                {media.media_type !== "person" && (
+                {!media.known_for_department && (
                   <div
                     className="absolute top-2 left-2 z-10 p-2 cursor-pointer bg-dark-100 text-white rounded-lg"
                     onClick={() => handleBookmarkClick(media)}

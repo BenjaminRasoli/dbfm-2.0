@@ -30,7 +30,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${roboto.variable} ${cinzel.variable} antialiased`}>
+      <body
+        className={`${roboto.variable} ${cinzel.variable} antialiased bg-white dark:bg-dark`}
+      >
         <Providers>
           <UserProvider>
             <Suspense fallback={null}>{children}</Suspense>

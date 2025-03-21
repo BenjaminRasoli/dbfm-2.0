@@ -1,4 +1,7 @@
-import { FilterButtonsTypes, FilterButtonTypes } from "@/app/Types/FilterbuttonsTypes";
+import {
+  FilterButtonsTypes,
+  FilterButtonTypes,
+} from "@/app/Types/FilterbuttonsTypes";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
 
@@ -34,6 +37,7 @@ function FilterButtons({
     },
     { label: "Movies", value: "movie" },
     { label: "TV Shows", value: "tv" },
+    { label: "Actors", value: "person" },
   ];
 
   return (

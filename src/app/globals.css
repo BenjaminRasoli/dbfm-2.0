@@ -23,8 +23,6 @@
 }
 
 body {
-  background: var(--background-light);
-  color: var(--text-dark);
   font-family: var(--font-roboto);
   margin: 0;
   padding: 0;
