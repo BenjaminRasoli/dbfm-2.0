@@ -18,6 +18,7 @@ import { TvTypes } from "@/app/Types/TvTypes";
 import { WatchResultsTypes } from "@/app/Types/WhereToWatchTypes";
 import { disableOverflow } from "@/app/utils/HandleDOM";
 import { handleOutsideClick } from "@/app/utils/HandleOutsideClick";
+import HandleFavorites from "../HandleFavorites/HandleFavorites";
 
 type MediaTypes = MovieTypes | TvTypes;
 
@@ -117,7 +118,7 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
 
   return (
     <div
-      className="relative bg-cover bg-center p-5"
+      className="relative bg-cover bg-center p-5 pt-10"
       style={{
         backgroundImage: `url('https://image.tmdb.org/t/p/original${mediaData.backdrop_path}')`,
       }}
@@ -128,12 +129,12 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
           backgroundColor: "rgba(0, 0, 0, 0.8)",
         }}
       ></div>
-      <div className="container mx-auto relative z-10 max-w-[280px] sm:max-w-[570px] md:max-w-[550px] custom:max-w-[900px]">
+      <div className="container mx-auto relative z-10 max-w-[280px] sm:max-w-[520px] md:max-w-[550px] custom:max-w-[900px]">
         <div className="flex flex-col md:flex-row items-center md:items-start">
-          <div className="mb-6 md:mb-0">
+          <div className="relative mb-6 md:mb-0">
             <Image
-              height={370}
-              width={370}
+              height={470}
+              width={470}
               src={
                 mediaData.poster_path
                   ? `https://image.tmdb.org/t/p/original${mediaData.poster_path}`
@@ -144,34 +145,39 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
                   ? mediaData.original_title
                   : mediaData.original_name
               }
-              className="rounded-lg shadow-lg"
+              className="rounded-lg shadow-lg "
             />
+            <HandleFavorites media={mediaData} />
           </div>
 
           <div className="w-full md:w-2/3 md:ml-8 text-white">
-            <div className="flex flex-col xl:flex-row xl:justify-between xl:items-center">
+            <div className="flex justify-between items-center gap-2">
               <h1 className="text-4xl font-bold mb-2 max-w-[300px]">
                 {isMovie(mediaData) ? mediaData.title : mediaData.name}
               </h1>
-              <div className="grid custom:flex">
-                <p className="text-lg">
-                  {isMovie(mediaData)
-                    ? mediaData.release_date
-                    : mediaData.first_air_date || "Unknown Date"}
-                </p>
-
-                <span className="hidden custom:block text-lg mx-2">•</span>
-                <p className="text-lg">
-                  {isMovie(mediaData)
-                    ? mediaData.runtime > 0
-                      ? mediaData.runtime + " mins"
-                      : "Unknown Runtime"
-                    : mediaData.episode_run_time[0] > 0
-                    ? mediaData.episode_run_time + " mins"
-                    : "Unknown Runtime"}
-                </p>
-              </div>
+              <h4 className="text-gray-400 opacity-80">
+                {isMovie(mediaData) ? "(Movie)" : "(Tv)"}
+              </h4>
             </div>
+            <div className="grid custom:flex">
+              <p className="text-lg">
+                {isMovie(mediaData)
+                  ? mediaData.release_date
+                  : mediaData.first_air_date || "Unknown Date"}
+              </p>
+
+              <span className="hidden custom:block text-lg mx-2">•</span>
+              <p className="text-lg">
+                {isMovie(mediaData)
+                  ? mediaData.runtime > 0
+                    ? mediaData.runtime + " mins"
+                    : "Unknown Runtime"
+                  : mediaData.episode_run_time[0] > 0
+                  ? mediaData.episode_run_time + " mins"
+                  : "Unknown Runtime"}
+              </p>
+            </div>
+
             <h1 className="text-4xl font-bold mb-6">
               {isMovie(mediaData)
                 ? mediaData.title !== mediaData.original_title &&

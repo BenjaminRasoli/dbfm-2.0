@@ -24,7 +24,7 @@ const responsive = {
 
 function Reviews({ reviews }: { reviews: ReviewTypes[] }) {
   return (
-    <div className="mt-8">
+    <div className="my-8">
       {reviews.length > 0 && (
         <>
           <h2 className="text-2xl font-bold text-white">Reviews</h2>
@@ -42,16 +42,16 @@ function Reviews({ reviews }: { reviews: ReviewTypes[] }) {
               {reviews?.map((review, index) => (
                 <div
                   key={index}
-                  className="p-5 rounded-lg text-white opacity-100 h-[300px] overflow-auto"
+                  className="rounded-lg text-white px-5 md:px-25 py-10  h-[400px] overflow-auto"
                 >
-                  <div className=" flex items-center space-x-4">
+                  <div className="flex items-center space-x-4">
                     {review.author_details.avatar_path ? (
                       <Image
-                        width={700}
-                        height={700}
+                        width={50}
+                        height={50}
                         src={`https://image.tmdb.org/t/p/original${review.author_details.avatar_path}`}
                         alt={review.author}
-                        className="rounded-full "
+                        className="rounded-full"
                       />
                     ) : (
                       <span className="text-black bg-gray-600 rounded-full p-2 w-12 h-12 flex items-center justify-center text-center">
@@ -84,7 +84,7 @@ function Reviews({ reviews }: { reviews: ReviewTypes[] }) {
                   </div>
 
                   <p
-                    className="mt-2 text-lg"
+                    className="mt-2"
                     dangerouslySetInnerHTML={{ __html: review.content }}
                   />
                 </div>

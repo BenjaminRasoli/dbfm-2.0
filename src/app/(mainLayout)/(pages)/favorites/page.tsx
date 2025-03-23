@@ -11,7 +11,6 @@ import { handleStateChange } from "@/app/utils/HandleStateChange";
 import { sortMedia } from "@/app/components/DropDown/DropDown";
 import Link from "next/link";
 
-
 function Page() {
   const { user } = useUser();
   const [favorites, setFavorites] = useState<MediaTypes[]>([]);
@@ -19,20 +18,14 @@ function Page() {
   const [loading, setLoading] = useState<boolean>(true);
   const [sortedMedia, setSortedMedia] = useState<MediaTypes[]>([]);
 
+
   const { sortOption, activeFilter, setSortOption, setActiveFilter } =
     QueryParams();
 
   useEffect(() => {
     if (user) {
       fetchFavoritesFromFirebase(user.uid);
-    } else {
-      const storedFavorites = JSON.parse(
-        localStorage.getItem("favoriteMovies") || "[]"
-      );
-      setFavorites(storedFavorites);
-      setLoading(false);
     }
-
     const handleStorageChange = () => {
       const updatedFavorites = JSON.parse(
         localStorage.getItem("favoriteMovies") || "[]"
@@ -57,7 +50,7 @@ function Page() {
       });
       setFilteredFavorites(filtered);
     }
-  }, [activeFilter, favorites]);
+  }, [favorites, activeFilter]);
 
   useEffect(() => {
     if (filteredFavorites.length > 0) {
@@ -67,9 +60,10 @@ function Page() {
       });
       setSortedMedia(sorted);
     }
-  }, [sortOption, filteredFavorites]);
+  }, [filteredFavorites, sortOption, activeFilter]);
 
   const fetchFavoritesFromFirebase = async (userId: string) => {
+    setLoading(true);
     const q = query(collection(db, "userFavoriteList", userId, "favorites"));
     try {
       const querySnapshot = await getDocs(q);
@@ -129,9 +123,15 @@ function Page() {
           />
         )}
 
-        {favorites.length === 0 ? (
+        {filteredFavorites.length <= 0 ? (
           <div className="text-xl text-center pt-10">
-            <p>No favorites yet. Start adding some</p>
+            {activeFilter === "movie" ? (
+              <p>No movies found in your favorites.</p>
+            ) : activeFilter === "tv" ? (
+              <p>No TV shows found in your favorites.</p>
+            ) : (
+              <p>No favorites yet. Start adding some</p>
+            )}
             <Link className="text-blue" href={"/"}>
               Home
             </Link>

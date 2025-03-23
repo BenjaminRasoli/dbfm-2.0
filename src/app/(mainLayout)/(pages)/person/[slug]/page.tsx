@@ -73,7 +73,7 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
               : PersonPoster
           }
           alt={actor.name}
-          className="mr-6 w-[300px] h-full object-cover rounded-lg items-start flex"
+          className="mr-6 mb-5 w-[300px] h-full object-cover rounded-lg items-start flex"
           height={700}
           width={700}
         />

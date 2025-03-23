@@ -12,7 +12,7 @@ function TopBilledActors({ actors }: { actors: ActorsTypes[] }) {
       <div className="flex overflow-x-auto mt-4 pb-4 space-x-4 max-w-full">
         {actors?.map((actor: ActorsTypes) => (
           <Link key={actor.id} href={`/person/${actor.id}`}>
-            <div className="bg-blue rounded-lg w-40 flex flex-col h-[300px]">
+            <div className="h-full bg-blue rounded-lg w-40 flex flex-col">
               <Image
                 height={700}
                 width={700}

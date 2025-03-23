@@ -11,7 +11,7 @@ function PageSelector({
   const finalTotalPages = Math.min(totalPages, MAX_PAGES);
 
   useEffect(() => {
-    if (currentPage > 500) {
+    if (currentPage > 500 || currentPage <= 0) {
       onPageChange(1);
     }
   }, [currentPage, finalTotalPages, onPageChange]);

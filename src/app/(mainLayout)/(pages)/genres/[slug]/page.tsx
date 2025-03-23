@@ -74,13 +74,10 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
   return (
     <div className="p-7">
       <section className="border-b-1 border-gray-600 dark:border-gray-800">
-        {genreName && (
           <h1 className="text-3xl max-w-xl text-blue pb-5">
-            {genreName} Movies
+            {genreName && genreName} Movies
           </h1>
-        )}
         <div className="flex justify-end">
-          {media?.length === 0 ? null : (
             <CustomDropdown
               options={["A-Z", "Date", "Rating"]}
               selectedOption={
@@ -95,7 +92,6 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
               onSelect={(newSort: string) => setSortOption(newSort)}
               sortOption={sortOption}
             />
-          )}
         </div>
       </section>
       <MediaCard media={sortedMedia} loading={loading} />

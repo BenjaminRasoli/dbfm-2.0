@@ -113,4 +113,5 @@ export interface TvTypes {
   type: string;
   vote_average: number;
   vote_count: number;
+  known_for_department?: string;
 }

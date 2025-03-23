@@ -22,3 +22,5 @@ export interface MediaTypes {
   gender?: number;
   known_for_department?: string;
 }
+
+

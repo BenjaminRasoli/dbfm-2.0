@@ -154,7 +154,7 @@ function Page() {
             <div className="relative flex items-center mb-4 w-full">
               <h3 className="text-lg  text-blue absolute left-0 hover:text-blue-hover">
                 <Link className="flex items-center" href="/">
-                  <IoIosArrowRoundBack />
+                  <IoIosArrowRoundBack size={20} />
                   Back
                 </Link>
               </h3>

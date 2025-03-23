@@ -179,11 +179,11 @@ function Page() {
             <div className="relative flex items-center mb-4 w-full">
               <h3 className="text-lg text-blue absolute left-0 hover:text-blue-hover">
                 <Link className="flex items-center" href="/">
-                  <IoIosArrowRoundBack />
+                  <IoIosArrowRoundBack size={20} />
                   Back
                 </Link>
               </h3>
-              <h2 className="text-2xl font-bold mx-auto">Login</h2>
+              <h2 className="text-2xl font-bold mx-auto">Register</h2>
             </div>
 
             <form onSubmit={handleRegister} noValidate>

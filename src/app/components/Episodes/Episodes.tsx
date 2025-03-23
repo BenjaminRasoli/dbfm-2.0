@@ -75,6 +75,7 @@ function Episodes({
                 ? "cursor-not-allowed opacity-50 bg-red"
                 : "hover:bg-blue-hover"
             }`}
+            onClick={(e) => isFirstSeason && e.preventDefault()}
           >
             Previous Season
           </Link>
@@ -86,6 +87,7 @@ function Episodes({
                 ? "cursor-not-allowed opacity-50 bg-red"
                 : "hover:bg-blue-hover"
             }`}
+            onClick={(e) => isLastSeason && e.preventDefault()}
           >
             Next Season
           </Link>
@@ -96,42 +98,42 @@ function Episodes({
             {episodes.name || "Unknown Name"}
           </h2>
           <p className="text-lg">
-            Total Episodes: {episodes.episodes.length || 0}
+            Total Episodes: {episodes.episodes?.length || 0}
           </p>
         </div>
 
         <div className="mt-10 pb-5 flex overflow-auto gap-6">
-          {episodes?.episodes.map((episode: EpisodeTypes) => (
+          {episodes.episodes?.map((episode: EpisodeTypes) => (
             <div
               key={episode.id}
               className="bg-blue rounded-lg overflow-hidden shadow-lg flex-shrink-0 w-[250px] sm:w-[320px] flex flex-col"
             >
               <Image
                 src={
-                  episode.still_path
+                  episode?.still_path
                     ? `https://image.tmdb.org/t/p/original${episode.still_path}`
                     : EpisodePlaceHolder
                 }
-                alt={episode.name}
+                alt={episode?.name}
                 className="w-full h-48 object-cover"
                 height={700}
                 width={700}
               />
               <div className="p-4 text-xl font-semibold text-white flex flex-col flex-grow">
                 <div className="flex justify-between items-center">
-                  <h3>EP {episode.episode_number || 0}</h3>
+                  <h3>EP {episode?.episode_number || 0}</h3>
                   <span className="text-yellow mr-2 flex items-center gap-1">
                     <RiStarSFill /> {episode.vote_average || 0}
                   </span>
                 </div>
-                <h3>{episode.name}</h3>
+                <h3>{episode?.name}</h3>
                 <p className="text-sm text-white">
-                  {episode.overview || "No Overview"}
+                  {episode?.overview || "No Overview"}
                 </p>
 
                 <div className="text-white mt-auto">
-                  <p>Runtime: {episode.runtime || 0} min</p>
-                  <p>Air Date: {episode.air_date || 0}</p>
+                  <p>Runtime: {episode?.runtime || 0} min</p>
+                  <p>Air Date: {episode?.air_date || 0}</p>
                 </div>
               </div>
             </div>

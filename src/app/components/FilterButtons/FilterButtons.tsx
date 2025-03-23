@@ -36,12 +36,15 @@ function FilterButtons({
       value: pathname === "/search" ? "multi" : "all",
     },
     { label: "Movies", value: "movie" },
-    { label: "TV Shows", value: "tv" },
-    { label: "Actors", value: "person" },
+    { label: "Tv", value: "tv" },
   ];
 
+  if (pathname !== "/favorites") {
+    filterOptions.push({ label: "Actors", value: "person" });
+  }
+
   return (
-    <div className="flex gap-5">
+    <div className="flex gap-2 w-[125px] custom2:w-[200px] custom2:gap-5 overflow-auto">
       {filterOptions.map((filter) => (
         <FilterButton
           key={filter.value}

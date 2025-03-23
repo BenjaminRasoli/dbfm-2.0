@@ -6,17 +6,20 @@ import { TvTypes } from "@/app/Types/TvTypes";
 function Seasons({ mediaData }: { mediaData: TvTypes }) {
   return (
     <div className="mt-9">
-      <h1 className="text-2xl font-bold text-white">Seasons:</h1>
+      <h1 className="text-2xl font-bold text-white">
+        Seasons: {mediaData.number_of_seasons}
+      </h1>
       <h1 className="text-2xl font-bold text-white mb-4">
         Total Episodes: {mediaData.number_of_episodes || 0}
       </h1>
       <div className="flex overflow-auto max-w-[900px] gap-4">
         {mediaData.seasons.map((season) => (
           <Link
+            className="pb-4"
             key={season.id}
             href={`/tv/${mediaData.id}/season/${season.season_number}`}
           >
-            <div className="bg-blue min-w-[230px] rounded-lg p-2 mb-4">
+            <div className="h-full bg-blue min-w-[230px] rounded-lg p-2 pb-4">
               <div className="relative">
                 <Image
                   src={

@@ -1,14 +1,16 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { MdErrorOutline } from "react-icons/md";
 import { IoIosArrowRoundBack, IoIosCheckbox } from "react-icons/io";
 import { auth } from "../../../config/FireBaseConfig";
 import Link from "next/link";
+import { useUser } from "@/app/context/UserProvider";
 
 function Page() {
   const router = useRouter();
+  const { user } = useUser();
 
   const [email, setEmail] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
@@ -37,6 +39,12 @@ function Page() {
     }
   };
 
+  useEffect(() => {
+    if (user) {
+      router.push("/");
+    }
+  }, [user, router]);
+
   return (
     <>
       <title>DBFM | Forgot Password</title>
@@ -45,7 +53,7 @@ function Page() {
           <div className="relative flex items-center mb-4 w-full">
             <h3 className="text-lg  text-blue absolute left-0 hover:text-blue-hover">
               <Link className="flex items-center" href="/login">
-                <IoIosArrowRoundBack />
+                <IoIosArrowRoundBack size={20} />
                 Back
               </Link>
             </h3>
