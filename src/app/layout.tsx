@@ -1,9 +1,11 @@
 import { Roboto, Cinzel } from "next/font/google";
 import { UserProvider } from "./context/UserProvider";
-import "./globals.css";
+import { ClipLoader } from "react-spinners";
 import { Metadata } from "next";
 import { Suspense } from "react";
 import { Providers } from "./context/ThemeProvider";
+import Footer from "./components/Footer/Footer";
+import "./globals.css";
 
 const roboto = Roboto({
   variable: "--font-roboto",
@@ -31,11 +33,20 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${roboto.variable} ${cinzel.variable} antialiased bg-white dark:bg-dark`}
+        className={`${roboto.variable} ${cinzel.variable} antialiased bg-white dark:bg-dark flex flex-col`}
       >
         <Providers>
           <UserProvider>
-            <Suspense fallback={null}>{children}</Suspense>
+            <Suspense
+              fallback={
+                <div className="min-h-[100dvh] flex justify-center items-center">
+                  <ClipLoader color="#2d99ff" size={60} />
+                </div>
+              }
+            >
+              {children}
+            </Suspense>
+            <Footer />
           </UserProvider>
         </Providers>
       </body>
