@@ -24,7 +24,7 @@ function LoginModal({ isModalOpen, setIsModalOpen }: LoginModalTypes) {
     return () => {
       document.removeEventListener("mousedown", handleClick);
     };
-  }, []);
+  }, [setIsModalOpen]);
 
   return (
     <>

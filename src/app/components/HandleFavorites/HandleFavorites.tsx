@@ -103,8 +103,6 @@ function HandleFavorites({ media }: FavoriteTypes) {
             "favoriteMovies",
             JSON.stringify(updatedFavorites)
           );
-          console.log(updatedFavorites);
-
           setFavorites(updatedFavorites);
         }
       } catch (error) {
@@ -131,13 +129,10 @@ function HandleFavorites({ media }: FavoriteTypes) {
         );
 
         await deleteDoc(favoriteRef);
-        console.log(favorites);
         const updatedFavorites = favorites.filter(
           (favorite) => favorite.id !== itemToRemove.id
         );
         setFavorites(updatedFavorites);
-        console.log(updatedFavorites);
-
         localStorage.setItem(
           "favoriteMovies",
           JSON.stringify(updatedFavorites)

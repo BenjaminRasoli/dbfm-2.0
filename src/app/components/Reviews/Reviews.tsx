@@ -42,9 +42,9 @@ function Reviews({ reviews }: { reviews: ReviewTypes[] }) {
               {reviews?.map((review, index) => (
                 <div
                   key={index}
-                  className="rounded-lg text-white px-5 md:px-25 py-10  h-[400px] overflow-auto"
+                  className="rounded-lg text-white px-5 md:px-25 py-10 mx-auto max-h-[350px] overflow-auto"
                 >
-                  <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-4 ">
                     {review.author_details.avatar_path ? (
                       <Image
                         width={50}

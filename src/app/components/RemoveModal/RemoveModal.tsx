@@ -26,7 +26,7 @@ function RemoveModal({
     return () => {
       document.removeEventListener("mousedown", handleClick);
     };
-  }, []);
+  }, [setIsConfirmModalOpen]);
 
   const handleRemoveConfirmation = async () => {
     if (itemToRemove) {

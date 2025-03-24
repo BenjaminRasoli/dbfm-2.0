@@ -15,9 +15,11 @@ function SingleSkeletonLoader({ mediaData }: { mediaData: MediaTypes | null }) {
           <div className="w-full  md:ml-10 text-white">
             <div className="mb-4 flex justify-between">
               <div className="w-2/4 h-8 bg-gray-300 animate-pulse rounded-md" />
-              <div className="w-1/4 h-8 bg-gray-300 animate-pulse rounded-md" />
+              <div className="w-1/6 h-8 bg-gray-300 animate-pulse rounded-md" />
             </div>
+
             <div className="grid custom:flex items-center mb-4 space-y-2 md:space-y-0 md:grid-cols-3"></div>
+            <div className="w-1/4 h-6 bg-gray-300 animate-pulse rounded-md" />
             <div className="w-1/4 h-6 bg-gray-300 animate-pulse rounded-md mb-4 mt-10" />
             <div className="w-12 h-12 bg-gray-300 animate-pulse mb-4 rounded-full" />
             <div className="w-1/4 h-6 bg-gray-300 animate-pulse rounded-md mb-4" />
