@@ -18,7 +18,6 @@ function Page() {
   const [loading, setLoading] = useState<boolean>(true);
   const [sortedMedia, setSortedMedia] = useState<MediaTypes[]>([]);
 
-
   const { sortOption, activeFilter, setSortOption, setActiveFilter } =
     QueryParams();
 
@@ -26,22 +25,10 @@ function Page() {
     if (user) {
       fetchFavoritesFromFirebase(user.uid);
     }
-    const handleStorageChange = () => {
-      const updatedFavorites = JSON.parse(
-        localStorage.getItem("favoriteMovies") || "[]"
-      );
-      setFavorites(updatedFavorites);
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
   }, [user]);
 
   useEffect(() => {
-    if (favorites.length > 0) {
+    if (favorites.length >= 0) {
       const filtered = favorites.filter((x) => {
         if (activeFilter && activeFilter !== "all") {
           return x.media_type === activeFilter;
@@ -53,7 +40,7 @@ function Page() {
   }, [favorites, activeFilter]);
 
   useEffect(() => {
-    if (filteredFavorites.length > 0) {
+    if (filteredFavorites.length >= 0) {
       const sorted = sortMedia({
         sortType: sortOption,
         media: filteredFavorites,
@@ -67,10 +54,33 @@ function Page() {
     const q = query(collection(db, "userFavoriteList", userId, "favorites"));
     try {
       const querySnapshot = await getDocs(q);
-      const fetchedFavorites: MediaTypes[] = querySnapshot.docs.map((doc) => {
-        const data = doc.data();
-        return data as MediaTypes;
-      });
+      const fetchedFavoritesList: MediaTypes[] = querySnapshot.docs.map(
+        (doc) => {
+          const data = doc.data();
+          return data as MediaTypes;
+        }
+      );
+
+      const favoriteRequests = fetchedFavoritesList.map(
+        async (media: MediaTypes) => {
+          if (!media.media_type) {
+            if (media.title) {
+              media.media_type = "movie";
+            } else if (media.name) {
+              media.media_type = "tv";
+            }
+          }
+          const url = `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getFavorites?media_type=${media.media_type}&id=${media.id}`;
+          const res = await fetch(url);
+          const data = await res.json();
+          return {
+            ...data,
+            media_type: media.media_type,
+          };
+        }
+      );
+
+      const fetchedFavorites = await Promise.all(favoriteRequests);
       setFavorites(fetchedFavorites);
     } catch (error) {
       console.error("Error fetching favorites: ", error);
@@ -123,7 +133,7 @@ function Page() {
           />
         )}
 
-        {filteredFavorites.length <= 0 ? (
+        {filteredFavorites.length === 0 ? (
           <div className="text-xl text-center pt-10">
             {activeFilter === "movie" ? (
               <p>No movies found in your favorites.</p>
@@ -137,7 +147,12 @@ function Page() {
             </Link>
           </div>
         ) : (
-          <MediaCard media={sortedMedia} loading={loading} />
+          <MediaCard
+            media={sortedMedia}
+            loading={loading}
+            favorites={favorites}
+            setFavorites={setFavorites}
+          />
         )}
       </div>
     </>

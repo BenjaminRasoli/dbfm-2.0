@@ -65,7 +65,7 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
 
   return (
     <div className="min-h-screen">
-      <div className="p-7 max-w-[300px] sm:max-w-[570px] md:max-w-[550px] custom:max-w-[950px] mx-auto rounded-lg flex flex-col lg:flex-row">
+      <div className="p-7 max-w-[350px] sm:max-w-[570px] md:max-w-[550px] custom:max-w-[950px] mx-auto rounded-lg flex flex-col lg:flex-row">
         <Image
           src={
             actor.profile_path
@@ -96,7 +96,7 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
         </div>
       </div>
 
-      <div className="p-7 max-w-[300px] sm:max-w-[570px] md:max-w-[550px] custom:max-w-[950px] mx-auto">
+      <div className="p-7 max-w-[350px] sm:max-w-[570px] md:max-w-[550px] custom:max-w-[950px] mx-auto">
         <h2 className="text-2xl font-semibold ">
           Movies and TV Shows Featuring {actor.name}
         </h2>
@@ -104,7 +104,7 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
           {actorKnownFor && actorKnownFor.length > 0 ? (
             actorKnownFor.map((credit: ActorKnownForTypes) => (
               <Link href={`/${credit.media_type}/${credit.id}`} key={credit.id}>
-                <div className="w-40 flex-shrink-0 bg-blue min-h-[350px]  rounded-lg shadow-md overflow-hidden">
+                <div className="w-40 flex-shrink-0 bg-blue min-h-[350px] h-full rounded-lg shadow-md overflow-hidden">
                   <Image
                     src={`https://image.tmdb.org/t/p/original${credit.poster_path}`}
                     alt={credit.title || credit.name}
@@ -116,7 +116,7 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
                     <h3 className="text-lg font-semibold">
                       {credit.title || credit.name}
                     </h3>
-                    <p className="text-sm ">Character: {credit.character}</p>
+                    <p className="text-sm pb-2">Character: {credit.character}</p>
                   </div>
                 </div>
               </Link>

@@ -53,7 +53,7 @@ function Page() {
         );
         const data = await movieRes.json();
 
-        const updatedResults = data.results.map((item: any) => ({
+        const updatedResults = data.results.map((item: MediaTypes) => ({
           ...item,
           ...(activeFilter === "movie" || activeFilter === "tv"
             ? { media_type: activeFilter }
@@ -64,7 +64,7 @@ function Page() {
         setTotalPages(data.total_pages);
         setMedia(updatedResults);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       } finally {
         setLoading(false);
       }

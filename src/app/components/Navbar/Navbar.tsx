@@ -77,7 +77,7 @@ function Navbar() {
       )}
 
       <div
-        className={`lg:hidden fixed top-0 left-0 w-[250px] h-full overflow-y-auto bg-white dark:bg-dark bg-opacity-50 border-r-1 border-gray-600 transform transition-transform duration-300 ease-in-out z-50 ${
+        className={`lg:hidden fixed top-0 left-0 w-[250px] h-full overflow-y-auto bg-white dark:bg-dark bg-opacity-50 border-r-1 border-gray-600 dark:border-gray-800 transform transition-transform duration-300 ease-in-out z-50 ${
           isHamburgerOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -88,7 +88,7 @@ function Navbar() {
               className={`grid  relative border-b-2 group transition-all duration-300 ${
                 pathname === "/"
                   ? "border-blue-500 text-blue-500"
-                  : "border-gray-600"
+                  : "border-gray-600 dark:border-gray-800"
               }`}
             >
               Home
@@ -98,7 +98,7 @@ function Navbar() {
               className={`grid  relative border-b-2 group transition-all duration-300 ${
                 pathname === "/favorites"
                   ? "border-blue-500 text-blue-500"
-                  : "border-gray-600"
+                  : "border-gray-600 dark:border-gray-800"
               }`}
             >
               Favorites
@@ -111,7 +111,7 @@ function Navbar() {
                 className={`grid  relative border-b-2 group transition-all duration-300 ${
                   pathname === `/genres/${genre.id}`
                     ? "border-blue-500 text-blue-500"
-                    : "border-gray-600"
+                    : "border-gray-600 dark:border-gray-800"
                 }`}
               >
                 {genre.name}
@@ -156,7 +156,7 @@ function Navbar() {
             className={`grid  relative border-b-2 group transition-all duration-300 ${
               pathname === "/favorites"
                 ? "border-blue text-blue"
-                : "hover:border-blue hover:text-blue border-gray-600"
+                : "hover:border-blue hover:text-blue border-gray-600 dark:border-gray-800"
             }`}
           >
             Favorites
@@ -169,7 +169,7 @@ function Navbar() {
               className={`grid  relative border-b-2 group transition-all duration-300 ${
                 pathname === `/genres/${genre.id}`
                   ? "border-blue text-blue"
-                  : "hover:border-blue hover:text-blue border-gray-600 "
+                  : "hover:border-blue hover:text-blue border-gray-600 dark:border-gray-800"
               }`}
             >
               {genre.name}

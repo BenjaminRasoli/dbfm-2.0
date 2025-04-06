@@ -14,9 +14,12 @@ import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import RemoveModal from "../RemoveModal/RemoveModal";
 import LoginModal from "../LoginModal/LoginModal";
 import { FavoriteTypes } from "../../Types/FavoritesTypes";
+import { MediaTypes } from "@/app/Types/MediaTypes";
+import { MovieTypes } from "@/app/Types/MovieTypes";
+import { TvTypes } from "@/app/Types/TvTypes";
 
-function HandleFavorites({ media }: FavoriteTypes) {
-  const [favorites, setFavorites] = useState<any[]>([]);
+function HandleFavorites({ media, favorites, setFavorites }: FavoriteTypes) {
+  const [localFavorites, setLocalFavorites] = useState<MediaTypes[]>([]);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [hoveredItemId, setHoveredItemId] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -24,32 +27,48 @@ function HandleFavorites({ media }: FavoriteTypes) {
 
   const { user } = useUser();
 
-  const fetchFavoritesFromFirebase = async (userId: string) => {
-    const q = query(collection(db, "userFavoriteList", userId, "favorites"));
-    try {
-      const querySnapshot = await getDocs(q);
-      const fetchedFavorites = querySnapshot.docs.map((doc) => doc.data());
-      setFavorites(fetchedFavorites);
-      localStorage.setItem("favoriteMovies", JSON.stringify(fetchedFavorites));
-    } catch (error) {
-      console.error("Error fetching favorites: ", error);
-      setFavorites([]);
-    }
-  };
-
   useEffect(() => {
-    if (user) {
+    const fetchFavoritesFromFirebase = async (userId: string) => {
+      const q = query(collection(db, "userFavoriteList", userId, "favorites"));
+      try {
+        const querySnapshot = await getDocs(q);
+        const fetchedFavorites: MediaTypes[] = querySnapshot.docs.map((doc) => {
+          const data = doc.data();
+          return data as MediaTypes;
+        });
+        if (setFavorites) {
+          setFavorites(fetchedFavorites);
+        }
+
+        if (!favorites) {
+          setLocalFavorites(fetchedFavorites);
+        }
+      } catch (error) {
+        console.error("Error fetching favorites: ", error);
+        if (setFavorites) {
+          setFavorites([]);
+        }
+      }
+    };
+
+    if (user && !favorites) {
       fetchFavoritesFromFirebase(user.uid);
     }
-  }, [user]);
+  }, [user, favorites, setFavorites]);
 
-  const handleBookmarkClick = async (media: any) => {
+  function isMediaType(
+    media: MovieTypes | TvTypes | MediaTypes
+  ): media is MediaTypes {
+    return (media as MediaTypes).id !== undefined;
+  }
+
+  const handleBookmarkClick = async (media: MediaTypes) => {
     if (!user) {
       setIsModalOpen(true);
       return;
     } else if (user) {
       try {
-        const isAlreadyInFavorites = favorites.some(
+        const isAlreadyInFavorites = (favorites ?? localFavorites)?.some(
           (favorite) => favorite.id === media.id
         );
 
@@ -70,40 +89,25 @@ function HandleFavorites({ media }: FavoriteTypes) {
           setItemToRemove(media);
           setIsConfirmModalOpen(true);
         } else {
-          await setDoc(favoriteRef, {
+          const updatedFavorite = {
             id: media.id,
             title: media.title || null,
             name: media.name || null,
-            release_date: media.release_date || null,
-            first_air_date: media.first_air_date || null,
-            vote_average: media.vote_average || 0,
-            poster_path: media.poster_path || null,
             media_type: media.media_type || null,
-          });
-
-          const currentFavorites = JSON.parse(
-            localStorage.getItem("favoriteMovies") || "[]"
-          );
-
-          const updatedFavorites = [
-            ...currentFavorites,
-            {
-              id: media.id,
-              title: media.title,
-              name: media.name,
-              release_date: media.release_date,
-              first_air_date: media.first_air_date,
-              vote_average: media.vote_average,
-              poster_path: media.poster_path,
-              media_type: media.media_type,
-            },
-          ];
-
-          localStorage.setItem(
-            "favoriteMovies",
-            JSON.stringify(updatedFavorites)
-          );
-          setFavorites(updatedFavorites);
+          };
+          await setDoc(favoriteRef, updatedFavorite);
+          if (setFavorites) {
+            setFavorites((prevFavorites: any) => [
+              ...prevFavorites,
+              updatedFavorite,
+            ]);
+          }
+          if (!favorites) {
+            setLocalFavorites((prevFavorites: any) => [
+              ...prevFavorites,
+              updatedFavorite,
+            ]);
+          }
         }
       } catch (error) {
         console.error("Error adding/removing movie to/from favorites:", error);
@@ -111,7 +115,9 @@ function HandleFavorites({ media }: FavoriteTypes) {
     }
   };
 
-  const handleRemoveFavorite = async (media: any) => {
+  const handleRemoveFavorite = async (
+    media: MovieTypes | TvTypes | MediaTypes
+  ) => {
     setItemToRemove(media);
     if (itemToRemove) {
       try {
@@ -129,16 +135,17 @@ function HandleFavorites({ media }: FavoriteTypes) {
         );
 
         await deleteDoc(favoriteRef);
-        const updatedFavorites = favorites.filter(
+        const updatedFavorites = (favorites ?? localFavorites)?.filter(
           (favorite) => favorite.id !== itemToRemove.id
         );
-        setFavorites(updatedFavorites);
-        localStorage.setItem(
-          "favoriteMovies",
-          JSON.stringify(updatedFavorites)
-        );
-
-        window.dispatchEvent(new Event("storage"));
+        if (setFavorites) {
+          setFavorites(updatedFavorites as MediaTypes[]);
+        }
+        if (!favorites) {
+          setLocalFavorites((prevFavorites) =>
+            prevFavorites.filter((favorite) => favorite.id !== itemToRemove.id)
+          );
+        }
       } catch (error) {
         console.error("Error removing movie from favorites:", error);
       }
@@ -153,11 +160,17 @@ function HandleFavorites({ media }: FavoriteTypes) {
       {!media.known_for_department && (
         <div
           className="absolute top-2 left-2 z-10 p-2 cursor-pointer bg-dark-100 text-white rounded-lg"
-          onClick={() => handleBookmarkClick(media)}
+          onClick={() => {
+            if (isMediaType(media)) {
+              handleBookmarkClick(media);
+            }
+          }}
           onMouseEnter={() => setHoveredItemId(media.id)}
           onMouseLeave={() => setHoveredItemId(null)}
         >
-          {favorites.some((favorite) => favorite.id === media.id) ? (
+          {(favorites ?? localFavorites)?.some(
+            (favorite) => favorite.id === media.id
+          ) ? (
             <FaBookmark className="text-blue" size={40} />
           ) : hoveredItemId === media.id ? (
             <FaBookmark className="text-blue" size={40} />

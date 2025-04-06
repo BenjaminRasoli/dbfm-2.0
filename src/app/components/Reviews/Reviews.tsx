@@ -34,10 +34,11 @@ function Reviews({ reviews }: { reviews: ReviewTypes[] }) {
               swipeable={true}
               draggable={true}
               ssr={true}
-              infinite={true}
+              infinite={reviews.length > 1}
               keyBoardControl={true}
               transitionDuration={500}
               renderButtonGroupOutside={true}
+              arrows={reviews.length > 1}
             >
               {reviews?.map((review, index) => (
                 <div

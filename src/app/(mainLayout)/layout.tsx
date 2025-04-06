@@ -1,5 +1,6 @@
 import Navbar from "../components/Navbar/Navbar";
 import Header from "../components/Header/Header";
+import ScrollToTopButton from "../components/ScrollToTopButton/ScrollToTopButton";
 import "../globals.css";
 
 export default function RootLayout({
@@ -14,6 +15,7 @@ export default function RootLayout({
         <Header />
         <main className="flex-1 overflow-y-auto">{children}</main>
       </div>
+      <ScrollToTopButton />
     </div>
   );
 }

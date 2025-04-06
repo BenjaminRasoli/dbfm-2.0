@@ -12,7 +12,7 @@ function Seasons({ mediaData }: { mediaData: TvTypes }) {
       <h1 className="text-2xl font-bold text-white mb-4">
         Total Episodes: {mediaData.number_of_episodes || 0}
       </h1>
-      <div className="flex overflow-auto max-w-[900px] gap-4">
+      <div className="flex overflow-auto max-w-[900px] h-full gap-4">
         {mediaData.seasons.map((season) => (
           <Link
             className="pb-4"

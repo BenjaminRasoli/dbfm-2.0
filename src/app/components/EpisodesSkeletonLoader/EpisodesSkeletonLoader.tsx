@@ -12,7 +12,6 @@ function EpisodesSkeletonLoader() {
           <div className="bg-gray-300 h-6 w-48 rounded-lg mb-2 animate-pulse"></div>
           <div className="bg-gray-300 h-6 w-64 rounded-lg animate-pulse"></div>
         </div>
-        <div className="text-6xl text-white bg-gray-300 h-12 w-72 rounded-lg animate-pulse"></div>
         <div className="mt-10 pb-5 flex  overflow-auto gap-6">
           {[...Array(5)].map((_, index) => (
             <div

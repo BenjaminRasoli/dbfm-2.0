@@ -8,7 +8,12 @@ import PersonPlaceHolder from "../../images/personposter.jpg";
 import Link from "next/link";
 import HandleFavorites from "@/app/components/HandleFavorites/HandleFavorites";
 
-function MediaCard({ media, loading }: MediaCardTypes) {
+function MediaCard({
+  media,
+  loading,
+  favorites,
+  setFavorites,
+}: MediaCardTypes) {
   return (
     <>
       <div className="grid grid-cols-1 place-items-center md:grid-cols-2 custom:grid-cols-3 2xl:grid-cols-4 gap-5 pt-10">
@@ -91,7 +96,11 @@ function MediaCard({ media, loading }: MediaCardTypes) {
                   </div>
                 </Link>
 
-                <HandleFavorites media={media} />
+                <HandleFavorites
+                  media={media}
+                  favorites={favorites}
+                  setFavorites={setFavorites}
+                />
               </div>
             ))}
       </div>

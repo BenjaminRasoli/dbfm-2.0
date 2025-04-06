@@ -330,7 +330,7 @@ function Page() {
                 onClick={() => handleSocialLogin(googleProvider)}
                 className="cursor-pointer w-full py-3 bg-white dark:bg-dark border-2 border-gray-300 rounded-md dark:hover:bg-gray-700 hover:bg-gray-200 transition duration-200 flex items-center justify-center gap-2"
               >
-                <FaGoogle /> Login with Google
+                <FaGoogle /> Regsiter with Google
               </button>
             </div>
 
@@ -339,7 +339,7 @@ function Page() {
                 onClick={() => handleSocialLogin(githubProvider)}
                 className="cursor-pointer w-full py-3 bg-white dark:bg-dark border-2 border-gray-300 rounded-md dark:hover:bg-gray-700 hover:bg-gray-200 transition duration-200 flex items-center justify-center gap-2"
               >
-                <FaGithub /> Login with GitHub
+                <FaGithub /> Regsiter with GitHub
               </button>
             </div>
 

@@ -53,7 +53,7 @@ function RemoveModal({
           ></div>
           <div
             ref={modalRef}
-            className="bg-white dark:bg-dark w-[300px] h-[200px] flex flex-col rounded-lg shadow-lg p-6 relative z-[55]"
+            className="bg-white dark:bg-dark w-[300px] min-h-[250px] flex flex-col rounded-lg shadow-lg p-6 relative z-[55]"
           >
             <button
               onClick={() => setIsConfirmModalOpen(false)}
@@ -64,7 +64,7 @@ function RemoveModal({
 
             <p className="text-lg font-semibold text-center my-auto">
               Are you sure you want to remove &quot;
-              <span className="font-bold text-blue">
+              <span className="font-bold text-blue break-words">
                 {itemToRemove.title || itemToRemove.name}
               </span>
               &quot; from your favorites?

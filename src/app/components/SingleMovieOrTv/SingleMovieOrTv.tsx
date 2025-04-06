@@ -261,7 +261,7 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
           <div className="absolute inset-0 bg-black opacity-50"></div>
           <div
             ref={modalRef}
-            className="bg-white dark:bg-dark p-4 rounded-lg w-[90%] relative z-10"
+            className="bg-white dark:bg-dark p-7 rounded-lg w-[90%] h-[90%] relative z-10"
           >
             <div className="flex justify-between">
               <h4 className="text-xl"> Play Trailer</h4>
@@ -273,8 +273,9 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
               </button>
             </div>
             <iframe
+              className="pb-5"
               width="100%"
-              height="400"
+              height="95%"
               src={trailerUrl}
               title="Trailer"
               allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
