@@ -45,7 +45,8 @@ function Episodes({
   }
 
   const isFirstSeason = hasSeasonZero ? currentSeason <= 0 : currentSeason <= 1;
-  const isLastSeason = currentSeason >= totalSeasons - 1;
+
+  const isLastSeason = currentSeason >= totalSeasons;
 
   return (
     <div

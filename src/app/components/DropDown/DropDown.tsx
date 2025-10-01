@@ -52,7 +52,7 @@ function CustomDropdown({
   }, []);
 
   return (
-    <div className="relative inline-block text-left z-10" ref={dropdownRef}>
+    <div className="relative inline-block text-left z-10 mb-2" ref={dropdownRef}>
       <button
         type="button"
         onClick={toggleDropdown}

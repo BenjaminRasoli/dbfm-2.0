@@ -35,6 +35,7 @@ export default function RootLayout({
       <body
         className={`${roboto.variable} ${cinzel.variable} antialiased bg-white dark:bg-dark flex flex-col`}
       >
+        <div id="modal-root"></div>
         <Providers>
           <UserProvider>
             <Suspense

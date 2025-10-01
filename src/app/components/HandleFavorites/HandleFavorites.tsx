@@ -157,7 +157,7 @@ function HandleFavorites({ media, favorites, setFavorites }: FavoriteTypes) {
 
   return (
     <>
-      {!media.known_for_department && (
+      {media.media_type !== "person" && media.gender == null && (
         <div
           className="absolute top-2 left-2 z-10 p-2 cursor-pointer bg-dark-100 text-white rounded-lg"
           onClick={() => {
