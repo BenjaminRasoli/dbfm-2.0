@@ -29,6 +29,7 @@ interface BelongsToCollection {
 }
 
 export interface MovieTypes {
+  gender: string;
   media_type: string;
   adult: boolean;
   backdrop_path: string;

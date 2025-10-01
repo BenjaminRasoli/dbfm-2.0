@@ -30,8 +30,7 @@ function MediaCard({
             const isImageLoaded = loadedImages[media.id] || false;
 
             const imageSrc =
-              media.media_type === "person" ||
-              media.known_for_department
+              media.media_type === "person" || media.known_for_department
                 ? media.profile_path === null
                   ? PersonPlaceHolder
                   : `https://image.tmdb.org/t/p/original/${media.profile_path}`
@@ -46,10 +45,12 @@ function MediaCard({
               : `/movie/${media.id}`;
 
             return (
-              <div
-                key={media.id}
-                className="w-[300px] h-[580px] mb-3 relative"
-              >
+              <div key={media.id} className="w-[300px] h-[580px] mb-3 relative">
+                <HandleFavorites
+                  media={media}
+                  favorites={favorites}
+                  setFavorites={setFavorites}
+                />
                 <Link href={href} className="block w-full h-full group">
                   <div className="relative w-full h-[400px] overflow-hidden rounded-t-lg">
                     {!isImageLoaded && (
@@ -75,16 +76,17 @@ function MediaCard({
 
                   <>
                     <div className="pb-4 p-2 shadow-2xl rounded-b-lg h-[120px]">
-                      {media.media_type !== "person" && (
-                        <div className="flex mt-2">
-                          <span className="text-yellow-400">
-                            <RiStarSFill size={20} />
-                          </span>
-                          <span className="ml-1 text-sm">
-                            {media.vote_average || 0}
-                          </span>
-                        </div>
-                      )}
+                      {media.media_type === "person" ||
+                        (media.gender == null && (
+                          <div className="flex mt-2">
+                            <span className="text-yellow-400">
+                              <RiStarSFill size={20} />
+                            </span>
+                            <span className="ml-1 text-sm">
+                              {media.vote_average || 0}
+                            </span>
+                          </div>
+                        ))}
 
                       <div className="mt-2">
                         <h3 className="text-xl font-semibold overflow-hidden text-ellipsis whitespace-nowrap">
@@ -92,32 +94,28 @@ function MediaCard({
                         </h3>
                       </div>
                       <div className="flex justify-between">
-                        <p>
-                          {media.media_type !== "person" &&
-                            (media.release_date ||
-                              media.first_air_date ||
-                              "Unknown date")}
-                        </p>
-                        <p className="text-gray-400 opacity-80">
-                          {media.media_type !== "person" && (
-                            <>
-                              {"("}
+                        {media.media_type !== "person" &&
+                          media.gender == null && (
+                            <p>
+                              {media.release_date ||
+                                media.first_air_date ||
+                                "Unknown date"}
+                            </p>
+                          )}
+
+                        {media.media_type !== "person" &&
+                          media.gender == null && (
+                            <p className="text-gray-400 opacity-80">
+                              (
                               {media.media_type
                                 ? media.media_type.charAt(0).toUpperCase() +
                                   media.media_type.slice(1)
                                 : "Movie"}
-                              {")"}
-                            </>
+                              )
+                            </p>
                           )}
-                        </p>
                       </div>
                     </div>
-
-                    <HandleFavorites
-                      media={media}
-                      favorites={favorites}
-                      setFavorites={setFavorites}
-                    />
                   </>
                 </Link>
               </div>

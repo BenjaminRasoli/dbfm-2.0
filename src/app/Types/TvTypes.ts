@@ -81,6 +81,7 @@ interface SpokenLanguage {
 }
 
 export interface TvTypes {
+  gender: string;
   media_type: string;
   adult: boolean;
   backdrop_path: string;
