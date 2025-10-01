@@ -22,10 +22,7 @@ function MediaCard({
               <SkeletonLoader key={index} />
             ))
           : media?.map((media: MediaTypes) => (
-              <div
-                key={media.id}
-                className="w-[300px] h-[580px] mb-3 p-1 relative"
-              >
+              <div key={media.id} className="w-[300px] h-[580px] mb-3 relative">
                 <Link
                   href={
                     media.media_type
@@ -57,7 +54,7 @@ function MediaCard({
                   </div>
 
                   <div className="pb-4 p-2 shadow-2xl rounded-b-lg h-[120px]">
-                    {!media.known_for_department && (
+                    {media.media_type !== "person" && (
                       <div className="flex mt-2">
                         <span className="text-yellow-400">
                           <RiStarSFill size={20} />
@@ -75,13 +72,13 @@ function MediaCard({
                     </div>
                     <div className="flex justify-between">
                       <p>
-                        {!media.known_for_department &&
+                        {media.media_type !== "person" &&
                           (media.release_date ||
                             media.first_air_date ||
                             "Unknown date")}
                       </p>
                       <p className="text-gray-400 opacity-80">
-                        {!media.known_for_department && (
+                        {media.media_type !== "person" && (
                           <>
                             {"("}
                             {media.media_type

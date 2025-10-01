@@ -51,6 +51,7 @@ function Navbar() {
   useEffect(() => {
     window.scroll(0, 0);
     setIsHamburgerOpen(false);
+    setHovered(false);
   }, [pathname]);
 
   useEffect(() => {

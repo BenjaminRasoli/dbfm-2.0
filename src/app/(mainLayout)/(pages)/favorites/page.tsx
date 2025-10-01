@@ -10,6 +10,7 @@ import QueryParams from "@/app/hooks/QueryParams";
 import { handleStateChange } from "@/app/utils/HandleStateChange";
 import { sortMedia } from "@/app/components/DropDown/DropDown";
 import Link from "next/link";
+import Loading from "@/app/components/Loading/Loading";
 
 function Page() {
   const { user } = useUser();
@@ -24,6 +25,8 @@ function Page() {
   useEffect(() => {
     if (user) {
       fetchFavoritesFromFirebase(user.uid);
+    } else {
+      setLoading(false);
     }
   }, [user]);
 
@@ -133,14 +136,22 @@ function Page() {
           />
         )}
 
-        {filteredFavorites.length === 0 ? (
+        {loading ? (
+          <div className="flex justify-center items-center mt-30">
+            <Loading size={100} />
+          </div>
+        ) : filteredFavorites.length === 0 ? (
           <div className="text-xl text-center pt-10">
             {activeFilter === "movie" ? (
               <p>No movies found in your favorites.</p>
             ) : activeFilter === "tv" ? (
               <p>No TV shows found in your favorites.</p>
             ) : (
-              <p>No favorites yet. Start adding some</p>
+              <p>
+                {!user
+                  ? "You must be logged in to view your favorites."
+                  : "No favorites yet. Start adding some"}
+              </p>
             )}
             <Link className="text-blue" href={"/"}>
               Home

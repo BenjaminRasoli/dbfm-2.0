@@ -29,6 +29,7 @@ interface BelongsToCollection {
 }
 
 export interface MovieTypes {
+  media_type: string;
   adult: boolean;
   backdrop_path: string;
   belongs_to_collection: BelongsToCollection;
@@ -55,10 +56,5 @@ export interface MovieTypes {
   video: boolean;
   vote_average: number;
   vote_count: number;
-  known_for_department?: string; 
+  known_for_department?: string;
 }
-
-
-
-
-
