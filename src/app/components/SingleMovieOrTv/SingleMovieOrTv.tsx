@@ -19,6 +19,8 @@ import { WatchResultsTypes } from "@/app/Types/WhereToWatchTypes";
 import { disableOverflow } from "@/app/utils/HandleDOM";
 import { handleOutsideClick } from "@/app/utils/HandleOutsideClick";
 import HandleFavorites from "../HandleFavorites/HandleFavorites";
+import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
 type MediaTypes = MovieTypes | TvTypes;
 
@@ -107,14 +109,14 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
 
   const scoreColor =
     userScore >= 90
-      ? "bg-green-800"
+      ? "#166534"
       : userScore >= 75
-      ? "bg-green-500"
+      ? "#22c55e"
       : userScore >= 50
-      ? "bg-yellow-600"
+      ? "#ca8a04"
       : userScore >= 30
-      ? "bg-orange-600"
-      : "bg-red";
+      ? "#ea580c"
+      : "#ef4444";
 
   return (
     <div
@@ -177,7 +179,6 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
                   : "Unknown Runtime"}
               </p>
             </div>
-
             <h1 className="text-4xl font-bold mb-6">
               {isMovie(mediaData)
                 ? mediaData.title !== mediaData.original_title &&
@@ -186,15 +187,19 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
                   mediaData.original_name}
             </h1>
 
-            <div className="flex flex-row items-center space-x-4 mb-6">
-              <p className="text-xl font-bold">
-                User Score:
-                <span
-                  className={`ml-2 p-2 ${scoreColor} w-12 h-12 flex items-center justify-center text-center rounded-full`}
-                >
-                  {userScore}%
-                </span>
-              </p>
+            <div className="flex flex-col items-start space-y-2 mb-6">
+              <p className="text-xl font-bold">User Score:</p>
+              <div className="w-14 h-14">
+                <CircularProgressbar
+                  value={userScore}
+                  text={`${userScore}%`}
+                  styles={buildStyles({
+                    pathColor: scoreColor,
+                    textColor: scoreColor,
+                    textSize: "24px",
+                  })}
+                />
+              </div>
             </div>
 
             <div className="space-x-1 mb-6">
@@ -208,12 +213,10 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
                   ))
                 : "Unknown Genre"}
             </div>
-
             <h1 className="font-bold text-xl">Overview:</h1>
             <p className="text-lg mb-6">
               {mediaData.overview || "No overview"}
             </p>
-
             {isMovie(mediaData) && (
               <>
                 {(mediaData.budget > 0 || mediaData.revenue > 0) && (
@@ -237,7 +240,6 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
                 )}
               </>
             )}
-
             {video.some((vid) => vid.type === "Trailer") && (
               <button
                 className="bg-blue hover:bg-blue-hover text-white py-2 mb-2 px-4 rounded-full cursor-pointer"
