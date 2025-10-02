@@ -74,7 +74,7 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
       setMediaData(data.mediaData);
       setReviews(data.reviewsData);
       setVideo(data.videoData.results);
-      setActors(data.actorsData.slice(0, 15));
+      setActors(data.actorsData);
       setWhereToWatch(wereToWatchData.results);
     };
     fetchData();

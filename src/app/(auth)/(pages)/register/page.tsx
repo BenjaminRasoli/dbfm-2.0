@@ -178,7 +178,7 @@ function Page() {
           <div className="w-full max-w-md bg-white dark:bg-dark-2 p-8 rounded-lg shadow-xl">
             <div className="relative flex items-center mb-4 w-full">
               <h3 className="text-lg text-blue absolute left-0 hover:text-blue-hover">
-                <Link className="flex items-center" href="/">
+                <Link className="flex items-center" href="/login">
                   <IoIosArrowRoundBack size={20} />
                   Back
                 </Link>
@@ -284,7 +284,7 @@ function Page() {
                 )}
               </div>
 
-              <div className="mb-6">
+              <div className="mb-10">
                 <label
                   htmlFor="password"
                   className="block text-sm font-semibold mb-2"
@@ -306,12 +306,6 @@ function Page() {
                     {error.password} <MdErrorOutline />
                   </div>
                 )}
-                <Link
-                  href="/forgotpassword"
-                  className="text-sm text-blue hover:underline flex pt-2 justify-end"
-                >
-                  Forgot Password?
-                </Link>
               </div>
 
               <div className="flex justify-between mb-4">

@@ -1,9 +1,9 @@
-import { BounceLoader } from "react-spinners";
+import { ClipLoader } from "react-spinners";
 
 function Loading({ size }: { size?: number }) {
   return (
     <>
-      <BounceLoader size={size} color="#2d99ff" />
+      <ClipLoader color="#2d99ff" size={size} />
     </>
   );
 }
