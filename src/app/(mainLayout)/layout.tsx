@@ -9,7 +9,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="grid grid-cols-[auto_1fr] grid-rows-[auto_1fr]">
+    <div className="grid lg:grid-cols-[auto_1fr] grid-rows-[auto_1fr]">
       <Navbar />
       <div className="flex flex-col">
         <Header />

@@ -149,19 +149,19 @@ function Page() {
             ) : (
               <div>
                 {!user ? (
-                  <>
+                  <div className="min-h-[40dvh] ">
                     <p>You must be logged in to view your favorites.</p>{" "}
                     <Link className="text-blue" href={"/login"}>
                       Login
                     </Link>
-                  </>
+                  </div>
                 ) : (
-                  <>
+                  <div className="min-h-[40dvh]">
                     <p>No favorites yet. Start adding some</p>
                     <Link className="text-blue" href={"/"}>
                       Home
                     </Link>
-                  </>
+                  </div>
                 )}
               </div>
             )}
