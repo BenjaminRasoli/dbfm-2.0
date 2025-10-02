@@ -7,7 +7,7 @@ function TopBilledActors({ actors }: { actors: ActorsTypes[] }) {
   return (
     <div className="mt-8">
       {actors.length > 0 && (
-        <h2 className="text-2xl font-bold text-white">Top Billed Cast</h2>
+        <h2 className="text-2xl font-bold text-white">Cast</h2>
       )}
       <div className="flex overflow-x-auto mt-4 pb-4 space-x-4 max-w-full">
         {actors?.map((actor: ActorsTypes) => (

@@ -38,8 +38,7 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
             const scoreA = a.vote_average * 10 + a.vote_count;
             const scoreB = b.vote_average * 10 + b.vote_count;
             return scoreB - scoreA;
-          })
-          .slice(0, 15);
+          });
 
         setActor(data);
         setActorKnownFor(sortedCredits);
@@ -100,7 +99,7 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
         <h2 className="text-2xl font-semibold ">
           Movies and TV Shows Featuring {actor.name}
         </h2>
-        <div className="flex overflow-auto gap-6 py-6 mt-6">
+        <div className="flex overflow-auto gap-6 mt-4">
           {actorKnownFor && actorKnownFor.length > 0 ? (
             actorKnownFor.map((credit: ActorKnownForTypes) => (
               <Link href={`/${credit.media_type}/${credit.id}`} key={credit.id}>
@@ -116,7 +115,9 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
                     <h3 className="text-lg font-semibold">
                       {credit.title || credit.name}
                     </h3>
-                    <p className="text-sm pb-2">Character: {credit.character}</p>
+                    <p className="text-sm pb-2">
+                      Character: {credit.character}
+                    </p>
                   </div>
                 </div>
               </Link>
