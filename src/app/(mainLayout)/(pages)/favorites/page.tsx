@@ -147,15 +147,24 @@ function Page() {
             ) : activeFilter === "tv" ? (
               <p>No TV shows found in your favorites.</p>
             ) : (
-              <p>
-                {!user
-                  ? "You must be logged in to view your favorites."
-                  : "No favorites yet. Start adding some"}
-              </p>
+              <div>
+                {!user ? (
+                  <>
+                    <p>You must be logged in to view your favorites.</p>{" "}
+                    <Link className="text-blue" href={"/login"}>
+                      Login
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <p>No favorites yet. Start adding some</p>
+                    <Link className="text-blue" href={"/"}>
+                      Home
+                    </Link>
+                  </>
+                )}
+              </div>
             )}
-            <Link className="text-blue" href={"/"}>
-              Home
-            </Link>
           </div>
         ) : (
           <MediaCard
