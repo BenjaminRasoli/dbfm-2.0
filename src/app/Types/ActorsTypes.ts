@@ -11,4 +11,11 @@ export interface ActorsTypes {
   character: string;
   credit_id: string;
   order: number;
+  roles: Roles[];
+}
+
+export interface Roles {
+  character: string;
+  episode_count: number;
+  credit_id: string;
 }

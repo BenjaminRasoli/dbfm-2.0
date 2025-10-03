@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { RiStarSFill } from "react-icons/ri";
 import Image from "next/image";
-import EpisodePlaceHolder from "../../images/noImageHolder.jpg";
+import EpisodePlaceholder from "../../images/MediaImagePlaceholder.jpg";
 import EpisodesSkeletonLoader from "../EpisodesSkeletonLoader/EpisodesSkeletonLoader";
 
 function Episodes({
@@ -113,7 +113,7 @@ function Episodes({
                 src={
                   episode?.still_path
                     ? `https://image.tmdb.org/t/p/original${episode.still_path}`
-                    : EpisodePlaceHolder
+                    : EpisodePlaceholder
                 }
                 alt={episode?.name}
                 className="w-full h-48 object-cover"

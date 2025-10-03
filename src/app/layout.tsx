@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   description:
     "DBFM is a movies website where you can check out the latest Movies and TV shows.",
   icons: {
-    icon: "/favicon.png",
+    icon: "/black_favicon.png",
   },
 };
 

@@ -3,7 +3,7 @@ import { ActorTypes } from "@/app/Types/ActorType";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import PersonPoster from "../../../../images/personposter.jpg";
+import PersonPoster from "../../../../images/PersonImagePlaceholder.jpg";
 import { ActorKnownForTypes } from "@/app/Types/ActorKnownForTypes";
 import ActorSkeletonLoader from "@/app/components/ActorSkeletonLoader/ActorSkeletonLoader";
 
