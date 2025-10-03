@@ -131,7 +131,7 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
           backgroundColor: "rgba(0, 0, 0, 0.8)",
         }}
       ></div>
-      <div className="container mx-auto relative z-10 max-w-[280px] sm:max-w-[520px] md:max-w-[550px] custom:max-w-[900px]">
+      <div className="mx-auto relative z-10 max-w-[360px] sm:max-w-[520px] md:max-w-[550px] custom:max-w-[900px]">
         <div className="flex flex-col md:flex-row items-center md:items-start">
           <div className="relative mb-6 md:mb-0">
             <Image

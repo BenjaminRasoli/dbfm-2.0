@@ -137,7 +137,7 @@ function Page() {
         )}
 
         {loading ? (
-          <div className="flex justify-center items-center mt-15">
+          <div className="flex justify-center items-center mt-15 min-h-[50dvh]">
             <Loading size={100} />
           </div>
         ) : filteredFavorites.length === 0 ? (
