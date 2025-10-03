@@ -4,7 +4,7 @@ import { FaWindowClose } from "react-icons/fa";
 import "react-multi-carousel/lib/styles.css";
 import Image from "next/image";
 import SingleSkeletonLoader from "../SingleSkeletonLoader/SingleSkeletonLoader";
-import poster from "../../images/poster-image.png";
+import MovieTvPlaceholder from "../../images/MediaImagePlaceholder.jpg";
 import { VideoTypes } from "@/app/Types/VideoTypes";
 import { ActorsTypes } from "@/app/Types/ActorsTypes";
 import { ReviewTypes } from "@/app/Types/ReviewTypes";
@@ -119,19 +119,18 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
       : "#ef4444";
 
   return (
-    <div
-      className="relative bg-cover bg-center p-5 pt-10"
-      style={{
-        backgroundImage: `url('https://image.tmdb.org/t/p/original${mediaData.backdrop_path}')`,
-      }}
-    >
+    <div className="relative overflow-hidden">
       <div
-        className="absolute inset-0 z-0"
+        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundColor: "rgba(0, 0, 0, 0.8)",
+          backgroundImage: `url('https://image.tmdb.org/t/p/original${mediaData.backdrop_path}')`,
+          backgroundAttachment: "fixed",
         }}
-      ></div>
-      <div className="mx-auto relative z-10 max-w-[360px] sm:max-w-[520px] md:max-w-[550px] custom:max-w-[900px]">
+      >
+        <div className="absolute inset-0 backdrop-blur-[4px] bg-black/70" />
+      </div>
+
+      <div className="mx-auto pt-10 relative z-10 max-w-[380px] sm:max-w-[520px] md:max-w-[550px] custom:max-w-[900px]">
         <div className="flex flex-col md:flex-row items-center md:items-start">
           <div className="relative mb-6 md:mb-0">
             <Image
@@ -140,7 +139,7 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
               src={
                 mediaData.poster_path
                   ? `https://image.tmdb.org/t/p/original${mediaData.poster_path}`
-                  : poster
+                  : MovieTvPlaceholder
               }
               alt={
                 isMovie(mediaData)

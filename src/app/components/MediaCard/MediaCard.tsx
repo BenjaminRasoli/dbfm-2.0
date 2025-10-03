@@ -5,8 +5,8 @@ import { MediaTypes } from "@/app/Types/MediaTypes";
 import { MediaCardTypes } from "@/app/Types/MediaCardTypes";
 import Image from "next/image";
 import SkeletonLoader from "../SkeletonLoader/SkeletonLoader";
-import MovieTvPlaceHolder from "../../images/poster-image.png";
-import PersonPlaceHolder from "../../images/personposter.jpg";
+import MovieTvPlaceholder from "../../images/MediaImagePlaceholder.jpg";
+import PersonPlaceholder from "../../images/PersonImagePlaceholder.jpg";
 import Link from "next/link";
 import HandleFavorites from "@/app/components/HandleFavorites/HandleFavorites";
 
@@ -32,10 +32,10 @@ function MediaCard({
             const imageSrc =
               media.media_type === "person" || media.known_for_department
                 ? media.profile_path === null
-                  ? PersonPlaceHolder
+                  ? PersonPlaceholder
                   : `https://image.tmdb.org/t/p/original/${media.profile_path}`
                 : media.poster_path === null
-                ? MovieTvPlaceHolder
+                ? MovieTvPlaceholder
                 : `https://image.tmdb.org/t/p/original/${media.poster_path}`;
 
             const href = media.media_type

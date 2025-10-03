@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { LiaStarSolid } from "react-icons/lia";
-import poster from "../../images/poster-image.png";
+import SeasonPlaceholder from "../../images/MediaImagePlaceholder.jpg";
 import Link from "next/link";
 import { TvTypes } from "@/app/Types/TvTypes";
 function Seasons({ mediaData }: { mediaData: TvTypes }) {
@@ -25,14 +25,14 @@ function Seasons({ mediaData }: { mediaData: TvTypes }) {
                   src={
                     season.poster_path
                       ? `https://image.tmdb.org/t/p/original${season.poster_path}`
-                      : poster
+                      : SeasonPlaceholder
                   }
                   alt={`Season ${season.season_number}`}
                   height={700}
                   width={700}
                   className="w-full h-[300px] object-cover rounded-lg"
                 />
-                <div className="absolute top-2 left-2 bg-black text-white py-1 px-2 rounded-lg">
+                <div className="absolute top-2 left-2 bg-blue text-white py-1 px-2 rounded-lg">
                   Season {season.season_number || 0}
                 </div>
               </div>
