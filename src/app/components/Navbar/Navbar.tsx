@@ -38,7 +38,7 @@ function Navbar() {
 
   return (
     <aside className="relative">
-      <div className="hidden lg:block p-4 min-w-[250px]  sticky top-0 overflow-y-auto h-screen scrollbar-thin scrollbar-thumb-rounded  ">
+      <div className="hidden lg:block p-4 min-w-[250px] border-r border-gray-600 dark:border-gray-800 sticky top-0 overflow-y-auto h-screen scrollbar-thin scrollbar-thumb-rounded  ">
         <Link href="/">
           {pathname === "/" ? (
             <Image

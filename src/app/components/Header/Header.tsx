@@ -62,21 +62,6 @@ function Header() {
     setIsHamburgerOpen(false);
   }, [pathname]);
 
-  // useEffect(() => {
-  //   const sidebar = sidebarRef.current;
-  //   if (sidebar) {
-  //     if (isHamburgerOpen) {
-  //       disableBodyScroll(sidebar, { reserveScrollBarGap: true });
-  //     } else {
-  //       enableBodyScroll(sidebar);
-  //     }
-  //   }
-
-  //   return () => {
-  //     clearAllBodyScrollLocks();
-  //   };
-  // }, [isHamburgerOpen]);
-
   useEffect(() => {
     disableOverflow(isHamburgerOpen);
     return () => disableOverflow(false);
@@ -93,7 +78,7 @@ function Header() {
 
   return (
     <>
-      <header className="py-6 px-3 border-b-1 border-gray-600 h-20 dark:border-gray-800 sticky top-0 z-20 bg-white dark:bg-dark">
+      <header className="py-5 px-3 lg:px-7 border-b-1 border-gray-600 h-20 dark:border-gray-800 sticky top-0 z-20 bg-white dark:bg-dark">
         {isHamburgerOpen && (
           <div
             className="fixed inset-0 opacity-50 z-40"
@@ -149,7 +134,7 @@ function Header() {
 
         <div
           className={clsx(
-            "h-full absolute top-0 left-0 z-[100] lg:hidden border-r  border-gray-600 dark:border-gray-800 flex items-center",
+            "h-full absolute top-0 left-0 z-[100] lg:hidden border-r border-gray-600 dark:border-gray-800 flex items-center",
             { "border-none": isHamburgerOpen }
           )}
         >
