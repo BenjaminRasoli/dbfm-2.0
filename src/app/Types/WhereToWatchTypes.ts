@@ -10,6 +10,7 @@ export interface WatchResultsTypes {
     link: string;
     free: WatchProviderTypes[];
     flatrate: WatchProviderTypes[];
+    buy: WatchProviderTypes[];
+    rent: WatchProviderTypes[];
   };
 }
-

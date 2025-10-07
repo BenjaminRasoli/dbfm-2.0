@@ -44,7 +44,7 @@ function FilterButtons({
   }
 
   return (
-    <div className="flex gap-2 w-[125px] custom2:w-[200px] custom2:gap-5 overflow-auto">
+    <div className="flex gap-3 custom-sm:gap-5 overflow-auto">
       {filterOptions.map((filter) => (
         <FilterButton
           key={filter.value}

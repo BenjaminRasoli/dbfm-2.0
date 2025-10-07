@@ -21,9 +21,9 @@ function MediaCard({
   );
 
   return (
-    <div className="grid grid-cols-1 place-items-center md:grid-cols-2 custom:grid-cols-3 2xl:grid-cols-4 gap-5 pt-10">
+    <div className="grid grid-cols-1  2-cards:grid-cols-2 3-cards:grid-cols-3 4-cards:grid-cols-4 5-cards:grid-cols-5 gap-8 pt-10">
       {loading || !media || media.length === 0
-        ? Array.from({ length: 6 }, (_, index) => (
+        ? Array.from({ length: 12 }, (_, index) => (
             <SkeletonLoader key={index} />
           ))
         : media.map((media: MediaTypes) => {
@@ -45,14 +45,14 @@ function MediaCard({
               : `/movie/${media.id}`;
 
             return (
-              <div key={media.id} className="w-[300px] h-[580px] mb-3 relative">
+              <div key={media.id} className="relative">
                 <HandleFavorites
                   media={media}
                   favorites={favorites}
                   setFavorites={setFavorites}
                 />
                 <Link href={href} className="block w-full h-full group">
-                  <div className="relative w-full h-[400px] overflow-hidden rounded-t-lg">
+                  <div className="relative w-full overflow-hidden rounded-t-lg">
                     {!isImageLoaded && (
                       <div className="absolute inset-0 z-10">
                         <SkeletonLoader />
@@ -63,7 +63,7 @@ function MediaCard({
                       alt={media.title || media.name || "Unknown title"}
                       width={700}
                       height={700}
-                      className="w-full h-full object-cover transition-transform duration-300 ease-in-out scale-100 group-hover:scale-110"
+                      className="w-full object-cover transition-transform duration-300 ease-in-out scale-100 group-hover:scale-110"
                       priority
                       onLoad={() =>
                         setLoadedImages((prev) => ({
