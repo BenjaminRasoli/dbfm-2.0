@@ -52,14 +52,17 @@ function CustomDropdown({
   }, []);
 
   return (
-    <div className="relative inline-block text-left z-10 mb-2" ref={dropdownRef}>
+    <div
+      className="relative inline-block text-left z-10 mb-2"
+      ref={dropdownRef}
+    >
       <button
         type="button"
         onClick={toggleDropdown}
         className="cursor-pointer inline-flex justify-between items-center w-full px-4 py-2 text-sm font-medium  bg-white dark:bg-dark border border-gray-600 dark:border-gray-800 rounded-md shadow-sm hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-1 focus:ring-offset-1 transition-all duration-200 ease-in-out"
       >
         {selectedOption ? selectedOption : "Select filter"}
-        <FaChevronDown className="w-5 h-5 ml-2 -mr-1 transition-all duration-200 ease-in-out" />
+        <FaChevronDown className="ml-2 -mr-1 transition-all duration-200 ease-in-out" />
       </button>
 
       {isOpen && (

@@ -19,8 +19,14 @@
   --color-gray: #f7fafc;
   --color-dark: #121212;
   --color-dark-2: #1a1a1a;
-  --breakpoint-custom: 78rem;
-  --breakpoint-custom2: 22rem;
+
+  --breakpoint-2-cards: 450px;
+  --breakpoint-3-cards: 680px;
+  --breakpoint-4-cards: 1550px;
+  --breakpoint-5-cards: 1950px;
+
+  --breakpoint-custom-sm: 25rem;
+  --breakpoint-custom-lg: 78rem;
 }
 
 body {

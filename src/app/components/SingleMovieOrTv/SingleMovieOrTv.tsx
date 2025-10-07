@@ -130,7 +130,7 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
         <div className="absolute inset-0 backdrop-blur-[4px] bg-black/70" />
       </div>
 
-      <div className="mx-auto pt-10 relative z-10 max-w-[380px] sm:max-w-[520px] md:max-w-[550px] custom:max-w-[900px]">
+      <div className="mx-auto pt-10 relative z-10 max-w-[380px] sm:max-w-[520px] md:max-w-[550px] custom-lg:max-w-[900px]">
         <div className="flex flex-col md:flex-row items-center md:items-start">
           <div className="relative mb-6 md:mb-0">
             <Image
@@ -160,14 +160,14 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
                 {isMovie(mediaData) ? "(Movie)" : "(Tv)"}
               </h4>
             </div>
-            <div className="grid custom:flex">
+            <div className="grid custom-lg:flex">
               <p className="text-lg">
                 {isMovie(mediaData)
                   ? mediaData.release_date
                   : mediaData.first_air_date || "Unknown Date"}
               </p>
 
-              <span className="hidden custom:block text-lg mx-2">•</span>
+              <span className="hidden custom-lg:block text-lg mx-2">•</span>
               <p className="text-lg">
                 {isMovie(mediaData)
                   ? mediaData.runtime > 0

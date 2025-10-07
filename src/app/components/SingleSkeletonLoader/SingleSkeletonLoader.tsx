@@ -6,7 +6,7 @@ function SingleSkeletonLoader({ mediaData }: { mediaData: MediaTypes | null }) {
   return (
     <div className="relative bg-cover bg-center p-5">
       <div className="absolute inset-0 z-0 bg-white dark:bg-dark"></div>
-      <div className="mx-auto relative z-10 max-w-[280px] sm:max-w-[570px] md:max-w-[550px] custom:max-w-[900px]">
+      <div className="mx-auto relative z-10 max-w-[280px] sm:max-w-[570px] md:max-w-[550px] custom-lg:max-w-[900px]">
         <div className="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0">
           <div className="mb-4 md:mb-0">
             <div className="w-[300px] h-[450px] bg-gray-300 animate-pulse rounded-md" />
@@ -18,7 +18,7 @@ function SingleSkeletonLoader({ mediaData }: { mediaData: MediaTypes | null }) {
               <div className="w-1/6 h-8 bg-gray-300 animate-pulse rounded-md" />
             </div>
 
-            <div className="grid custom:flex items-center mb-4 space-y-2 md:space-y-0 md:grid-cols-3"></div>
+            <div className="grid custom-lg:flex items-center mb-4 space-y-2 md:space-y-0 md:grid-cols-3"></div>
             <div className="w-1/4 h-6 bg-gray-300 animate-pulse rounded-md" />
             <div className="w-1/4 h-6 bg-gray-300 animate-pulse rounded-md mb-4 mt-10" />
             <div className="w-12 h-12 bg-gray-300 animate-pulse mb-4 rounded-full" />
