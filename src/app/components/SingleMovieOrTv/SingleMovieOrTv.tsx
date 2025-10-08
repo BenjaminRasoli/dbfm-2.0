@@ -31,6 +31,7 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [trailerUrl, setTrailerUrl] = useState<string>("");
   const [reviews, setReviews] = useState<ReviewTypes[]>([]);
+  const [posterLoaded, setPosterLoaded] = useState<boolean>(false);
   const [whereToWatch, setWhereToWatch] = useState<WatchResultsTypes | null>(
     null
   );
@@ -132,7 +133,12 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
 
       <div className="mx-auto pt-10 relative z-10 max-w-[350px] sm:max-w-[520px] md:max-w-[550px] custom-lg:max-w-[900px]">
         <div className="flex flex-col md:flex-row items-center md:items-start">
-          <div className="relative mb-6 md:mb-0">
+
+
+          <div className="relative overflow-hidden rounded-lg shadow-lg">
+            {!posterLoaded && (
+              <div className="absolute inset-0 bg-gray-300 animate-pulse z-10 rounded-lg" />
+            )}
             <Image
               height={470}
               width={470}
@@ -147,6 +153,8 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
                   : mediaData.original_name
               }
               className="rounded-lg shadow-lg "
+              onLoad={() => setPosterLoaded(true)}
+              priority
             />
             <HandleFavorites media={mediaData} />
           </div>
