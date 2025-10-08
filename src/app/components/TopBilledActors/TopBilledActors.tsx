@@ -24,8 +24,8 @@ function TopBilledActors({ actors }: { actors: ActorsTypes[] }) {
 
           return (
             <Link key={actor.id} href={`/person/${actor.id}`}>
-              <div className=" bg-blue h-full max-h-[350px] overflow-auto rounded-lg w-43 flex flex-col">
-                <div className="relative w-full h-[500px] overflow-hidden rounded-t-lg">
+              <div className="bg-blue rounded-lg w-43 flex flex-col h-[350px] overflow-hidden">
+                <div className="relative w-full h-[250px] overflow-hidden rounded-t-lg">
                   {!isImageLoaded && (
                     <div className="absolute inset-0 bg-gray-300 animate-pulse z-10" />
                   )}
@@ -43,21 +43,24 @@ function TopBilledActors({ actors }: { actors: ActorsTypes[] }) {
                     }
                   />
                 </div>
-
-                <div className="flex flex-col pl-1 mb-7 h-full">
-                  <h3 className="text-white font-bold mt-2 text-ellipsis">
-                    {actor.name}
+                <div className="flex flex-col pl-1 mt-0 overflow-auto max-h-[100px]">
+                  <h3 className="text-white font-bold text-ellipsis">
+                    {actor?.name}
                   </h3>
                   <p className="text-white text-xs">{actor?.character}</p>
 
                   {Array.isArray(actor.roles) && actor.roles.length > 0 && (
                     <>
                       {actor.roles.map((role) => (
-                        <div className="text-white" key={role.credit_id}>
-                          <p className="text-sm">{role.character}</p>
-                          <p className="text-xs opacity-85">
-                            {role.episode_count} Episodes
-                          </p>
+                        <div className="text-white pb-2" key={role.credit_id}>
+                          {role.character && (
+                            <p className="text-sm">{role.character}</p>
+                          )}
+                          {role.episode_count && (
+                            <p className="text-xs opacity-85">
+                              {role.episode_count} Episodes
+                            </p>
+                          )}
                         </div>
                       ))}
                     </>

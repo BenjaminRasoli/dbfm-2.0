@@ -26,6 +26,12 @@ function SingleSkeletonLoader({ mediaData }: { mediaData: MediaTypes | null }) {
             <div className="w-3/4 h-40 bg-gray-300 animate-pulse rounded-md mb-4" />
             <div className="w-18 h-6 bg-gray-300 animate-pulse rounded-md mb-4" />
             <div className="w-2/4 h-6 bg-gray-300 animate-pulse rounded-md mb-4" />
+            {!isMovie && (
+              <>
+                <div className="w-18 h-6 bg-gray-300 animate-pulse rounded-md mb-4" />
+                <div className="w-18 h-6 bg-gray-300 animate-pulse rounded-md mb-4" />
+              </>
+            )}
             <div className="w-25 h-8 bg-gray-300 animate-pulse rounded-full mb-4" />
 
             {isMovie && (

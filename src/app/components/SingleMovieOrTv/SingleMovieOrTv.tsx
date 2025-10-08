@@ -133,8 +133,6 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
 
       <div className="mx-auto pt-10 relative z-10 max-w-[350px] sm:max-w-[520px] md:max-w-[550px] custom-lg:max-w-[900px]">
         <div className="flex flex-col md:flex-row items-center md:items-start">
-
-
           <div className="relative overflow-hidden rounded-lg shadow-lg">
             {!posterLoaded && (
               <div className="absolute inset-0 bg-gray-300 animate-pulse z-10 rounded-lg" />
