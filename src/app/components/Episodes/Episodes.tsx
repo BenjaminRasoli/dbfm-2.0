@@ -33,7 +33,7 @@ function Episodes({
       const data = await response.json();
       const tvData = await tvResponse.json();
       setEpisodes(data);
-      setTotalSeasons(tvData.mediaData.seasons.length);
+      setTotalSeasons(tvData.mediaData.number_of_seasons);
       setHasSeasonZero(tvData.mediaData.seasons[0]?.season_number === 0);
     };
 

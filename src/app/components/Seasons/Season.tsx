@@ -46,6 +46,7 @@ function Seasons({ mediaData }: { mediaData: TvTypes }) {
                   Rating: <LiaStarSolid className="text-yellow" />
                   <span>{season.vote_average || 0}</span>
                 </span>
+                {season.air_date && <> Air Date: {season.air_date}</>}
               </p>
             </div>
           </Link>
