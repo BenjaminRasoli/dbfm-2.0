@@ -130,7 +130,7 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
         <div className="absolute inset-0 backdrop-blur-[4px] bg-black/70" />
       </div>
 
-      <div className="mx-auto pt-10 relative z-10 max-w-[380px] sm:max-w-[520px] md:max-w-[550px] custom-lg:max-w-[900px]">
+      <div className="mx-auto pt-10 relative z-10 max-w-[350px] sm:max-w-[520px] md:max-w-[550px] custom-lg:max-w-[900px]">
         <div className="flex flex-col md:flex-row items-center md:items-start">
           <div className="relative mb-6 md:mb-0">
             <Image
@@ -187,7 +187,7 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
             </h1>
 
             <div className="flex flex-col items-start space-y-2 mb-6">
-              <p className="text-xl font-bold">User Score:</p>
+              <p className="text-xl font-bold">User Score</p>
               <div className="w-14 h-14">
                 <CircularProgressbar
                   value={userScore}
@@ -202,7 +202,7 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
             </div>
 
             <div className="space-x-1 mb-6">
-              <p className="text-xl font-bold">Genres:</p>
+              <p className="text-xl font-bold">Genres</p>
               {mediaData?.genres?.length > 0
                 ? mediaData?.genres?.map((genre, index) => (
                     <span key={genre.id} className="text-lg">
@@ -212,7 +212,7 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
                   ))
                 : "Unknown Genre"}
             </div>
-            <h1 className="font-bold text-xl">Overview:</h1>
+            <h1 className="font-bold text-xl">Overview</h1>
             <p className="text-lg mb-6">
               {mediaData.overview || "No overview"}
             </p>
@@ -222,14 +222,14 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
                   <>
                     {mediaData.budget > 0 && (
                       <>
-                        <h1 className="font-bold text-xl">Budget:</h1>
+                        <h1 className="font-bold text-xl">Budget</h1>
                         <p className="text-lg mb-6">{"$" + mediaData.budget}</p>
                       </>
                     )}
 
                     {mediaData.revenue > 0 && (
                       <>
-                        <h1 className="font-bold text-xl">Revenue:</h1>
+                        <h1 className="font-bold text-xl">Revenue</h1>
                         <p className="text-lg mb-4">
                           {"$" + mediaData.revenue}
                         </p>

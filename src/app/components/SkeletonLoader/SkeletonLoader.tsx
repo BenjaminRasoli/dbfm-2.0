@@ -1,7 +1,7 @@
 function SkeletonLoader() {
   return (
     <div className="flex flex-col rounded-lg overflow-hidden bg-gray-100 animate-pulse shadow-sm">
-      <div className="relative w-full aspect-[3/5] h-full bg-gray-300">
+      <div className="relative w-full aspect-[3/4] h-full bg-gray-300">
         <div className="absolute top-0 left-0 w-full h-full bg-gray-400 rounded-lg"></div>
       </div>
 
