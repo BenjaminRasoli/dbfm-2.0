@@ -9,7 +9,7 @@ function SingleSkeletonLoader({ mediaData }: { mediaData: MediaTypes | null }) {
       <div className="mx-auto relative z-10 max-w-[350px] sm:max-w-[520px] md:max-w-[550px] custom-lg:max-w-[900px]">
         <div className="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0">
           <div className="mb-4 md:mb-0">
-            <div className="w-[380px] h-[500px] bg-gray-300 animate-pulse rounded-md" />
+            <div className="w-[380px] h-[565px] bg-gray-300 animate-pulse rounded-md" />
           </div>
 
           <div className="w-full  md:ml-10 text-white">
