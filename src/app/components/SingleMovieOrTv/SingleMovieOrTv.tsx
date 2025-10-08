@@ -167,16 +167,17 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
                   : mediaData.first_air_date || "Unknown Date"}
               </p>
 
-              <span className="hidden custom-lg:block text-lg mx-2">•</span>
-              <p className="text-lg">
-                {isMovie(mediaData)
-                  ? mediaData.runtime > 0
-                    ? mediaData.runtime + " mins"
-                    : "Unknown Runtime"
-                  : mediaData.episode_run_time[0] > 0
-                  ? mediaData.episode_run_time + " mins"
-                  : "Unknown Runtime"}
-              </p>
+              {(isMovie(mediaData) && mediaData.runtime > 0) ||
+              (!isMovie(mediaData) && mediaData.episode_run_time[0] > 0) ? (
+                <>
+                  <span className="hidden custom-lg:block text-lg mx-2">•</span>
+                  <p className="text-lg">
+                    {isMovie(mediaData)
+                      ? `${mediaData.runtime} mins`
+                      : `${mediaData.episode_run_time[0]} mins`}
+                  </p>
+                </>
+              ) : null}
             </div>
             <h1 className="text-4xl font-bold mb-6">
               {isMovie(mediaData)
@@ -201,6 +202,11 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
               </div>
             </div>
 
+            <h1 className="font-bold text-xl">Overview</h1>
+            <p className="text-lg mb-6">
+              {mediaData.overview || "No overview"}
+            </p>
+
             <div className="space-x-1 mb-6">
               <p className="text-xl font-bold">Genres</p>
               {mediaData?.genres?.length > 0
@@ -212,10 +218,17 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
                   ))
                 : "Unknown Genre"}
             </div>
-            <h1 className="font-bold text-xl">Overview</h1>
-            <p className="text-lg mb-6">
-              {mediaData.overview || "No overview"}
-            </p>
+
+            {!isMovie(mediaData) && (
+              <div className="space-x-1 mb-6">
+                <p className="text-xl font-bold">Status</p>
+                {mediaData?.status ? (
+                  <span className="text-lg">{mediaData.status}</span>
+                ) : (
+                  "Unknown Status"
+                )}
+              </div>
+            )}
             {isMovie(mediaData) && (
               <>
                 {(mediaData.budget > 0 || mediaData.revenue > 0) && (
