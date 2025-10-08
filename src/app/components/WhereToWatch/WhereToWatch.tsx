@@ -21,9 +21,9 @@ function WhereToWatch({ whereToWatch }: { whereToWatch: WatchResultsTypes }) {
   );
 
   return (
-    <div className="mt-6 mb-10 overflow-auto">
-      <h2 className="text-2xl pb-2 font-bold text-white">Where to Watch:</h2>
-      <div className="flex gap-4">
+    <div className="mt-6 mb-15 overflow-auto">
+      <h2 className="text-2xl font-bold text-white">Where to Watch</h2>
+      <div className="flex gap-4 pb-4 mt-4">
         {uniqueProviders.map((provider) => (
           <Link
             key={provider.provider_id}
