@@ -1,22 +1,22 @@
 function ActorSkeletonLoader() {
   return (
     <div className="min-h-screen">
-      <div className="p-7 max-w-[300px] sm:max-w-[570px] md:max-w-[550px] custom-lg:max-w-[950px] mx-auto  rounded-lg flex flex-col lg:flex-row animate-pulse">
-        <div className="mr-6 mb-6 w-[280px] h-[400px] bg-gray-300 rounded-lg"></div>
+      <div className="p-7 max-w-[350px] sm:max-w-[570px] md:max-w-[550px] custom-lg:max-w-[950px] mx-auto  rounded-lg flex flex-col lg:flex-row animate-pulse">
+        <div className="mr-6 mb-6 w-[300px] h-[400px] bg-gray-300 rounded-lg"></div>
 
         <div className="flex-1">
           <div className="h-8 w-1/2 bg-gray-300 rounded mb-4"></div>
-          <div className="h-40 w-3/4 bg-gray-300 rounded mb-2"></div>
-          <div className="h-4 w-1/2 bg-gray-300 rounded mb-2"></div>
-          <div className="h-4 w-2/3 bg-gray-300 rounded mb-2"></div>
-          <div className="h-4 w-1/3 bg-gray-300 rounded mb-2"></div>
+          <div className="h-60 w-3/4 bg-gray-300 rounded mb-4"></div>
+          <div className="h-4 w-40 bg-gray-300 rounded mb-4"></div>
+          <div className="h-4 w-70 bg-gray-300 rounded mb-4"></div>
+          <div className="h-4 w-30 bg-gray-300 rounded mb-4"></div>
         </div>
       </div>
 
       <div className="p-7 max-w-[300px] sm:max-w-[570px] md:max-w-[550px] custom-lg:max-w-[950px] mx-auto">
-        <h2 className="h-9 w-2/4 bg-gray-300 rounded mb-4 animate-pulse"></h2>
-        <div className="flex overflow-auto gap-6 py-6  mt-6">
-          {[...Array(3)].map((_, index) => (
+        <h2 className="h-9 w-2/4 bg-gray-300 rounded mb-2 animate-pulse"></h2>
+        <div className="flex overflow-auto gap-6 py-6">
+          {[...Array(6)].map((_, index) => (
             <div
               key={index}
               className="w-40  flex-shrink-0 bg-gray-300 min-h-[350px] text-white rounded-lg shadow-md overflow-hidden animate-pulse"
