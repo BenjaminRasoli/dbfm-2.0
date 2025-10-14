@@ -195,8 +195,14 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
             <div className="grid custom-lg:flex">
               <p className="text-lg">
                 {isMovie(mediaData)
-                  ? mediaData.release_date
-                  : `${mediaData.first_air_date} - ${mediaData.last_air_date}` || "Unknown Date"}
+                  ? mediaData.release_date || "Unknown Date"
+                  : mediaData.first_air_date || mediaData.last_air_date
+                  ? `${mediaData.first_air_date || ""}${
+                      mediaData.first_air_date && mediaData.last_air_date
+                        ? " - "
+                        : ""
+                    }${mediaData.last_air_date || ""}`
+                  : "Unknown Date"}
               </p>
 
               {(isMovie(mediaData) && mediaData.runtime > 0) ||
