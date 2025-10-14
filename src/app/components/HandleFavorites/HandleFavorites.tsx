@@ -21,7 +21,7 @@ import { TvTypes } from "@/app/Types/TvTypes";
 function HandleFavorites({ media, favorites, setFavorites }: FavoriteTypes) {
   const [localFavorites, setLocalFavorites] = useState<MediaTypes[]>([]);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
-  const [hoveredItemId, setHoveredItemId] = useState<number | null>(null);
+  const [isHovered, setIsHovered] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [itemToRemove, setItemToRemove] = useState<any | null>(null);
 
@@ -165,14 +165,14 @@ function HandleFavorites({ media, favorites, setFavorites }: FavoriteTypes) {
               handleBookmarkClick(media);
             }
           }}
-          onMouseEnter={() => setHoveredItemId(media.id)}
-          onMouseLeave={() => setHoveredItemId(null)}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         >
           {(favorites ?? localFavorites)?.some(
             (favorite) => favorite.id === media.id
           ) ? (
             <FaBookmark className="text-blue" size={40} />
-          ) : hoveredItemId === media.id ? (
+          ) : isHovered ? (
             <FaBookmark className="text-blue" size={40} />
           ) : (
             <FaRegBookmark size={40} />

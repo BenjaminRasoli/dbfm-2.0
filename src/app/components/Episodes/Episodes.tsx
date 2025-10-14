@@ -6,6 +6,7 @@ import { RiStarSFill } from "react-icons/ri";
 import Image from "next/image";
 import EpisodePlaceholder from "../../images/MediaImagePlaceholder.jpg";
 import EpisodesSkeletonLoader from "../EpisodesSkeletonLoader/EpisodesSkeletonLoader";
+import NotFound from "@/app/not-found";
 
 function Episodes({
   params,
@@ -17,31 +18,55 @@ function Episodes({
   const [totalSeasons, setTotalSeasons] = useState<number>(1);
   const [currentSeason, setCurrentSeason] = useState<number>(1);
   const [hasSeasonZero, setHasSeasonZero] = useState<boolean>(false);
+  const [notFound, setNotFound] = useState<boolean>(false);
   const [loadedImages, setLoadedImages] = useState<{ [id: number]: boolean }>(
     {}
   );
+
 
   useEffect(() => {
     const fetchData = async () => {
       const { slug, seasonNumber } = await params;
       setSlug(slug);
       setCurrentSeason(seasonNumber);
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getEpisodes?id=${slug}&seasonNumber=${seasonNumber}`
-      );
-      const tvResponse = await fetch(
-        `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getSingleMovieOrTv?id=${slug}&type=tv`
-      );
 
-      const data = await response.json();
-      const tvData = await tvResponse.json();
-      setEpisodes(data);
-      setTotalSeasons(tvData.mediaData.number_of_seasons);
-      setHasSeasonZero(tvData.mediaData.seasons[0]?.season_number === 0);
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getEpisodes?id=${slug}&seasonNumber=${seasonNumber}`
+        );
+
+        const tvResponse = await fetch(
+          `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getSingleMovieOrTv?id=${slug}&type=tv`
+        );
+
+        if (!response.ok || !tvResponse.ok) {
+          setNotFound(true);
+          return;
+        }
+
+        const data = await response.json();
+        const tvData = await tvResponse.json();
+
+        if (!data?.episodes || !tvData?.mediaData) {
+          setNotFound(true);
+          return;
+        }
+
+        setEpisodes(data);
+        setTotalSeasons(tvData.mediaData.number_of_seasons);
+        setHasSeasonZero(tvData.mediaData.seasons[0]?.season_number === 0);
+      } catch (error) {
+        console.error("Error fetching episode data:", error);
+        setEpisodes(null);
+      }
     };
 
     fetchData();
   }, [params]);
+
+  if (notFound === true) {
+    return <NotFound />;
+  }
 
   if (!episodes) {
     return <EpisodesSkeletonLoader />;

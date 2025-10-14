@@ -6,13 +6,13 @@ function SingleSkeletonLoader({ mediaData }: { mediaData: MediaTypes | null }) {
   return (
     <div className="relative bg-cover bg-center p-5 mt-5">
       <div className="absolute inset-0 z-0 bg-white dark:bg-dark"></div>
-      <div className="mx-auto relative z-10 max-w-[350px] sm:max-w-[520px] md:max-w-[550px] custom-lg:max-w-[900px]">
-        <div className="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0">
-          <div className="mb-4 md:mb-0">
-            <div className="w-[380px] h-[565px] bg-gray-300 animate-pulse rounded-md" />
+      <div className="mx-auto relative z-10 p-3 max-w-[380px] md:max-w-[900px]">
+        <div className="flex flex-col md:flex-row items-center sm:items-start space-y-4 md:space-y-0">
+          <div className="mb-4 md:mb-0 w-full">
+            <div className="w-full h-[565px] bg-gray-300 animate-pulse rounded-md" />
           </div>
 
-          <div className="w-full  md:ml-10 text-white">
+          <div className="w-full  md:ml-5 text-white">
             <div className="flex justify-between">
               <div className="w-2/4 h-8 bg-gray-300 animate-pulse rounded-md" />
               <div className="w-1/6 h-8 bg-gray-300 animate-pulse rounded-md" />
@@ -25,24 +25,20 @@ function SingleSkeletonLoader({ mediaData }: { mediaData: MediaTypes | null }) {
             <div className="w-1/4 h-6 bg-gray-300 animate-pulse rounded-md mb-4" />
             <div className="w-3/4 h-40 bg-gray-300 animate-pulse rounded-md mb-4" />
             <div className="w-18 h-6 bg-gray-300 animate-pulse rounded-md mb-4" />
-            <div className="w-2/4 h-6 bg-gray-300 animate-pulse rounded-md mb-4" />
+            <div className="w-30 h-6 bg-gray-300 animate-pulse rounded-md mb-4" />
             {!isMovie && (
               <>
                 <div className="w-18 h-6 bg-gray-300 animate-pulse rounded-md mb-4" />
-                <div className="w-18 h-6 bg-gray-300 animate-pulse rounded-md mb-4" />
+                <div className="w-25 h-6 bg-gray-300 animate-pulse rounded-md mb-4" />
               </>
             )}
-            <div className="w-25 h-8 bg-gray-300 animate-pulse rounded-full mb-4" />
-
             {isMovie && (
               <>
                 <div className="w-1/4 h-6 bg-gray-300 animate-pulse rounded-md mb-4" />
                 <div className="w-1/4 h-6 bg-gray-300 animate-pulse rounded-md mb-4" />
-                <div className="w-1/4 h-6 bg-gray-300 animate-pulse rounded-md mb-4" />
-                <div className="w-1/4 h-6 bg-gray-300 animate-pulse rounded-md mb-4" />
-                <div className="w-1/4 h-6 bg-gray-300 animate-pulse rounded-md mb-4" />
               </>
             )}
+            <div className="w-25 h-8 bg-gray-300 animate-pulse rounded-full mb-4" />
           </div>
         </div>
 

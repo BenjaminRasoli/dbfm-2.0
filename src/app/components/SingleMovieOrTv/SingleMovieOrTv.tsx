@@ -14,6 +14,7 @@ import { MovieTypes } from "@/app/Types/MovieTypes";
 import { usePathname } from "next/navigation";
 import Seasons from "../Seasons/Season";
 import WhereToWatch from "../WhereToWatch/WhereToWatch";
+import NotFound from "@/app/not-found";
 import { TvTypes } from "@/app/Types/TvTypes";
 import { WatchResultsTypes } from "@/app/Types/WhereToWatchTypes";
 import { disableOverflow } from "@/app/utils/HandleDOM";
@@ -32,6 +33,7 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
   const [trailerUrl, setTrailerUrl] = useState<string>("");
   const [reviews, setReviews] = useState<ReviewTypes[]>([]);
   const [posterLoaded, setPosterLoaded] = useState<boolean>(false);
+  const [notFound, setNotFound] = useState<boolean>(false);
   const [whereToWatch, setWhereToWatch] = useState<WatchResultsTypes | null>(
     null
   );
@@ -63,21 +65,41 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { slug } = await params;
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getSingleMovieOrTv?id=${slug}&type=${type}`
-      );
-      const wereToWatchResponse = await fetch(
-        `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getWhereToWatch?id=${slug}&type=${type}`
-      );
-      const data = await response.json();
-      const wereToWatchData = await wereToWatchResponse.json();
-      setMediaData(data.mediaData);
-      setReviews(data.reviewsData);
-      setVideo(data.videoData.results);
-      setActors(data.actorsData);
-      setWhereToWatch(wereToWatchData.results);
+      const { slug } = params;
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getSingleMovieOrTv?id=${slug}&type=${type}`
+        );
+
+        if (!response.ok) {
+          setNotFound(true);
+          return;
+        }
+
+        const data = await response.json();
+
+        if (!data?.mediaData) {
+          setNotFound(true);
+          return;
+        }
+
+        const wereToWatchResponse = await fetch(
+          `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getWhereToWatch?id=${slug}&type=${type}`
+        );
+        const wereToWatchData = await wereToWatchResponse.json();
+
+        setMediaData(data.mediaData);
+        setReviews(data.reviewsData);
+        setVideo(data.videoData.results);
+        setActors(data.actorsData);
+        setWhereToWatch(wereToWatchData.results);
+        console.log(data);
+      } catch (error) {
+        console.error("Fetch error:", error);
+        setNotFound(true);
+      }
     };
+
     fetchData();
   }, [params, type]);
 
@@ -101,6 +123,10 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
       document.title = "DBFM | Details";
     }
   }, [mediaData]);
+
+  if (notFound) {
+    return <NotFound />;
+  }
 
   if (!mediaData) {
     return <SingleSkeletonLoader mediaData={mediaData} />;
@@ -131,9 +157,9 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
         <div className="absolute inset-0 backdrop-blur-[4px] bg-black/70" />
       </div>
 
-      <div className="mx-auto pt-10 relative z-10 max-w-[350px] sm:max-w-[520px] md:max-w-[550px] custom-lg:max-w-[900px]">
+      <div className="mx-auto pt-10 p-3 relative z-10 max-w-[380px] sm:max-w-[520px] md:max-w-[600px] custom-lg:max-w-[900px]">
         <div className="flex flex-col md:flex-row items-center md:items-start">
-          <div className="relative overflow-hidden rounded-lg shadow-lg">
+          <div className="relative overflow-hidden rounded-lg shadow-lg mb-5 min-w-1/2 min-h-[500px]">
             {!posterLoaded && (
               <div className="absolute inset-0 bg-gray-300 animate-pulse z-10 rounded-lg" />
             )}
@@ -150,7 +176,7 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
                   ? mediaData.original_title
                   : mediaData.original_name
               }
-              className="rounded-lg shadow-lg "
+              className="rounded-lg shadow-lg w-full h-full object-cover"
               onLoad={() => setPosterLoaded(true)}
               priority
             />
@@ -169,8 +195,14 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
             <div className="grid custom-lg:flex">
               <p className="text-lg">
                 {isMovie(mediaData)
-                  ? mediaData.release_date
-                  : mediaData.first_air_date || "Unknown Date"}
+                  ? mediaData.release_date || "Unknown Date"
+                  : mediaData.first_air_date || mediaData.last_air_date
+                  ? `${mediaData.first_air_date || ""}${
+                      mediaData.first_air_date && mediaData.last_air_date
+                        ? " - "
+                        : ""
+                    }${mediaData.last_air_date || ""}`
+                  : "Unknown Date"}
               </p>
 
               {(isMovie(mediaData) && mediaData.runtime > 0) ||
@@ -281,7 +313,8 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
           <div className="absolute inset-0 bg-black opacity-50"></div>
           <div
             ref={modalRef}
-            className="bg-white dark:bg-dark p-7 rounded-lg w-[90%] h-[90%] relative z-10"
+            className="
+    bg-white dark:bg-dark p-7 rounded-lg w-[95%] h-[40%] custom-md:h-[60%] md:h-[80%] lg:h-[95%] relative z-10"
           >
             <div className="flex justify-between">
               <h4 className="text-xl"> Play Trailer</h4>
