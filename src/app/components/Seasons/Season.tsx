@@ -32,7 +32,7 @@ function Seasons({ mediaData }: { mediaData: TvTypes }) {
               key={season.id}
               href={`/tv/${mediaData.id}/season/${season.season_number}`}
             >
-              <div className="h-full bg-blue min-w-[230px] rounded-lg p-2 pb-4">
+              <div className="h-full bg-blue w-[230px] rounded-lg p-2 pb-4">
                 <div className="relative w-full h-[300px] overflow-hidden rounded-lg">
                   {!isImageLoaded && (
                     <div className="absolute inset-0 bg-gray-300 animate-pulse z-10 rounded-lg" />

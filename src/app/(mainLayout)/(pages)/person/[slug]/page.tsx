@@ -104,12 +104,12 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
             {actor.biography ? (
               <>
                 {showFullBio || actor.biography.length <= bioLimit
-                  ? actor.biography
-                  : `${actor.biography.slice(0, bioLimit)}...`}
+                  ? `${actor.biography} `
+                  : `${actor.biography.slice(0, bioLimit)}... `}
                 {actor.biography.length > bioLimit && (
                   <button
                     onClick={handleToggleBio}
-                    className="ml-2 text-blue underline text-sm cursor-pointer"
+                    className="text-blue underline text-sm cursor-pointer"
                   >
                     {showFullBio ? "Show less" : "Read more"}
                   </button>
@@ -172,7 +172,7 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
                       <h3 className="text-sm font-semibold truncate">
                         {credit.title || credit.name}
                       </h3>
-                    <p className="text-sm pt-1 pb-2">
+                      <p className="text-sm pt-1 pb-2">
                         Character: {credit.character || "Unknown"}
                       </p>
                     </div>
