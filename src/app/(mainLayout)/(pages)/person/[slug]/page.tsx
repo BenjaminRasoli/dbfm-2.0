@@ -85,7 +85,7 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
 
   return (
     <div className="min-h-screen">
-      <div className="p-7 max-w-[350px] sm:max-w-[520px] md:max-w-[750px] custom-lg:max-w-[900px] mx-auto rounded-lg flex flex-col items-center lg:flex-row lg:items-start">
+      <div className="p-7 max-w-[350px] sm:max-w-[500px] md:max-w-[600px] custom-lg:max-w-[900px] 2xl:max-w-[1100px] mx-auto rounded-lg flex flex-col items-center lg:flex-row lg:items-start">
         <Image
           src={
             actor.profile_path
@@ -132,7 +132,7 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
           </p>
         </div>
       </div>
-      <div className="p-7 max-w-[350px] sm:max-w-[520px] md:max-w-[750px] custom-lg:max-w-[900px] mx-auto">
+      <div className="p-7 max-w-[350px] sm:max-w-[500px] md:max-w-[600px] custom-lg:max-w-[900px] 2xl:max-w-[1100px] mx-auto">
         <h2 className="text-2xl font-semibold mb-4">
           Movies and TV Shows Featuring {actor.name}
         </h2>

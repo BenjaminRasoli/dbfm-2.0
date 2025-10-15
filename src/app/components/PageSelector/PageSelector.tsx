@@ -18,7 +18,7 @@ function PageSelector({
 
   const handlePageChange = (page: number) => {
     if (page < 1 || page > finalTotalPages) page = 1;
-    window.scroll(0, 0);
+    window.scroll(0, 300);
     onPageChange(page);
   };
 

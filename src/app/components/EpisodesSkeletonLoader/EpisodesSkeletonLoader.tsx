@@ -9,8 +9,8 @@ function EpisodesSkeletonLoader() {
           <div className="bg-gray-300 h-10 w-32 rounded-lg animate-pulse"></div>
         </div>
         <div className="text-white mb-6">
-          <div className="bg-gray-300 h-6 w-48 rounded-lg mb-2 animate-pulse"></div>
-          <div className="bg-gray-300 h-6 w-64 rounded-lg animate-pulse"></div>
+          <div className="bg-gray-300 h-6 w-25 rounded-lg mb-2 animate-pulse"></div>
+          <div className="bg-gray-300 h-5 w-35 rounded-lg animate-pulse"></div>
         </div>
         <div className="mt-10 pb-5 flex  overflow-auto gap-6">
           {[...Array(5)].map((_, index) => (
@@ -25,9 +25,9 @@ function EpisodesSkeletonLoader() {
                   <div className="bg-gray-400 rounded h-4 w-10 mb-2 animate-pulse"></div>
                 </div>
 
-                <div className="bg-gray-400 rounded h-3 w-48 mb-2 animate-pulse"></div>
+                <div className="bg-gray-400 rounded h-3 w-30 mb-2 animate-pulse"></div>
                 <div className="bg-gray-400 rounded h-15 w-50 mb-2 animate-pulse"></div>
-                <div className="bg-gray-400 rounded h-3 w-40 mb-2 animate-pulse"></div>
+                <div className="bg-gray-400 rounded h-3 w-30 mb-2 animate-pulse"></div>
                 <div className="bg-gray-400 rounded h-3 w-40 animate-pulse"></div>
               </div>
             </div>

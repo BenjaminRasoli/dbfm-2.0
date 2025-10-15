@@ -7,6 +7,7 @@ import { handleStateChange } from "../utils/HandleStateChange";
 import { MediaTypes } from "../Types/MediaTypes";
 import { sortMedia } from "../components/DropDown/DropDown";
 import QueryParams from "../hooks/QueryParams";
+import Banner from "../components/Banner/Banner";
 
 function Home() {
   const [totalPages, setTotalPages] = useState<number>(1);
@@ -69,8 +70,9 @@ function Home() {
   return (
     <>
       <title>DBFM | Home</title>
+      <Banner />
       <div className="p-7">
-        <h1 className="text-3xl text-blue pb-5">Trending</h1>
+        <h1 className="text-3xl text-blue pt-5">Trending</h1>
         <MovieFilters
           activeFilter={activeFilter}
           handleFilterChange={(value) =>
