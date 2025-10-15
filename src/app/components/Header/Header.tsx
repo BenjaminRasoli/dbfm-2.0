@@ -138,7 +138,7 @@ function Header() {
             { "border-none": isHamburgerOpen }
           )}
         >
-          <div className="bg-white dark:bg-dark rounded-sm pb-1">
+          <div className="bg-white dark:bg-dark rounded-sm">
             <Hamburger
               toggled={isHamburgerOpen}
               toggle={setIsHamburgerOpen}
