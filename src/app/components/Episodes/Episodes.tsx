@@ -23,7 +23,6 @@ function Episodes({
     {}
   );
 
-
   useEffect(() => {
     const fetchData = async () => {
       const { slug, seasonNumber } = await params;
@@ -140,7 +139,7 @@ function Episodes({
             return (
               <div
                 key={episode.id}
-                className="bg-blue rounded-lg overflow-hidden shadow-lg flex-shrink-0 w-[250px] sm:w-[320px] flex flex-col"
+                className="bg-blue rounded-lg overflow-hidden shadow-lg flex-shrink-0 w-[250px] sm:w-[300px] flex flex-col"
               >
                 <div className="relative w-full aspect-[16/9] overflow-hidden">
                   {!isImageLoaded && (
