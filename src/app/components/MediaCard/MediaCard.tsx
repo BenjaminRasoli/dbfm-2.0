@@ -62,7 +62,6 @@ function MediaCard({
                       width={700}
                       height={700}
                       className="w-full h-full object-cover transition-transform duration-300 ease-in-out scale-100 group-hover:scale-110"
-                      priority
                       onLoad={() =>
                         setLoadedImages((prev) => ({
                           ...prev,

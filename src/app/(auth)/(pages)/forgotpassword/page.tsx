@@ -7,6 +7,8 @@ import { IoIosArrowRoundBack, IoIosCheckbox } from "react-icons/io";
 import { auth } from "../../../config/FireBaseConfig";
 import Link from "next/link";
 import { useUser } from "@/app/context/UserProvider";
+import clsx from "clsx";
+import Loading from "@/app/components/Loading/Loading";
 
 function Page() {
   const router = useRouter();
@@ -14,10 +16,12 @@ function Page() {
 
   const [email, setEmail] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   const [success, setSuccess] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     setError(null);
     setSuccess(null);
 
@@ -33,9 +37,11 @@ function Page() {
     try {
       await sendPasswordResetEmail(auth, email);
       setSuccess("Password reset email sent! Check your inbox.");
-      setTimeout(() => router.push("/login"), 1500);
+      setLoading(false);
+      setTimeout(() => router.push("/login"), 2000);
     } catch (error: any) {
       setError(error.message);
+      setLoading(false);
     }
   };
 
@@ -48,7 +54,7 @@ function Page() {
   return (
     <>
       <title>DBFM | Forgot Password</title>
-      <div className="flex items-center justify-center p-6 min-h-screen ">
+      <div className="flex items-center justify-center p-6 min-h-screen">
         <div className="w-full max-w-md bg-white dark:bg-dark-2 p-8 rounded-lg shadow-xl">
           <div className="relative flex items-center mb-4 w-full">
             <h3 className="text-lg  text-blue absolute left-0 hover:text-blue-hover">
@@ -88,9 +94,16 @@ function Page() {
 
             <button
               type="submit"
-              className="cursor-pointer w-full py-3 mt-7 bg-blue text-white rounded-md hover:bg-blue-hover transition duration-200"
+              aria-label="send reset link button"
+              disabled={loading}
+              className={clsx(
+                "w-full py-3 mt-7 rounded-md text-white transition duration-200",
+                loading
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue hover:bg-blue-hover cursor-pointer"
+              )}
             >
-              Send Reset Link
+              {loading ? <Loading size={20} /> : "Send Reset Link"}
             </button>
           </form>
 

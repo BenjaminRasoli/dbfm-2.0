@@ -16,6 +16,8 @@ import { FaGoogle, FaGithub } from "react-icons/fa";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { UserDataTypes } from "@/app/Types/UserDataTypes";
 import { UserDataErrorTypes } from "@/app/Types/UserDataErrorTypes";
+import Loading from "@/app/components/Loading/Loading";
+import clsx from "clsx";
 
 function Page() {
   const { login, user } = useUser();
@@ -29,6 +31,7 @@ function Page() {
     lastName: "",
     uid: "",
   });
+  const [loading, setLoading] = useState<boolean>(false);
 
   const [error, setError] = useState<UserDataErrorTypes>({
     email: "",
@@ -49,6 +52,7 @@ function Page() {
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
 
     let hasError: boolean = false;
     setError({
@@ -125,13 +129,14 @@ function Page() {
         lastName: userData.lastName,
         userName: userData.userName,
       });
-
+      setLoading(false);
       router.push("/");
     } catch (error: any) {
       setError((prev) => ({
         ...prev,
         password: error.message,
       }));
+      setLoading(false);
     }
   };
 
@@ -173,7 +178,7 @@ function Page() {
   return (
     <>
       <title>DBFM | Register</title>
-      <div className="p-6 flex items-center justify-center min-h-screen">
+      <div className="p-6 mb-8 flex items-center justify-center min-h-screen">
         {!user && (
           <div className="w-full max-w-md bg-white dark:bg-dark-2 p-8 rounded-lg shadow-xl">
             <div className="relative flex items-center mb-4 w-full">
@@ -311,10 +316,16 @@ function Page() {
               <div className="flex justify-between mb-4">
                 <button
                   type="submit"
-                  aria-label="Register"
-                  className="cursor-pointer w-full py-3 bg-blue text-white rounded-md hover:bg-blue-hover transition duration-200"
+                  aria-label="Register button"
+                  disabled={loading}
+                  className={clsx(
+                    "w-full py-3 rounded-md text-white transition duration-200",
+                    loading
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : "bg-blue hover:bg-blue-hover cursor-pointer"
+                  )}
                 >
-                  Register
+                  {loading ? <Loading size={20} /> : "Register"}
                 </button>
               </div>
             </form>
