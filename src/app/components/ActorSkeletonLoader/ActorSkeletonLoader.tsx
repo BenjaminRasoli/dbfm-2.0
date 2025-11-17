@@ -2,11 +2,11 @@ function ActorSkeletonLoader() {
   return (
     <div className="min-h-screen">
       <div className="p-7 max-w-[350px] sm:max-w-[570px] md:max-w-[550px] custom-lg:max-w-[950px] mx-auto  rounded-lg flex flex-col lg:flex-row animate-pulse">
-        <div className="mr-6 mb-6 w-[300px] h-[400px] bg-gray-300 rounded-lg"></div>
+        <div className="mr-6 mb-6 w-[320px] h-[450px] bg-gray-300 rounded-lg"></div>
 
         <div className="flex-1">
           <div className="h-8 w-1/2 bg-gray-300 rounded mb-4"></div>
-          <div className="h-60 w-3/4 bg-gray-300 rounded mb-4"></div>
+          <div className="h-54 w-3/4 bg-gray-300 rounded mb-4"></div>
           <div className="h-4 w-40 bg-gray-300 rounded mb-4"></div>
           <div className="h-4 w-70 bg-gray-300 rounded mb-4"></div>
           <div className="h-4 w-30 bg-gray-300 rounded mb-4"></div>
@@ -19,7 +19,7 @@ function ActorSkeletonLoader() {
           {[...Array(6)].map((_, index) => (
             <div
               key={index}
-              className="w-40  flex-shrink-0 bg-gray-300 min-h-[350px] text-white rounded-lg shadow-md overflow-hidden animate-pulse"
+              className="w-50  flex-shrink-0 bg-gray-300 min-h-[350px] text-white rounded-lg shadow-md overflow-hidden animate-pulse"
             >
               <div className="w-full h-56 bg-gray-400 rounded-t-lg"></div>
               <div className="pl-1 mt-2">
