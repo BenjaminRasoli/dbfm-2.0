@@ -159,13 +159,12 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
 
       <div className="mx-auto pt-10 p-3 relative z-10 max-w-[380px] sm:max-w-[500px] md:max-w-[600px] custom-lg:max-w-[900px] 2xl:max-w-[1100px]">
         <div className="flex flex-col md:flex-row items-center md:items-start">
-          <div className="relative overflow-hidden rounded-lg shadow-lg mb-5 min-h-full w-full custom-lg:w-auto">
+          <div className="relative overflow-hidden rounded-lg shadow-lg mb-5 min-h-[600px] h-full min-w-[360px] w-full custom-lg:w-auto">
             {!posterLoaded && (
               <div className="absolute inset-0 bg-gray-300 animate-pulse z-10 rounded-lg" />
             )}
+
             <Image
-              height={470}
-              width={470}
               src={
                 mediaData.poster_path
                   ? `https://image.tmdb.org/t/p/original${mediaData.poster_path}`
@@ -176,9 +175,9 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
                   ? mediaData.original_title
                   : mediaData.original_name
               }
+              fill
               className="rounded-lg shadow-lg w-full h-full object-cover"
               onLoad={() => setPosterLoaded(true)}
-              priority
             />
             <HandleFavorites media={mediaData} />
           </div>

@@ -46,7 +46,6 @@ function Navbar() {
               width={200}
               height={200}
               alt="DATABASEFORMOVIES-blue-logo"
-              priority
             />
           ) : (
             <Image
@@ -60,7 +59,6 @@ function Navbar() {
               width={200}
               height={200}
               alt="DATABASEFORMOVIES-black-logo"
-              priority
               onMouseEnter={() => setHovered(true)}
               onMouseLeave={() => setHovered(false)}
             />

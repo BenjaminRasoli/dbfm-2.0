@@ -14,10 +14,13 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import { MdErrorOutline } from "react-icons/md";
 import { IoIosCheckbox, IoIosArrowRoundBack } from "react-icons/io";
 import { FaGoogle, FaGithub } from "react-icons/fa";
+import Loading from "@/app/components/Loading/Loading";
+import clsx from "clsx";
 
 function Page() {
   const { login, user } = useUser();
   const [email, setEmail] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
   const [emailError, setEmailError] = useState<string>("");
   const [passwordError, setPasswordError] = useState<string>("");
@@ -61,6 +64,7 @@ function Page() {
     if (hasError) return;
 
     try {
+      setLoading(true);
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email,
@@ -86,11 +90,13 @@ function Page() {
         setEmail("");
         setPassword("");
         setLoginText("Login successful.");
+        setLoading(false);
       } else {
         setPasswordError("User data not found.");
       }
     } catch (error: any) {
       setPasswordError(error.message);
+      setLoading(false);
     }
   };
 
@@ -148,7 +154,7 @@ function Page() {
     <>
       <title>DBFM | Login</title>
 
-      <div className="flex items-center p-6 justify-center min-h-screen ">
+      <div className="flex items-center p-6 mb-8 justify-center min-h-screen ">
         {!user && (
           <div className="w-full max-w-md bg-white dark:bg-dark-2 p-8 rounded-lg shadow-xl">
             <div className="relative flex items-center mb-4 w-full">
@@ -223,9 +229,16 @@ function Page() {
 
               <button
                 type="submit"
-                className="cursor-pointer w-full py-3 bg-blue hover:bg-blue-hover rounded-md text-white transition duration-200"
+                aria-label="Login button"
+                disabled={loading}
+                className={clsx(
+                  "w-full py-3 rounded-md text-white transition duration-200",
+                  loading
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-blue hover:bg-blue-hover cursor-pointer"
+                )}
               >
-                Login
+                {loading ? <Loading size={20} /> : "Login"}
               </button>
             </form>
 
