@@ -144,13 +144,18 @@ function Header() {
               toggle={setIsHamburgerOpen}
               direction="left"
               size={20}
+              label="Toggle navigation menu"
             />
           </div>
         </div>
 
         <div className="flex items-center justify-between z-[100000000]">
           <form className="flex items-center gap-2 ml-15 lg:ml-0">
-            <button type="submit" onClick={handleSearch}>
+            <button
+              type="submit"
+              onClick={handleSearch}
+              aria-label="Search movies and TV shows"
+            >
               <IoIosSearch size={20} />
             </button>
             <input
@@ -198,6 +203,7 @@ function Header() {
                         setIsModalOpen(false);
                       }}
                       className="bg-red hover:bg-red-hover rounded-lg w-full p-2 flex items-center gap-2 text-sm cursor-pointer"
+                      aria-label="Logout from DBFM"
                     >
                       Logout <IoIosLogOut />
                     </button>
@@ -205,6 +211,7 @@ function Header() {
                     <button
                       className="mt-3 text-blue text-sm cursor-pointer hover:underline"
                       onClick={() => setIsModalOpen(false)}
+                      aria-label="Close user menu"
                     >
                       Close
                     </button>

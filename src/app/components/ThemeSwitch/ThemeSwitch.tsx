@@ -16,6 +16,7 @@ export default function ThemeSwitch() {
       <button
         onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
         className="relative w-16 h-8 rounded-full bg-gray-300 dark:bg-gray-800 flex items-center justify-between p-1 cursor-pointer transition-colors duration-300"
+        aria-label="Toggle theme between light and dark"
       >
         <motion.div
           className="w-6 h-6 bg-white dark:bg-yellow-400 rounded-full shadow-md flex items-center justify-center"

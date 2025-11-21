@@ -86,9 +86,9 @@ function MediaCard({
                         ))}
 
                       <div className="mt-2">
-                        <h3 className="text-xl font-semibold overflow-hidden text-ellipsis whitespace-nowrap">
+                        <h1 className="text-xl font-semibold overflow-hidden text-ellipsis whitespace-nowrap">
                           {media.title || media.name || "Unknown name"}
-                        </h3>
+                        </h1>
                       </div>
                       <div className="flex justify-between">
                         {media.media_type !== "person" &&

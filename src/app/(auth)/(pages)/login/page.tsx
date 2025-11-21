@@ -242,10 +242,18 @@ function Page() {
               </button>
             </form>
 
-            <div className="mt-4 text-center">
+            <div className="flex items-center py-6">
+              <span className="flex-1 border-t"></span>
+              <span className="px-3 text-dark dark:text-white">
+                Or continue with
+              </span>
+              <span className="flex-1 border-t"></span>
+            </div>
+
+            <div className="text-center">
               <button
                 onClick={() => handleSocialLogin(googleProvider)}
-                className="cursor-pointer w-full py-3 bg-white dark:bg-dark border-2 border-gray-300 rounded-md dark:hover:bg-gray-700 hover:bg-gray-200 transition duration-200 flex items-center justify-center gap-2"
+                className="p-2 cursor-pointer w-full py-3 bg-white dark:bg-dark border-2 border-gray-300 rounded-md dark:hover:bg-gray-700 hover:bg-gray-200 transition duration-200 flex items-center justify-center gap-2"
               >
                 <FaGoogle /> Login with Google
               </button>
@@ -254,14 +262,14 @@ function Page() {
             <div className="mt-4 text-center">
               <button
                 onClick={() => handleSocialLogin(githubProvider)}
-                className="cursor-pointer w-full py-3 bg-white dark:bg-dark border-2 border-gray-300 rounded-md dark:hover:bg-gray-700 hover:bg-gray-200 transition duration-200 flex items-center justify-center gap-2"
+                className="p-2 cursor-pointer w-full py-3 bg-white dark:bg-dark border-2 border-gray-300 rounded-md dark:hover:bg-gray-700 hover:bg-gray-200 transition duration-200 flex items-center justify-center gap-2"
               >
-                <FaGithub /> Login with GitHub
+                <FaGithub /> Login with Github
               </button>
             </div>
 
             <div className="mt-4 text-center">
-              <span className="text-sm">Dont have an account? </span>
+              <span>Dont have an account? </span>
               <Link href="/register" className="text-blue hover:underline">
                 Sign up
               </Link>

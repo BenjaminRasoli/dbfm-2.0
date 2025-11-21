@@ -52,7 +52,6 @@ function Page() {
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
 
     let hasError: boolean = false;
     setError({
@@ -105,6 +104,7 @@ function Page() {
     }
 
     if (hasError) return;
+    setLoading(true);
 
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -313,7 +313,7 @@ function Page() {
                 )}
               </div>
 
-              <div className="flex justify-between mb-4">
+              <div className="flex justify-between">
                 <button
                   type="submit"
                   aria-label="Register button"
@@ -330,7 +330,15 @@ function Page() {
               </div>
             </form>
 
-            <div className="mt-4 text-center">
+            <div className="flex items-center py-6">
+              <span className="flex-1 border-t"></span>
+              <span className="px-3 text-dark dark:text-white">
+                Or continue with
+              </span>
+              <span className="flex-1 border-t"></span>
+            </div>
+
+            <div className="text-center">
               <button
                 onClick={() => handleSocialLogin(googleProvider)}
                 className="cursor-pointer w-full py-3 bg-white dark:bg-dark border-2 border-gray-300 rounded-md dark:hover:bg-gray-700 hover:bg-gray-200 transition duration-200 flex items-center justify-center gap-2"
@@ -349,7 +357,7 @@ function Page() {
             </div>
 
             <div className="mt-4 text-center">
-              <span className="text-sm">Already have an account? </span>
+              <span>Already have an account? </span>
               <Link href="/login" className="text-blue hover:underline">
                 Login
               </Link>
