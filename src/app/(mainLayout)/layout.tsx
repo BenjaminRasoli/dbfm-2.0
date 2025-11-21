@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   icons: {
     icon: "/black_favicon.png",
   },
+  metadataBase: new URL("https://dbfm.vercel.app"),
   openGraph: {
     title: "DBFM - Discover Movies & TV Shows",
     description: "Check out the latest movies, TV shows, and actors on DBFM.",
