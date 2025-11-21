@@ -200,9 +200,9 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
                 )}
               </div>
 
-              <h4 className="text-gray-400 opacity-80 text-lg whitespace-nowrap">
+              <h3 className="text-gray-400 opacity-80 text-lg whitespace-nowrap">
                 {isMovie(mediaData) ? "(Movie)" : "(Tv)"}
-              </h4>
+              </h3>
             </div>
 
             <div className="grid custom-lg:flex">

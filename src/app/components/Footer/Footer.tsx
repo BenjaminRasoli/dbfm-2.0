@@ -15,6 +15,7 @@ function Footer() {
           <Link
             className={pathname === "/" ? "text-blue" : "hover:text-blue"}
             href={"/"}
+            title="Go to DBFM homepage"
           >
             Home
           </Link>
@@ -25,6 +26,7 @@ function Footer() {
               pathname === "/favorites" ? "text-blue" : "hover:text-blue"
             }
             href={"/favorites"}
+            title="Go to DBFM favorites page"
           >
             Favorites
           </Link>
@@ -37,6 +39,7 @@ function Footer() {
                   pathname === "/login" ? "text-blue" : "hover:text-blue"
                 }
                 href={"/login"}
+                title="Go to DBFM login page"
               >
                 Login
               </Link>
@@ -47,6 +50,7 @@ function Footer() {
                   pathname === "/register" ? "text-blue" : "hover:text-blue"
                 }
                 href={"/register"}
+                title="Go to DBFM register page"
               >
                 Register
               </Link>
@@ -56,13 +60,22 @@ function Footer() {
       </ul>
       <ul className="flex justify-center gap-5">
         <li className="hover:text-blue cursor-pointer">
-          <Link target="_blank" href={"https://github.com/BenjaminRasoli"}>
+          <Link
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Visit my GitHub profile"
+            aria-label="Visit my Github profile"
+            href={"https://github.com/BenjaminRasoli"}
+          >
             <FaGithub size={30} />
           </Link>
         </li>
         <li className="hover:text-blue cursor-pointer">
           <Link
             target="_blank"
+            rel="noopener noreferrer"
+            title="Visit my LinkedIn profile"
+            aria-label="Visit my LinkedIn profile"
             href={"https://www.linkedin.com/in/benjamin-rasoli-2948ab300"}
           >
             <FaLinkedin size={30} />
