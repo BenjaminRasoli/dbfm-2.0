@@ -5,6 +5,7 @@ import { Metadata } from "next";
 import { Suspense } from "react";
 import { Providers } from "./context/ThemeProvider";
 import Footer from "./components/Footer/Footer";
+import Snowfall from "./components/Snowfall/Snowfall";
 import "./globals.css";
 
 const roboto = Roboto({
@@ -35,6 +36,7 @@ export default function RootLayout({
       <body
         className={`${roboto.variable} ${cinzel.variable} antialiased bg-white dark:bg-dark flex flex-col`}
       >
+        <Snowfall />
         <div id="modal-root"></div>
         <Providers>
           <UserProvider>
