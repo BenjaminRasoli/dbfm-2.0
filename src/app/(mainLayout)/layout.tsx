@@ -4,6 +4,7 @@ import ScrollToTopButton from "../components/ScrollToTopButton/ScrollToTopButton
 import GlobalTopLoader from "../components/GlobalTopLoader/GlobalTopLoader";
 import { Metadata } from "next";
 import "../globals.css";
+import BottomMenu from "../components/BottomMenu/BottomMenu";
 
 export const metadata: Metadata = {
   title: "DBFM - Discover Movies & TV Shows",
@@ -34,6 +35,7 @@ export default function RootLayout({
         <Header />
         <main className="flex-1 overflow-y-auto">{children}</main>
       </div>
+      <BottomMenu />
       <ScrollToTopButton />
     </div>
   );

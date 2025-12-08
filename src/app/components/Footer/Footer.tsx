@@ -9,7 +9,7 @@ function Footer() {
   const pathname = usePathname();
 
   return (
-    <div className="bg-white dark:bg-dark text-center gap-5 flex flex-col justify-center items-center w-full py-10 border-t-1 border-gray-600 dark:border-gray-800">
+    <div className="bg-white mb-20 md:mb-0 dark:bg-dark text-center gap-5 flex flex-col justify-center items-center w-full py-10 border-t-1 border-gray-600 dark:border-gray-800">
       <ul className="flex justify-center gap-5 text-lg">
         <li>
           <Link

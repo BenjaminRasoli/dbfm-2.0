@@ -25,7 +25,7 @@ function ScrollToTopButton() {
 
   return (
     <div
-      className={`fixed bottom-6 right-6 z-50 transition-opacity duration-500  ${
+      className={`hidden md:block fixed bottom-2 right-2 z-50 transition-opacity duration-500  ${
         isVisible ? "opacity-100" : "opacity-0"
       }`}
       onClick={scrollToTop}
@@ -33,7 +33,7 @@ function ScrollToTopButton() {
       <button aria-label="Scroll to top">
         <FaArrowCircleUp
           size={40}
-          className="text-white dark:text-black cursor-pointer rounded-full bg-black dark:bg-white hover:bg-blue-500 transition-all duration-300 ease-in-out"
+          className="text-white dark:text-black cursor-pointer rounded-full bg-black dark:bg-white hover:bg-blue transition-all duration-300 ease-in-out"
         />
       </button>
     </div>

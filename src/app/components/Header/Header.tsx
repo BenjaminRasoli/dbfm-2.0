@@ -98,7 +98,7 @@ function Header() {
                 href="/"
                 className={`grid  relative border-b-2 group transition-all duration-300 ${
                   pathname === "/"
-                    ? "border-blue-500 text-blue-500"
+                    ? "border-blue text-blue"
                     : "border-gray-600 dark:border-gray-800"
                 }`}
               >
@@ -108,7 +108,7 @@ function Header() {
                 href="/favorites"
                 className={`grid  relative border-b-2 group transition-all duration-300 ${
                   pathname === "/favorites"
-                    ? "border-blue-500 text-blue-500"
+                    ? "border-blue text-blue"
                     : "border-gray-600 dark:border-gray-800"
                 }`}
               >
@@ -121,7 +121,7 @@ function Header() {
                   href={`/genres/${genre.id}`}
                   className={`grid  relative border-b-2 group transition-all duration-300 ${
                     pathname === `/genres/${genre.id}`
-                      ? "border-blue-500 text-blue-500"
+                      ? "border-blue text-blue"
                       : "border-gray-600 dark:border-gray-800"
                   }`}
                 >
@@ -160,7 +160,7 @@ function Header() {
             </button>
             <input
               type="text"
-              className="outline-none w-32 lg:w-96"
+              className="outline-none w-32 lg:w-[27rem]"
               placeholder="Search..."
               value={searchWord}
               ref={inputRef}
