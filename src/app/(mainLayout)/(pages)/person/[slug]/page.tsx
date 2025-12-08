@@ -85,7 +85,7 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
 
   return (
     <div className="min-h-screen">
-      <div className="p-7 max-w-[350px] sm:max-w-[500px] md:max-w-[600px] custom-lg:max-w-[900px] 2xl:max-w-[1100px] mx-auto rounded-lg flex flex-col items-center lg:flex-row lg:items-start">
+      <div className="p-7 w-[400px] sm:max-w-[500px] md:max-w-[600px] custom-lg:max-w-[900px] 2xl:max-w-[1100px] mx-auto rounded-lg flex flex-col items-center lg:flex-row lg:items-start">
         <Image
           src={
             actor.profile_path
@@ -93,7 +93,7 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
               : PersonPoster
           }
           alt={actor.name}
-          className="mb-5 w-[300px] h-full object-cover rounded-lg lg:mr-6"
+          className="mb-5 w-[400px] h-full object-cover rounded-lg lg:mr-6"
           height={700}
           width={700}
         />
@@ -132,7 +132,7 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
           </p>
         </div>
       </div>
-      <div className="p-7 max-w-[350px] sm:max-w-[500px] md:max-w-[600px] custom-lg:max-w-[900px] 2xl:max-w-[1100px] mx-auto">
+      <div className="p-7 max-w-[400px] sm:max-w-[500px] md:max-w-[600px] custom-lg:max-w-[900px] 2xl:max-w-[1100px] mx-auto">
         <h2 className="text-2xl font-semibold mb-4">
           Movies and TV Shows Featuring {actor.name}
         </h2>

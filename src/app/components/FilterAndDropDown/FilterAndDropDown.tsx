@@ -15,7 +15,14 @@ function MovieFilters({
         handleFilterChange={handleFilterChange}
       />
       <CustomDropdown
-        options={["A-Z", "Date", "Rating"]}
+        options={[
+          "A-Z",
+          "Date",
+          "Rating",
+          "Z-A",
+          "Date (Oldest)",
+          "Rating (Lowest)",
+        ]}
         selectedOption={
           sortOption === "standard"
             ? "Sort by"
@@ -23,6 +30,12 @@ function MovieFilters({
             ? "Date"
             : sortOption === "Rating"
             ? "Rating"
+            : sortOption === "Z-A"
+            ? "Z-A"
+            : sortOption === "Date (Oldest)"
+            ? "Date (Oldest)"
+            : sortOption === "Rating (Lowest)"
+            ? "Rating (Lowest)"
             : "A-Z"
         }
         onSelect={handleSortChange}

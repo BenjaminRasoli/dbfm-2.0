@@ -1,7 +1,7 @@
 function ActorSkeletonLoader() {
   return (
     <div className="min-h-screen">
-      <div className="p-7 max-w-[350px] sm:max-w-[570px] md:max-w-[550px] custom-lg:max-w-[950px] mx-auto  rounded-lg flex flex-col lg:flex-row animate-pulse">
+      <div className="p-7 max-w-[400px] sm:max-w-[570px] md:max-w-[550px] custom-lg:max-w-[950px] mx-auto  rounded-lg flex flex-col lg:flex-row animate-pulse">
         <div className="mr-6 mb-6 w-[320px] h-[450px] bg-gray-300 rounded-lg"></div>
 
         <div className="flex-1">
