@@ -168,7 +168,7 @@ function Episodes({
                     </span>
                   </div>
                   <h3>{episode?.name}</h3>
-                  <p className="text-sm text-white">
+                  <p className="text-sm py-4 text-white">
                     {episode?.overview || "No Overview"}
                   </p>
 
