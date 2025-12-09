@@ -9,12 +9,15 @@ import MovieTvPlaceholder from "../../images/MediaImagePlaceholder.jpg";
 import PersonPlaceholder from "../../images/PersonImagePlaceholder.jpg";
 import Link from "next/link";
 import HandleFavorites from "@/app/components/HandleFavorites/HandleFavorites";
+import HandleWatched from "../HandleWacthed/HandleWacthed";
 
 function MediaCard({
   media,
   loading,
   favorites,
   setFavorites,
+  watched,
+  setWatched
 }: MediaCardTypes) {
   const [loadedImages, setLoadedImages] = useState<{ [id: number]: boolean }>(
     {}
@@ -50,6 +53,11 @@ function MediaCard({
                   media={media}
                   favorites={favorites}
                   setFavorites={setFavorites}
+                />
+                <HandleWatched
+                  media={media}
+                  watched={watched}
+                  setWatched={setWatched}
                 />
                 <Link href={href} className="block w-full h-full group">
                   <div className="relative w-full aspect-[2/3] overflow-hidden rounded-t-lg">

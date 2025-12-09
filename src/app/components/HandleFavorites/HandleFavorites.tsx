@@ -159,6 +159,7 @@ function HandleFavorites({ media, favorites, setFavorites }: FavoriteTypes) {
     <>
       {media.media_type !== "person" && media.gender == null && (
         <div
+          title="Add to favorites"
           className="absolute top-2 left-2 z-10 p-2 cursor-pointer bg-dark-100 text-white rounded-lg"
           onClick={() => {
             if (isMediaType(media)) {

@@ -4,6 +4,7 @@ import React from "react";
 import { FaHome, FaStar, FaUser } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 import { useUser } from "@/app/context/UserProvider";
+import { ImCheckmark } from "react-icons/im";
 
 function BottomMenu() {
   const pathname = usePathname();
@@ -38,16 +39,16 @@ function BottomMenu() {
 
       {user ? (
         <Link
-          href="/profile"
+          href="/watched"
           className={`flex flex-col items-center px-6 py-2 rounded-lg transition ${
-            isActive("/profile") ? "text-blue" : "hover:text-blue"
+            isActive("/watched") ? "text-blue" : "hover:text-blue"
           }`}
         >
-          <FaUser
+          <ImCheckmark
             size={24}
-            color={isActive("/profile") ? "#2d99ff" : "currentColor"}
+            color={isActive("/watched") ? "#2d99ff" : "currentColor"}
           />
-          <span className="text-sm">Profile</span>
+          <span className="text-sm">Watched</span>
         </Link>
       ) : (
         <Link
