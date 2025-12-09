@@ -137,34 +137,28 @@ function Page() {
         )}
 
         {loading ? (
-          <div className="flex justify-center items-center mt-15 min-h-[50dvh]">
+          <div className="flex justify-center items-center mt-15 min-h-[70dvh]">
             <Loading size={100} />
           </div>
         ) : filteredFavorites.length === 0 ? (
-          <div className="text-xl text-center pt-10">
-            {activeFilter === "movie" ? (
-              <p>No movies found in your favorites.</p>
-            ) : activeFilter === "tv" ? (
-              <p>No TV shows found in your favorites.</p>
-            ) : (
-              <div>
-                {!user ? (
-                  <div className="min-h-[40dvh] ">
-                    <p>You must be logged in to view your favorites.</p>{" "}
-                    <Link className="text-blue" href={"/login"}>
-                      Login
-                    </Link>
-                  </div>
-                ) : (
-                  <div className="min-h-[40dvh]">
-                    <p>No favorites yet. Start adding some</p>
-                    <Link className="text-blue" href={"/"}>
-                      Home
-                    </Link>
-                  </div>
-                )}
-              </div>
-            )}
+          <div className="text-xl text-center pt-10 min-h-[70dvh]">
+            <div>
+              {!user ? (
+                <div className="min-h-[40dvh] ">
+                  <p>You must be logged in to view your favorites list.</p>{" "}
+                  <Link className="text-blue" href={"/login"}>
+                    Login
+                  </Link>
+                </div>
+              ) : (
+                <div className="min-h-[70dvh]">
+                  <p>No favorites yet. Start adding some</p>
+                  <Link className="text-blue" href={"/"}>
+                    Home
+                  </Link>
+                </div>
+              )}
+            </div>
           </div>
         ) : (
           <MediaCard

@@ -3,10 +3,10 @@ function EpisodesSkeletonLoader() {
     <div className="relative bg-cover bg-center py-14 p-4">
       <div className="absolute inset-0 z-0  bg-white dark:bg-dark"></div>
       <div className="relative mx-auto z-10 max-w-[400px] sm:max-w-[570px] md:max-w-[550px] custom-lg:max-w-[950px] ">
-        <div className="bg-gray-300 h-8 w-25 rounded-lg mb-5 animate-pulse"></div>
+        <div className="bg-gray-300 h-8 w-16 rounded-lg mb-5 animate-pulse"></div>
         <div className="flex gap-3 flex-col md:flex-row md:justify-between md:items-center mb-6 mt-6">
-          <div className="bg-gray-300 h-8 w-32 rounded-lg animate-pulse"></div>
-          <div className="bg-gray-300 h-8 w-32 rounded-lg animate-pulse"></div>
+          <div className="bg-gray-300 h-10 w-38 rounded-lg animate-pulse"></div>
+          <div className="bg-gray-300 h-10 w-38 rounded-lg animate-pulse"></div>
         </div>
         <div className="text-white mb-6">
           <div className="bg-gray-300 h-6 w-25 rounded-lg mb-2 animate-pulse"></div>
