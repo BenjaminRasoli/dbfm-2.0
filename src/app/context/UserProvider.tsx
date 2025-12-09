@@ -8,6 +8,7 @@ import {
 } from "react";
 import { UserContextTypes } from "../Types/UserContextTypes";
 import { UserDataSavedTypes } from "../Types/UserDataTypes";
+import { useRouter } from "next/navigation";
 
 const UserContext = createContext<UserContextTypes | null>(null);
 
@@ -29,6 +30,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const [user, setUser] = useState<UserDataSavedTypes | null>(null);
   const [isHydrating, setIsHydrating] = useState(true);
 
+  const router = useRouter();
+
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -44,7 +47,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   const logout = () => {
     localStorage.removeItem("user");
-    localStorage.removeItem("favoriteMovies");
+    router.push("/");
     setUser(null);
   };
 

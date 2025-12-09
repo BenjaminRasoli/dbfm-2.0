@@ -114,6 +114,16 @@ function Header() {
               >
                 Favorites
               </Link>
+              <Link
+                href="/watched"
+                className={`grid  relative border-b-2 group transition-all duration-300 ${
+                  pathname === "/watched"
+                    ? "border-blue text-blue"
+                    : "border-gray-600 dark:border-gray-800"
+                }`}
+              >
+                Watched
+              </Link>
 
               {genres?.map((genre: GenresType) => (
                 <Link
