@@ -46,7 +46,7 @@ function LoginModal({ isModalOpen, setIsModalOpen }: LoginModalTypes) {
         </button>
 
         <p className="text-lg font-semibold text-center my-auto">
-          Please Register or Login to add media to your favorite list
+          Please Register or Login to save media
         </p>
 
         <div className="flex justify-between px-10 mt-6">

@@ -39,7 +39,7 @@ function FilterButtons({
     { label: "Tv", value: "tv" },
   ];
 
-  if (pathname !== "/favorites") {
+  if (pathname !== "/favorites" && pathname !== "/watched") {
     filterOptions.push({ label: "Actors", value: "person" });
   }
 

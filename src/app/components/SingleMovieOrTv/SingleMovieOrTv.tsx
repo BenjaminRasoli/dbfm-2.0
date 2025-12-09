@@ -89,7 +89,12 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
         );
         const wereToWatchData = await wereToWatchResponse.json();
 
-        setMediaData(data.mediaData);
+        const mediaWithType = {
+          ...data.mediaData,
+          media_type: isMovie(data.mediaData) ? "movie" : "tv",
+        };
+
+        setMediaData(mediaWithType);
         setReviews(data.reviewsData);
         setVideo(data.videoData.results);
         setActors(data.actorsData);

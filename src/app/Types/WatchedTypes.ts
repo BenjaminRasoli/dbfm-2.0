@@ -3,11 +3,8 @@ import { MediaTypes } from "./MediaTypes";
 import { MovieTypes } from "./MovieTypes";
 import { TvTypes } from "./TvTypes";
 
-export interface MediaCardTypes {
-  media: MediaTypes[];
-  loading: boolean | null;
-  favorites?: Array<MovieTypes | TvTypes | MediaTypes>;
-  setFavorites?: Dispatch<SetStateAction<MediaTypes[]>> | undefined;
+export interface WatchedTypes {
+  media: MovieTypes | TvTypes | MediaTypes;
   watched?: Array<MovieTypes | TvTypes | MediaTypes>;
   setWatched?: Dispatch<SetStateAction<MediaTypes[]>> | undefined;
 }

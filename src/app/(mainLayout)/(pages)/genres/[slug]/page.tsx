@@ -67,31 +67,50 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
   useEffect(() => {
     if (media?.length > 0) {
       const sorted = sortMedia({ sortType: sortOption, media });
-      setSortedMedia(sorted);
+
+      const sortedWithMediaType = sorted.map((item) => ({
+        ...item,
+        media_type: "movie",
+      }));
+
+      setSortedMedia(sortedWithMediaType);
     }
   }, [sortOption, media]);
 
   return (
     <div className="p-7">
       <section className="border-b-1 border-gray-600 dark:border-gray-800">
-          <h1 className="text-3xl max-w-xl text-blue pb-5">
-            {genreName && genreName} Movies
-          </h1>
+        <h1 className="text-3xl max-w-xl text-blue pb-5">
+          {genreName && genreName} Movies
+        </h1>
         <div className="flex justify-end">
-            <CustomDropdown
-              options={["A-Z", "Date", "Rating"]}
-              selectedOption={
-                sortOption === "standard"
-                  ? "Sort by"
-                  : sortOption === "Date"
-                  ? "Date"
-                  : sortOption === "Rating"
-                  ? "Rating"
-                  : "A-Z"
-              }
-              onSelect={(newSort: string) => setSortOption(newSort)}
-              sortOption={sortOption}
-            />
+          <CustomDropdown
+            options={[
+              "A-Z",
+              "Date",
+              "Rating",
+              "Z-A",
+              "Date (Oldest)",
+              "Rating (Lowest)",
+            ]}
+            selectedOption={
+              sortOption === "standard"
+                ? "Sort by"
+                : sortOption === "Date"
+                ? "Date"
+                : sortOption === "Rating"
+                ? "Rating"
+                : sortOption === "Z-A"
+                ? "Z-A"
+                : sortOption === "Date (Oldest)"
+                ? "Date (Oldest)"
+                : sortOption === "Rating (Lowest)"
+                ? "Rating (Lowest)"
+                : "A-Z"
+            }
+            onSelect={(newSort: string) => setSortOption(newSort)}
+            sortOption={sortOption}
+          />
         </div>
       </section>
       <MediaCard media={sortedMedia} loading={loading} />

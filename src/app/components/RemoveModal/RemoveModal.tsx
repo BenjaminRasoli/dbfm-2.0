@@ -66,7 +66,7 @@ function RemoveModal({
           <span className="font-bold text-blue break-words">
             {itemToRemove.title || itemToRemove.name}
           </span>
-          &quot; from your favorites?
+          &quot;
         </p>
 
         <div className="flex justify-between px-5 gap-2 mt-6">
