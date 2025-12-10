@@ -17,6 +17,7 @@ import { FavoriteTypes } from "../../Types/FavoritesTypes";
 import { MediaTypes } from "@/app/Types/MediaTypes";
 import { MovieTypes } from "@/app/Types/MovieTypes";
 import { TvTypes } from "@/app/Types/TvTypes";
+import { useRouter } from "next/navigation";
 
 function HandleFavorites({ media, favorites, setFavorites }: FavoriteTypes) {
   const [localFavorites, setLocalFavorites] = useState<MediaTypes[]>([]);
@@ -25,6 +26,8 @@ function HandleFavorites({ media, favorites, setFavorites }: FavoriteTypes) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [itemToRemove, setItemToRemove] = useState<any | null>(null);
 
+  
+  const router = useRouter();
   const { user } = useUser();
 
   useEffect(() => {
@@ -108,6 +111,7 @@ function HandleFavorites({ media, favorites, setFavorites }: FavoriteTypes) {
               updatedFavorite,
             ]);
           }
+          router.refresh();
         }
       } catch (error) {
         console.error("Error adding/removing movie to/from favorites:", error);
@@ -146,6 +150,7 @@ function HandleFavorites({ media, favorites, setFavorites }: FavoriteTypes) {
             prevFavorites.filter((favorite) => favorite.id !== itemToRemove.id)
           );
         }
+        router.refresh();
       } catch (error) {
         console.error("Error removing movie from favorites:", error);
       }

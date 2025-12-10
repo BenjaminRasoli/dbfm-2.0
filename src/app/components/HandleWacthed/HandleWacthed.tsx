@@ -17,6 +17,7 @@ import { WatchedTypes } from "@/app/Types/WatchedTypes";
 import { MediaTypes } from "@/app/Types/MediaTypes";
 import { MovieTypes } from "@/app/Types/MovieTypes";
 import { TvTypes } from "@/app/Types/TvTypes";
+import { useRouter } from "next/navigation";
 
 function HandleWatched({ media, watched, setWatched }: WatchedTypes) {
   const [localWatched, setLocalWatched] = useState<MediaTypes[]>([]);
@@ -25,6 +26,7 @@ function HandleWatched({ media, watched, setWatched }: WatchedTypes) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [itemToRemove, setItemToRemove] = useState<any | null>(null);
 
+  const router = useRouter();
   const { user } = useUser();
 
   useEffect(() => {
@@ -107,6 +109,7 @@ function HandleWatched({ media, watched, setWatched }: WatchedTypes) {
         if (!watched) {
           setLocalWatched((prev: any) => [...prev, updatedWatched]);
         }
+        router.refresh();
       }
     } catch (error) {
       console.error("Error adding/removing watched item:", error);
@@ -149,6 +152,7 @@ function HandleWatched({ media, watched, setWatched }: WatchedTypes) {
             prev.filter((item) => item.id !== itemToRemove.id)
           );
         }
+        router.refresh();
       } catch (error) {
         console.error("Error removing item from watched:", error);
       }
