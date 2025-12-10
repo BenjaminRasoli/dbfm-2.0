@@ -8,29 +8,13 @@ import DBFMLogoBlue from "../../images/DATABASEFORMOVIES-logos_blue.png";
 import DBFMLogoWhite from "../../images/DATABASEFORMOVIES-logos_white.png";
 import Link from "next/link";
 import Image from "next/image";
+import { NavbarProps } from "@/app/Types/NavbarProps";
 
-function Navbar() {
-  const [genres, setGenres] = useState<GenresType[]>([]);
+function Navbar({ genres }: NavbarProps) {
   const [hovered, setHovered] = useState<boolean>(false);
   const { resolvedTheme } = useTheme();
 
   const pathname = usePathname();
-
-  useEffect(() => {
-    const getGenres = async () => {
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getNavbarGenres`
-        );
-        const data = await res.json();
-        setGenres(data.genres);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    getGenres();
-  }, []);
 
   useEffect(() => {
     setHovered(false);

@@ -1,49 +1,20 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { MediaTypes } from "@/app/Types/MediaTypes";
+import React from "react";
 import Image from "next/image";
+import { BannerProps } from "@/app/Types/BannerProps";
 
-function Banner() {
-  const [media, setMedia] = useState<MediaTypes | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    const fetchTrending = async () => {
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getMedias?type=movie&page=1`
-        );
-        const data = await res.json();
-        if (data.results && data.results.length > 0) {
-          const randomIndex = Math.floor(Math.random() * data.results.length);
-          const selectedMedia = data.results[randomIndex];
-          setMedia(selectedMedia);
-        }
-      } catch (err) {
-        console.error("Error fetching trending for banner:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTrending();
-  }, []);
-
-  const title = media?.title || media?.name || "Featured Media";
-
-  const backdropUrl = media?.backdrop_path
-    ? `https://media.themoviedb.org/t/p/w1920_and_h600_multi_faces_filter(duotone,00192f,00baff)${media.backdrop_path}`
+function Banner({ backdropPath }: BannerProps) {
+  const backdropUrl = backdropPath
+    ? `https://media.themoviedb.org/t/p/w1920_and_h600_multi_faces_filter(duotone,00192f,00baff)${backdropPath}`
     : "";
 
   return (
     <div className="relative w-full h-[40dvh] text-white overflow-hidden">
       <div className="absolute inset-0">
-        {loading ? (
-          <div className="w-full h-full bg-gray-400 animate-pulse" />
-        ) : media?.backdrop_path ? (
+        {backdropPath ? (
           <Image
             src={backdropUrl}
-            alt={title}
+            alt="Featured Media"
             fill
             className="object-cover"
             priority

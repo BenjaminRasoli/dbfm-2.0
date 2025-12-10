@@ -1,6 +1,12 @@
 import { MediaTypes } from "@/app/Types/MediaTypes";
+import { MovieTypes } from "@/app/Types/MovieTypes";
+import { TvTypes } from "@/app/Types/TvTypes";
 
-function SingleSkeletonLoader({ mediaData }: { mediaData: MediaTypes | null }) {
+function SingleSkeletonLoader({
+  mediaData,
+}: {
+  mediaData: MediaTypes | MovieTypes | TvTypes | null;
+}) {
   const isMovie = mediaData && mediaData.original_title !== undefined;
 
   return (
