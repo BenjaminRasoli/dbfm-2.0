@@ -1,6 +1,6 @@
 import HomeClient from "../components/HomeClient/HomeClient";
 import { MediaTypes } from "../Types/MediaTypes";
-//`${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getMedias?type${type}&page=${page}`
+
 async function getMedia(type: string, page: number) {
   try {
     const apiUrl = `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getMedias?type=${type}&page=${page}`;

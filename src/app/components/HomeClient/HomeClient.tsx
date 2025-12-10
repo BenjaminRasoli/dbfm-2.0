@@ -21,6 +21,11 @@ export default function HomeClient({
   const [media, setMedia] = useState<MediaTypes[]>(initialMedia);
   const [sortedMedia, setSortedMedia] = useState<MediaTypes[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [banner, setBanner] = useState<string | null>(bannerBackdrop);
+
+  useEffect(() => {
+    setBanner(bannerBackdrop);
+  }, []);
 
   const {
     page,
@@ -69,7 +74,7 @@ export default function HomeClient({
   return (
     <>
       <title>DBFM | Home</title>
-      <Banner backdropPath={bannerBackdrop} />
+      <Banner backdropPath={banner} />
       <div className="p-7">
         <h1 className="text-3xl text-blue pt-5">Trending</h1>
         <MovieFilters
