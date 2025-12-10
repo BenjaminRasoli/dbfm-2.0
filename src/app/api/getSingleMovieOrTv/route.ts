@@ -1,49 +1,33 @@
-import { FetchSingleTypes } from "@/app/Types/FetchSingleMovieOrTvTypes";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-async function fetchFromTMDB({ type, id, endpoint }: FetchSingleTypes) {
+async function fetchFromTMDB(type: string, id: string, endpoint: string) {
   const apiUrl = `https://api.themoviedb.org/3/${type}/${id}${endpoint}?api_key=${process.env.APIKEY}&language=en-US`;
+
   const response = await fetch(apiUrl);
 
   if (!response.ok) {
-    throw new Error(`Failed to fetch from TMDB: ${response.statusText}`);
+    throw new Error(`Failed fetching TMDB: ${response.statusText}`);
   }
+
   return response.json();
 }
 
 export async function GET(req: NextRequest) {
   const url = new URL(req.url);
+
   const type = url.searchParams.get("type");
   const id = url.searchParams.get("id");
+  const endpoint = url.searchParams.get("endpoint") ?? "";
 
   if (!type || !id) {
-    return new Response(JSON.stringify({ error: "Missing type or id" }), {
-      status: 400,
-    });
+    return NextResponse.json({ error: "Missing type or id" }, { status: 400 });
   }
 
   try {
-    const mediaData = await fetchFromTMDB({ type, id, endpoint: "" });
-    const videoData = await fetchFromTMDB({ type, id, endpoint: "/videos" });
-    const actorsData = await fetchFromTMDB({
-      type,
-      id,
-      endpoint: type === "movie" ? "/credits" : "/aggregate_credits",
-    });
-    const reviewsData = await fetchFromTMDB({ type, id, endpoint: "/reviews" });
+    const data = await fetchFromTMDB(type, id, endpoint);
 
-    return new Response(
-      JSON.stringify({
-        mediaData,
-        videoData,
-        actorsData: actorsData.cast,
-        reviewsData: reviewsData.results,
-      }),
-      { status: 200 }
-    );
-  } catch (error) {
-    return new Response(JSON.stringify({ error: error }), {
-      status: 500,
-    });
+    return NextResponse.json(data);
+  } catch (err: any) {
+    return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }

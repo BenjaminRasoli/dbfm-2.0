@@ -14,11 +14,9 @@ const UserContext = createContext<UserContextTypes | null>(null);
 
 export const useUser = (): UserContextTypes => {
   const context = useContext(UserContext);
-
   if (!context) {
     throw new Error("useUser must be used within a UserProvider");
   }
-
   return context;
 };
 
@@ -26,16 +24,27 @@ interface UserProviderProps {
   children: ReactNode;
 }
 
+async function updateCookie(action: "set" | "remove", userId?: string) {
+  await fetch(`${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/userCookie`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ action, userId }),
+  });
+}
+
 export const UserProvider = ({ children }: UserProviderProps) => {
   const [user, setUser] = useState<UserDataSavedTypes | null>(null);
   const [isHydrating, setIsHydrating] = useState(true);
-
   const router = useRouter();
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      const userData = JSON.parse(storedUser);
+      setUser(userData);
+      if (userData.uid) {
+        updateCookie("set", userData.uid);
+      }
     }
     setIsHydrating(false);
   }, []);
@@ -43,17 +52,19 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const login = (userData: UserDataSavedTypes) => {
     localStorage.setItem("user", JSON.stringify(userData));
     setUser(userData);
+    if (userData.uid) {
+      updateCookie("set", userData.uid);
+    }
   };
 
   const logout = () => {
     localStorage.removeItem("user");
+    updateCookie("remove");
     router.push("/");
     setUser(null);
   };
 
-  if (isHydrating) {
-    return null;
-  }
+  if (isHydrating) return null;
 
   return (
     <UserContext.Provider value={{ user, login, logout }}>

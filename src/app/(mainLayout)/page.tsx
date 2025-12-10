@@ -1,99 +1,83 @@
-"use client";
-import { useEffect, useState } from "react";
-import MediaCard from "../components/MediaCard/MediaCard";
-import MovieFilters from "../components/FilterAndDropDown/FilterAndDropDown";
-import PageSelector from "../components/PageSelector/PageSelector";
-import { handleStateChange } from "../utils/HandleStateChange";
+import HomeClient from "../components/HomeClient/HomeClient";
 import { MediaTypes } from "../Types/MediaTypes";
-import { sortMedia } from "../components/DropDown/DropDown";
-import QueryParams from "../hooks/QueryParams";
-import Banner from "../components/Banner/Banner";
+//`${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getMedias?type${type}&page=${page}`
+async function getMedia(type: string, page: number) {
+  try {
+    const apiUrl = `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getMedias?type=${type}&page=${page}`;
+    const res = await fetch(apiUrl, { cache: "no-store" });
 
-function Home() {
-  const [totalPages, setTotalPages] = useState<number>(1);
-  const [media, setMedia] = useState<MediaTypes[]>([]);
-  const [sortedMedia, setSortedMedia] = useState<MediaTypes[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [initialized, setInitialized] = useState(false);
-  const [error, setError] = useState<unknown>("");
-
-  const {
-    page,
-    sortOption,
-    activeFilter,
-    setPage,
-    setSortOption,
-    setActiveFilter,
-  } = QueryParams();
-
-  useEffect(() => {
-    setInitialized(true);
-  }, []);
-
-  useEffect(() => {
-    if (initialized && activeFilter && page) {
-      setLoading(true);
-      setError("");
-
-      const fetchMedia = async () => {
-        try {
-          const res = await fetch(
-            `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getMedias?type=${activeFilter}&page=${page}`
-          );
-          const data = await res.json();
-          setMedia(data.results);
-          setTotalPages(data.total_pages);
-        } catch (error) {
-          setError(error);
-        } finally {
-          setLoading(false);
-        }
-      };
-
-      fetchMedia();
+    if (!res.ok) {
+      throw new Error("Failed to fetch media");
     }
-  }, [activeFilter, page, initialized]);
 
-  useEffect(() => {
-    if (media?.length > 0) {
-      const sorted = sortMedia({ sortType: sortOption, media });
-      setSortedMedia(sorted);
-    }
-  }, [sortOption, media]);
-  if (error) {
-    return (
-      <div className="p-7 text-center text-red">
-        Failed to fetch: {String(error)}
-      </div>
-    );
+    const data = await res.json();
+    return {
+      results: data.results as MediaTypes[],
+      total_pages: data.total_pages as number,
+    };
+  } catch (error) {
+    console.error("Error fetching media:", error);
+    return {
+      results: [] as MediaTypes[],
+      total_pages: 1,
+    };
   }
-  return (
-    <>
-      <title>DBFM | Home</title>
-      <Banner />
-      <div className="p-7">
-        <h1 className="text-3xl text-blue pt-5">Trending</h1>
-        <MovieFilters
-          activeFilter={activeFilter}
-          handleFilterChange={(value) =>
-            handleStateChange(setActiveFilter, true)(value, setPage)
-          }
-          sortOption={sortOption}
-          handleSortChange={(value) =>
-            handleStateChange(setSortOption)(value, setPage)
-          }
-        />
-        <MediaCard media={sortedMedia} loading={loading} />
-        <PageSelector
-          currentPage={page}
-          totalPages={totalPages}
-          onPageChange={(newPage) =>
-            handleStateChange(setPage)(newPage, setPage)
-          }
-        />
-      </div>
-    </>
-  );
 }
 
-export default Home;
+async function getBannerBackdrop(): Promise<string | null> {
+  try {
+    const apiUrl = `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getMedias?type=movie&page=1`;
+    const res = await fetch(apiUrl, {
+      next: { revalidate: 3600 },
+    });
+
+    if (!res.ok) {
+      return null;
+    }
+
+    const data = await res.json();
+    if (data.results && data.results.length > 0) {
+      const mediaWithBackdrop = data.results.filter(
+        (media: MediaTypes) => media.backdrop_path
+      );
+
+      if (mediaWithBackdrop.length > 0) {
+        const randomIndex = Math.floor(
+          Math.random() * mediaWithBackdrop.length
+        );
+        return mediaWithBackdrop[randomIndex].backdrop_path;
+      }
+    }
+
+    return null;
+  } catch (error) {
+    console.error("Error fetching banner backdrop:", error);
+    return null;
+  }
+}
+
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ type?: string; page?: string }>;
+}) {
+  const params = await searchParams;
+  const activeFilter = params.type || "all";
+  const page = parseInt(params.page || "1", 10);
+
+  const filterType = activeFilter === "all" ? "movie" : activeFilter;
+  const [mediaData, bannerBackdrop] = await Promise.all([
+    getMedia(filterType, page),
+    getBannerBackdrop(),
+  ]);
+
+  return (
+    <HomeClient
+      initialMedia={mediaData.results}
+      initialTotalPages={mediaData.total_pages}
+      initialActiveFilter={activeFilter}
+      initialPage={page}
+      bannerBackdrop={bannerBackdrop}
+    />
+  );
+}

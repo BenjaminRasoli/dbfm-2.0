@@ -11,6 +11,7 @@
   "dependencies": {
     "clsx": "^2.1.1",
     "firebase": "^11.4.0",
+    "firebase-admin": "^13.6.0",
     "framer-motion": "^12.5.0",
     "hamburger-react": "^2.5.2",
     "next": "15.2.6",

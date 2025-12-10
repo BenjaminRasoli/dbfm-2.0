@@ -12,13 +12,13 @@ import Image from "next/image";
 import Link from "next/link";
 import LogoutModal from "../LogoutModal/LogoutModal";
 import ThemeSwitch from "../ThemeSwitch/ThemeSwitch";
+import { HeaderProps } from "@/app/Types/HeaderProps";
 
-function Header() {
+function Header({ genres }: HeaderProps) {
   const [searchWord, setSearchWord] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState<boolean>(false);
   const [isHamburgerOpen, setIsHamburgerOpen] = useState<boolean>(false);
-  const [genres, setGenres] = useState<GenresType[]>([]);
   const modalRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const sidebarRef = useRef<HTMLDivElement>(null);
@@ -40,22 +40,6 @@ function Header() {
 
     setSearchWord("");
   };
-
-  useEffect(() => {
-    const getGenres = async () => {
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getNavbarGenres`
-        );
-        const data = await res.json();
-        setGenres(data.genres);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    getGenres();
-  }, []);
 
   useEffect(() => {
     window.scroll(0, 0);

@@ -15,14 +15,18 @@ function MovieFilters({
         handleFilterChange={handleFilterChange}
       />
       <CustomDropdown
-        options={[
-          "A-Z",
-          "Date",
-          "Rating",
-          "Z-A",
-          "Date (Oldest)",
-          "Rating (Lowest)",
-        ]}
+        options={
+          activeFilter === "person"
+            ? ["A-Z", "Z-A"]
+            : [
+                "A-Z",
+                "Date",
+                "Rating",
+                "Z-A",
+                "Date (Oldest)",
+                "Rating (Lowest)",
+              ]
+        }
         selectedOption={
           sortOption === "standard"
             ? "Sort by"
