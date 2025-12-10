@@ -31,6 +31,14 @@ export default function MediaListClient({
   }, []);
 
   useEffect(() => {
+    if (!user) {
+      setMediaList([]);
+      setFilteredMedia([]);
+      setSortedMedia([]);
+    }
+  }, [user]);
+
+  useEffect(() => {
     if (mediaList.length >= 0) {
       const filtered = mediaList.filter((x) => {
         if (activeFilter && activeFilter !== "all") {
