@@ -34,7 +34,6 @@ async function updateCookie(action: "set" | "remove", userId?: string) {
 
 export const UserProvider = ({ children }: UserProviderProps) => {
   const [user, setUser] = useState<UserDataSavedTypes | null>(null);
-  const [isHydrating, setIsHydrating] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -46,7 +45,6 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         updateCookie("set", userData.uid);
       }
     }
-    setIsHydrating(false);
   }, []);
 
   const login = (userData: UserDataSavedTypes) => {
@@ -60,11 +58,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const logout = () => {
     localStorage.removeItem("user");
     updateCookie("remove");
-    router.push("/");
     setUser(null);
-  };
 
-  if (isHydrating) return null;
+    router.push("/");
+  };
 
   return (
     <UserContext.Provider value={{ user, login, logout }}>

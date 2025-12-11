@@ -2,6 +2,8 @@ import { getUserId } from "@/app/utils/cookies";
 import { MediaTypes } from "@/app/Types/MediaTypes";
 import { getAdminDB } from "@/app/config/FireBaseAdmin";
 import MediaList from "@/app/components/MediaList/MediaList";
+import { Suspense } from "react";
+import Loading from "@/app/components/Loading/Loading";
 
 export async function fetchMediaDetails(
   items: MediaTypes[]
@@ -57,7 +59,20 @@ export async function getFavorites(): Promise<MediaTypes[]> {
 }
 
 export default async function Page() {
-  const favorites = await getFavorites();
+  return (
+    <Suspense
+      fallback={
+        <div className="flex justify-center items-center mt-15 min-h-[70dvh]">
+          <Loading size={100} />
+        </div>
+      }
+    >
+      <FavoritesContent />
+    </Suspense>
+  );
+}
 
+async function FavoritesContent() {
+  const favorites = await getFavorites();
   return <MediaList initialMedia={favorites} type="favorites" />;
 }

@@ -3,7 +3,10 @@ import { MediaTypes } from "@/app/Types/MediaTypes";
 async function getGenreMovies(genreId: string, page: number) {
   try {
     const apiUrl = `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getGenreMovies?genre=${genreId}&page=${page}`;
-    const res = await fetch(apiUrl, { cache: "no-store" });
+    const res = await fetch(apiUrl, { 
+      cache: "force-cache",
+      next: { revalidate: 300 }
+    });
 
     if (!res.ok) {
       throw new Error("Failed to fetch genre movies");
@@ -25,7 +28,10 @@ async function getGenreMovies(genreId: string, page: number) {
 async function getGenreName(genreId: string) {
   try {
     const apiUrl = `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getNavbarGenres`;
-    const res = await fetch(apiUrl, { cache: "no-store" });
+    const res = await fetch(apiUrl, { 
+      cache: "force-cache",
+      next: { revalidate: 3600 }
+    });
 
     if (!res.ok) {
       throw new Error("Failed to fetch genres");

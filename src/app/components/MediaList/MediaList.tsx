@@ -20,15 +20,19 @@ export default function MediaListClient({
   const [filteredMedia, setFilteredMedia] = useState<MediaTypes[]>(
     initialMedia.length > 0 ? initialMedia : []
   );
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(initialMedia.length === 0);
   const [sortedMedia, setSortedMedia] = useState<MediaTypes[]>([]);
 
   const { sortOption, activeFilter, setSortOption, setActiveFilter } =
     QueryParams();
 
   useEffect(() => {
-    setLoading(false);
-  }, []);
+    if (initialMedia.length === 0 || !user) {
+      setLoading(false);
+    } else {
+      setLoading(false);
+    }
+  }, [initialMedia.length, user]);
 
   useEffect(() => {
     if (!user) {

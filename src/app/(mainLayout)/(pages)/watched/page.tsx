@@ -2,6 +2,8 @@ import { MediaTypes } from "@/app/Types/MediaTypes";
 import { getUserId } from "@/app/utils/cookies";
 import { fetchMediaDetails, getFirebaseItems } from "../favorites/page";
 import MediaList from "@/app/components/MediaList/MediaList";
+import { Suspense } from "react";
+import Loading from "@/app/components/Loading/Loading";
 
 async function getWatched(): Promise<MediaTypes[]> {
   const userId = await getUserId();
@@ -12,7 +14,20 @@ async function getWatched(): Promise<MediaTypes[]> {
 }
 
 export default async function Page() {
-  const watched = await getWatched();
+  return (
+    <Suspense
+      fallback={
+        <div className="flex justify-center items-center mt-15 min-h-[70dvh]">
+          <Loading size={100} />
+        </div>
+      }
+    >
+      <WatchedContent />
+    </Suspense>
+  );
+}
 
+async function WatchedContent() {
+  const watched = await getWatched();
   return <MediaList initialMedia={watched} type="watched" />;
 }
