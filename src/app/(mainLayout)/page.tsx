@@ -4,7 +4,10 @@ import { MediaTypes } from "../Types/MediaTypes";
 async function getMedia(type: string, page: number) {
   try {
     const apiUrl = `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getMedias?type=${type}&page=${page}`;
-    const res = await fetch(apiUrl, { cache: "no-store" });
+    const res = await fetch(apiUrl, { 
+      cache: "force-cache",
+      next: { revalidate: 300 }
+    });
 
     if (!res.ok) {
       throw new Error("Failed to fetch media");

@@ -3,7 +3,9 @@ import { NextRequest, NextResponse } from "next/server";
 async function fetchFromTMDB(type: string, id: string, endpoint: string) {
   const apiUrl = `https://api.themoviedb.org/3/${type}/${id}${endpoint}?api_key=${process.env.APIKEY}&language=en-US`;
 
-  const response = await fetch(apiUrl);
+  const response = await fetch(apiUrl, {
+    next: { revalidate: 3600 },
+  });
 
   if (!response.ok) {
     throw new Error(`Failed fetching TMDB: ${response.statusText}`);
@@ -26,7 +28,11 @@ export async function GET(req: NextRequest) {
   try {
     const data = await fetchFromTMDB(type, id, endpoint);
 
-    return NextResponse.json(data);
+    return NextResponse.json(data, {
+      headers: {
+        "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=7200",
+      },
+    });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }

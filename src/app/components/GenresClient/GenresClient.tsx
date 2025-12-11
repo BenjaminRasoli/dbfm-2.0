@@ -43,7 +43,10 @@ export default function GenresClient({
       const fetchData = async () => {
         try {
           const movieRes = await fetch(
-            `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getGenreMovies?genre=${initialGenreSlug}&page=${page}`
+            `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getGenreMovies?genre=${initialGenreSlug}&page=${page}`,
+            {
+              cache: "force-cache",
+            }
           );
           const data = await movieRes.json();
           setMedia(data.results);
