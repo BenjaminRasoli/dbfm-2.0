@@ -5,6 +5,8 @@ import { Providers } from "./context/ThemeProvider";
 import Footer from "./components/Footer/Footer";
 import Snowfall from "./components/Snowfall/Snowfall";
 import "./globals.css";
+import { Suspense } from "react";
+import Loading from "./components/Loading/Loading";
 
 const roboto = Roboto({
   variable: "--font-roboto",
@@ -34,14 +36,22 @@ export default function RootLayout({
       <body
         className={`${roboto.variable} ${cinzel.variable} antialiased bg-white dark:bg-dark flex flex-col`}
       >
-        <Snowfall />
-        <div id="modal-root"></div>
-        <Providers>
-          <UserProvider>
-            {children}
-            <Footer />
-          </UserProvider>
-        </Providers>
+        <Suspense
+          fallback={
+            <div className="flex justify-center items-center">
+              <Loading size={100} />
+            </div>
+          }
+        >
+          <Snowfall />
+          <div id="modal-root"></div>
+          <Providers>
+            <UserProvider>
+              {children}
+              <Footer />
+            </UserProvider>
+          </Providers>
+        </Suspense>
       </body>
     </html>
   );

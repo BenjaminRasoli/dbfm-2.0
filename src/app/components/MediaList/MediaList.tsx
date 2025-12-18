@@ -35,6 +35,28 @@ export default function MediaListClient({
   }, [initialMedia.length, user]);
 
   useEffect(() => {
+    if (!user) return;
+
+    const fetchFavorites = async () => {
+      setLoading(true);
+      try {
+        const FavOrWatch = type === "favorites" ? "Favorites" : "Watched";
+        const res = await fetch(`/api/get${FavOrWatch}`);
+        const favs: MediaTypes[] = await res.json();
+        setMediaList(favs);
+        setFilteredMedia(favs);
+        setSortedMedia(favs);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFavorites();
+  }, [user]);
+
+  useEffect(() => {
     if (!user) {
       setMediaList([]);
       setFilteredMedia([]);

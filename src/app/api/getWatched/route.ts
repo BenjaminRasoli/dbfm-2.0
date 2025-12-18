@@ -9,9 +9,9 @@ export async function GET(req: NextRequest) {
 
     const db = await getAdminDB();
     const snapshot = await db
-      .collection("userFavoriteList")
+      .collection("userWatchedList")
       .doc(userId)
-      .collection("favorites")
+      .collection("watched")
       .get();
 
     const items = snapshot.docs.map((doc) => doc.data());
@@ -31,11 +31,11 @@ export async function GET(req: NextRequest) {
       }
     });
 
-    const favoritesWithDetails = await Promise.all(promises);
+    const wacthedWithDetails = await Promise.all(promises);
 
-    return new Response(JSON.stringify(favoritesWithDetails), { status: 200 });
+    return new Response(JSON.stringify(wacthedWithDetails), { status: 200 });
   } catch (error) {
-    console.error("Error fetching favorites:", error);
+    console.error("Error fetching wacthed:", error);
     return new Response(JSON.stringify({ error: error }), { status: 500 });
   }
 }
