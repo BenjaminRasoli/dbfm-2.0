@@ -1,3 +1,14 @@
 export const disableOverflow = (shouldDisable: boolean) => {
-  document.body.style.overflow = shouldDisable ? "hidden" : "auto";
+  const body = document.body;
+
+  if (shouldDisable) {
+    const scrollbarWidth =
+      window.innerWidth - document.documentElement.clientWidth;
+
+    body.style.overflow = "hidden";
+    body.style.paddingRight = `${scrollbarWidth}px`;
+  } else {
+    body.style.overflow = "";
+    body.style.paddingRight = "";
+  }
 };

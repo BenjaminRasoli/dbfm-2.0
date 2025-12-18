@@ -54,7 +54,7 @@ export default function MediaListClient({
     };
 
     fetchFavorites();
-  }, [user]);
+  }, [user, type]);
 
   useEffect(() => {
     if (!user) {
@@ -141,20 +141,45 @@ export default function MediaListClient({
           <div className="text-xl text-center pt-10 min-h-[70dvh]">
             <div>
               {!user ? (
-                <div className="min-h-[40dvh] ">
-                  <p>
-                    You must be logged in to view your {title.toLowerCase()}{" "}
-                    list.
-                  </p>{" "}
-                  <Link className="text-blue" href={"/login"}>
-                    Login
-                  </Link>
+                <div className="flex flex-col items-center justify-center min-h-[30dvh] text-center p-8 space-y-4">
+                  <h2 className="pt-10 text-2xl font-bold text-blue">
+                    You must be logged in
+                  </h2>
+                  <p className="text-black dark:text-white">
+                    to view your {title.toLowerCase()} list.
+                  </p>
+                  <div className="flex gap-4">
+                    <Link
+                      href="/login"
+                      className="bg-blue hover:bg-blue-hover text-white px-4 py-2 rounded-lg transition"
+                    >
+                      Login
+                    </Link>
+                    <Link
+                      href="/register"
+                      className="bg-blue hover:bg-blue-hover text-white px-4 py-2 rounded-lg transition"
+                    >
+                      Register
+                    </Link>
+                  </div>
+                  <p className="text-gray-800 dark:text-gray-400 mt-2">
+                    Start saving your favorite movies and shows!
+                  </p>
                 </div>
               ) : (
-                <div className="min-h-[70dvh]">
-                  <p>No {title.toLowerCase()} yet. Start adding some</p>
-                  <Link className="text-blue" href={"/"}>
-                    Home
+                <div className="flex flex-col items-center justify-center min-h-[30dvh] text-center p-8 space-y-4">
+                  <h2 className="text-2xl font-bold text-blue">
+                    No {title.toLowerCase()} yet!
+                  </h2>
+                  <p className="text-black dark:text-white">
+                    Start adding some to keep track of your favorites or watched
+                    shows.
+                  </p>
+                  <Link
+                    href="/"
+                    className="bg-blue hover:bg-blue-hover text-white px-6 py-3 rounded-lg font-medium transition"
+                  >
+                    Go Home
                   </Link>
                 </div>
               )}

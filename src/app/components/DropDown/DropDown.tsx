@@ -40,6 +40,8 @@ function CustomDropdown({
   return (
     <div className="relative inline-block text-left z-10 mb-2">
       <select
+        id="select_filter"
+        name="select_filter"
         value={selectedOption}
         onChange={(e) => onSelect(e.target.value)}
         className="cursor-pointer w-full px-4 py-2 text-sm font-medium bg-white dark:bg-dark border border-gray-600 dark:border-gray-800 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-offset-1 transition-all duration-200 ease-in-out"

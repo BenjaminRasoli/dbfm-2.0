@@ -1,8 +1,7 @@
-import { NextRequest } from "next/server";
 import { getUserId } from "@/app/utils/cookies";
 import { getAdminDB } from "@/app/config/FireBaseAdmin";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     const userId = await getUserId();
     if (!userId) return new Response(JSON.stringify([]), { status: 200 });
