@@ -25,6 +25,7 @@ function PageSelector({
   const renderPageButton = (page: number) => (
     <button
       key={page}
+      aria-label={"page"}
       onClick={() => handlePageChange(page)}
       disabled={page === currentPage}
       className={clsx(
@@ -45,6 +46,7 @@ function PageSelector({
     buttons.push(
       <button
         key="prev"
+        aria-label="previous page"
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 1}
         className={clsx(
@@ -79,6 +81,7 @@ function PageSelector({
     buttons.push(
       <button
         key="next"
+        aria-label="next page"
         onClick={() => handlePageChange(currentPage + 1)}
         disabled={currentPage === finalTotalPages}
         className={clsx(

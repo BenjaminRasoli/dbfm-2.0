@@ -25,7 +25,7 @@ export default function HomeClient({
 
   useEffect(() => {
     setBanner(bannerBackdrop);
-  }, []);
+  }, [bannerBackdrop]);
 
   const {
     page,
