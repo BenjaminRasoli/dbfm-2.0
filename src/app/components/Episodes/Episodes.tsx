@@ -1,25 +1,78 @@
 "use client";
-import { EpisodeTypes } from "@/app/Types/EpisodesTypes";
-import { useState } from "react";
+import { EpisodesTypes, EpisodeTypes } from "@/app/Types/EpisodesTypes";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { RiStarSFill } from "react-icons/ri";
 import Image from "next/image";
 import EpisodePlaceholder from "../../images/MediaImagePlaceholder.jpg";
-import { EpisodesClientProps } from "@/app/Types/EpisodesClientProps";
+import EpisodesSkeletonLoader from "../EpisodesSkeletonLoader/EpisodesSkeletonLoader";
+import NotFound from "@/app/not-found";
 
-export default function EpisodesClient({
-  episodes,
-  slug,
-  seasonNumber,
-  totalSeasons,
-  hasSeasonZero,
-}: EpisodesClientProps) {
+function Episodes({
+  params,
+}: {
+  params: Promise<{ slug: string; seasonNumber: number }>;
+}) {
+  const [episodes, setEpisodes] = useState<EpisodesTypes | null>(null);
+  const [slug, setSlug] = useState<string | null>(null);
+  const [totalSeasons, setTotalSeasons] = useState<number>(1);
+  const [currentSeason, setCurrentSeason] = useState<number>(1);
+  const [hasSeasonZero, setHasSeasonZero] = useState<boolean>(false);
+  const [notFound, setNotFound] = useState<boolean>(false);
   const [loadedImages, setLoadedImages] = useState<{ [id: number]: boolean }>(
     {}
   );
 
-  const isFirstSeason = hasSeasonZero ? seasonNumber <= 0 : seasonNumber <= 1;
-  const isLastSeason = seasonNumber >= totalSeasons;
+  useEffect(() => {
+    const fetchData = async () => {
+      const { slug, seasonNumber } = await params;
+      setSlug(slug);
+      setCurrentSeason(seasonNumber);
+
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getEpisodes?id=${slug}&seasonNumber=${seasonNumber}`
+        );
+
+        const tvResponse = await fetch(
+          `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getSingleMovieOrTv?id=${slug}&type=tv`
+        );
+
+        if (!response.ok || !tvResponse.ok) {
+          setNotFound(true);
+          return;
+        }
+
+        const data = await response.json();
+        const tvData = await tvResponse.json();
+
+        if (!data?.episodes || !tvData?.mediaData) {
+          setNotFound(true);
+          return;
+        }
+
+        setEpisodes(data);
+        setTotalSeasons(tvData.mediaData.number_of_seasons);
+        setHasSeasonZero(tvData.mediaData.seasons[0]?.season_number === 0);
+      } catch (error) {
+        console.error("Error fetching episode data:", error);
+        setEpisodes(null);
+      }
+    };
+
+    fetchData();
+  }, [params]);
+
+  if (notFound === true) {
+    return <NotFound />;
+  }
+
+  if (!episodes) {
+    return <EpisodesSkeletonLoader />;
+  }
+
+  const isFirstSeason = hasSeasonZero ? currentSeason <= 0 : currentSeason <= 1;
+  const isLastSeason = currentSeason >= totalSeasons;
 
   return (
     <div
@@ -33,7 +86,7 @@ export default function EpisodesClient({
         style={{ backgroundColor: "rgba(0, 0, 0, 0.8)" }}
       ></div>
 
-      <div className="relative mx-auto z-10 pt-10 p-3 max-w-[400px] sm:max-w-[570px] md:max-w-[550px] custom-lg:max-w-[950px]">
+      <div className="relative mx-auto z-10 pt-10 p-3 max-w-[300px] sm:max-w-[570px] md:max-w-[550px] custom-lg:max-w-[950px]">
         <Link
           href={`/tv/${slug}`}
           className="text-white bg-blue px-4 mb-5 py-2 rounded-lg hover:bg-blue-hover"
@@ -43,7 +96,7 @@ export default function EpisodesClient({
 
         <div className="flex flex-col gap-3 md:flex-row md:justify-between md:items-center mb-3 mt-6">
           <Link
-            href={`/tv/${slug}/season/${Number(seasonNumber) - 1}`}
+            href={`/tv/${slug}/season/${Number(currentSeason) - 1}`}
             className={`text-white bg-blue px-4 py-2 rounded-lg w-[160px] ${
               isFirstSeason
                 ? "cursor-not-allowed opacity-50 bg-red"
@@ -55,7 +108,7 @@ export default function EpisodesClient({
           </Link>
 
           <Link
-            href={`/tv/${slug}/season/${Number(seasonNumber) + 1}`}
+            href={`/tv/${slug}/season/${Number(currentSeason) + 1}`}
             className={`text-white bg-blue px-4 py-2 rounded-lg w-[160px] ${
               isLastSeason
                 ? "cursor-not-allowed opacity-50 bg-red"
@@ -115,7 +168,7 @@ export default function EpisodesClient({
                     </span>
                   </div>
                   <h3>{episode?.name}</h3>
-                  <p className="text-sm max-h-[150px] overflow-auto py-4 text-white">
+                  <p className="text-sm text-white">
                     {episode?.overview || "No Overview"}
                   </p>
 
@@ -132,3 +185,5 @@ export default function EpisodesClient({
     </div>
   );
 }
+
+export default Episodes;

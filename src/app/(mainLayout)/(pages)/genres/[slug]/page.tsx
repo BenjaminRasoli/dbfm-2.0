@@ -1,76 +1,111 @@
-import GenresClient from "../../../../components/GenresClient/GenresClient";
+"use client";
+import CustomDropdown, { sortMedia } from "@/app/components/DropDown/DropDown";
+import { useState, useEffect } from "react";
+import PageSelector from "@/app/components/PageSelector/PageSelector";
+import QueryParams from "@/app/hooks/QueryParams";
+import { handleStateChange } from "@/app/utils/HandleStateChange";
 import { MediaTypes } from "@/app/Types/MediaTypes";
-async function getGenreMovies(genreId: string, page: number) {
-  try {
-    const apiUrl = `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getGenreMovies?genre=${genreId}&page=${page}`;
-    const res = await fetch(apiUrl, { 
-      cache: "force-cache",
-      next: { revalidate: 300 }
-    });
+import MediaCard from "@/app/components/MediaCard/MediaCard";
 
-    if (!res.ok) {
-      throw new Error("Failed to fetch genre movies");
-    }
+function Page({ params }: { params: Promise<{ slug: string }> }) {
+  const [totalPages, setTotalPages] = useState(1);
+  const [media, setMedia] = useState<MediaTypes[]>([]);
+  const [genreName, setGenreName] = useState<string>("");
+  const [sortedMedia, setSortedMedia] = useState<MediaTypes[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [genreSlug, setGenreSlug] = useState<string>("");
 
-    const data = await res.json();
-    return {
-      results: data.results as MediaTypes[],
-      total_pages: data.total_pages as number,
+  const { page, sortOption, setPage, setSortOption } = QueryParams();
+
+  useEffect(() => {
+    const resolveParams = async () => {
+      const resolvedParams = await params;
+      setGenreSlug(resolvedParams.slug);
     };
-  } catch (error) {
-    console.error("Error fetching genre movies:", error);
-    return {
-      results: [] as MediaTypes[],
-      total_pages: 1,
+
+    resolveParams();
+  }, [params]);
+
+  useEffect(() => {
+    if (!genreSlug) return;
+
+    setLoading(true);
+    const fetchData = async () => {
+      try {
+        const movieRes = await fetch(
+          `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getGenreMovies?genre=${genreSlug}&page=${page}`
+        );
+        const data = await movieRes.json();
+        setMedia(data.results);
+        setTotalPages(data.total_pages);
+
+        const genreRes = await fetch(
+          `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getNavbarGenres`
+        );
+        const genreData = await genreRes.json();
+
+        const genre = genreData.genres.find(
+          (genre: { id: number }) => genre.id === parseInt(genreSlug)
+        );
+        setGenreName(genre.name);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
     };
-  }
-}
-async function getGenreName(genreId: string) {
-  try {
-    const apiUrl = `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getNavbarGenres`;
-    const res = await fetch(apiUrl, { 
-      cache: "force-cache",
-      next: { revalidate: 3600 }
-    });
 
-    if (!res.ok) {
-      throw new Error("Failed to fetch genres");
+    fetchData();
+  }, [genreSlug, page]);
+
+  useEffect(() => {
+    if (genreName) {
+      document.title = `DBFM | ${genreName}`;
     }
+  }, [genreName]);
 
-    const data = await res.json();
-    const genre = data.genres.find(
-      (genre: { id: number }) => genre.id === parseInt(genreId)
-    );
-    return genre?.name || "";
-  } catch (error) {
-    console.error("Error fetching genre name:", error);
-    return "";
-  }
-}
-
-export default async function Page({
-  params,
-  searchParams,
-}: {
-  params: Promise<{ slug: string }>;
-  searchParams: Promise<{ page?: string }>;
-}) {
-  const { slug } = await params;
-  const paramsSearch = await searchParams;
-  const page = parseInt(paramsSearch.page || "1", 10);
-
-  const [genreMovies, genreName] = await Promise.all([
-    getGenreMovies(slug, page),
-    getGenreName(slug),
-  ]);
+  useEffect(() => {
+    if (media?.length > 0) {
+      const sorted = sortMedia({ sortType: sortOption, media });
+      setSortedMedia(sorted);
+    }
+  }, [sortOption, media]);
 
   return (
-    <GenresClient
-      initialMedia={genreMovies.results}
-      initialTotalPages={genreMovies.total_pages}
-      initialGenreName={genreName}
-      initialGenreSlug={slug}
-      initialPage={page}
-    />
+    <div className="p-7">
+      <section className="border-b-1 border-gray-600 dark:border-gray-800">
+        <h1 className="text-3xl max-w-xl text-blue pb-5">
+          {genreName && genreName} Movies
+        </h1>
+        <div className="flex justify-end">
+          <CustomDropdown
+            options={["A-Z", "Date", "Rating"]}
+            selectedOption={
+              sortOption === "standard"
+                ? "Sort by"
+                : sortOption === "Date"
+                ? "Date"
+                : sortOption === "Rating"
+                ? "Rating"
+                : "A-Z"
+            }
+            onSelect={(newSort: string) => setSortOption(newSort)}
+            sortOption={sortOption}
+          />
+        </div>
+      </section>
+      <MediaCard media={sortedMedia} loading={loading} />
+      {media?.length === 0 || loading ? null : (
+        <PageSelector
+          currentPage={page}
+          totalPages={totalPages}
+          onPageChange={(newPage) =>
+            handleStateChange(setPage, false)(newPage, setPage)
+          }
+        />
+      )}
+    </div>
   );
 }
+
+export default Page;
