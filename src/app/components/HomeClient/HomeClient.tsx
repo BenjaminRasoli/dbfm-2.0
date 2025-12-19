@@ -1,31 +1,25 @@
 "use client";
 import { useEffect, useState } from "react";
-import { handleStateChange } from "../../utils/HandleStateChange";
+import QueryParams from "../../hooks/QueryParams";
 import { MediaTypes } from "../../Types/MediaTypes";
 import { sortMedia } from "../DropDown/DropDown";
-import { HomeClientProps } from "../../Types/HomeClientProps";
-import QueryParams from "../../hooks/QueryParams";
 import Banner from "../Banner/Banner";
 import MediaCard from "../MediaCard/MediaCard";
 import MovieFilters from "../FilterAndDropDown/FilterAndDropDown";
 import PageSelector from "../PageSelector/PageSelector";
+import { handleStateChange } from "../../utils/HandleStateChange";
 
 export default function HomeClient({
-  initialMedia,
-  initialTotalPages,
-  initialActiveFilter,
-  initialPage,
   bannerBackdrop,
-}: HomeClientProps) {
-  const [totalPages, setTotalPages] = useState<number>(initialTotalPages);
-  const [media, setMedia] = useState<MediaTypes[]>(initialMedia);
+}: {
+  bannerBackdrop: string | null;
+}) {
+  const [media, setMedia] = useState<MediaTypes[]>([]);
   const [sortedMedia, setSortedMedia] = useState<MediaTypes[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [banner, setBanner] = useState<string | null>(bannerBackdrop);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    setBanner(bannerBackdrop);
-  }, [bannerBackdrop]);
+  const [banner] = useState(bannerBackdrop);
 
   const {
     page,
@@ -37,39 +31,34 @@ export default function HomeClient({
   } = QueryParams();
 
   useEffect(() => {
-    if (media?.length > 0) {
-      const sorted = sortMedia({ sortType: sortOption, media });
-      setSortedMedia(sorted);
-    } else {
-      setSortedMedia([]);
-    }
-  }, [sortOption, media]);
+    if (!activeFilter || !page) return;
+
+    const fetchMedia = async () => {
+      try {
+        setLoading(true);
+        setMedia([]);
+        setSortedMedia([]);
+
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getMedias?type=${activeFilter}&page=${page}`
+        );
+        const data = await res.json();
+
+        setMedia(data.results);
+        setTotalPages(data.total_pages);
+      } catch (error) {
+        console.error("Error fetching media:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMedia();
+  }, [activeFilter, page]);
 
   useEffect(() => {
-    if (
-      (activeFilter !== initialActiveFilter || page !== initialPage) &&
-      activeFilter &&
-      page
-    ) {
-      setLoading(true);
-      const fetchMedia = async () => {
-        try {
-          const res = await fetch(
-            `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getMedias?type=${activeFilter}&page=${page}`
-          );
-          const data = await res.json();
-          setMedia(data.results);
-          setTotalPages(data.total_pages);
-        } catch (error) {
-          console.error("Error fetching media:", error);
-        } finally {
-          setLoading(false);
-        }
-      };
-
-      fetchMedia();
-    }
-  }, [activeFilter, page, initialActiveFilter, initialPage]);
+    setSortedMedia(sortMedia({ sortType: sortOption, media }));
+  }, [sortOption, media]);
 
   return (
     <>

@@ -12,9 +12,14 @@ import { NavbarProps } from "@/app/Types/NavbarProps";
 
 function Navbar({ genres }: NavbarProps) {
   const [hovered, setHovered] = useState<boolean>(false);
+  const [mounted, setMounted] = useState<boolean>(false);
   const { resolvedTheme } = useTheme();
 
   const pathname = usePathname();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     setHovered(false);
@@ -36,13 +41,15 @@ function Navbar({ genres }: NavbarProps) {
               src={
                 hovered
                   ? DBFMLogoBlue
-                  : resolvedTheme === "dark"
+                  : mounted && resolvedTheme === "dark"
                   ? DBFMLogoWhite
-                  : DBFMLogoBlack
+                  : mounted && resolvedTheme === "light"
+                  ? DBFMLogoBlack
+                  : DBFMLogoWhite
               }
               width={200}
               height={200}
-              alt="DATABASEFORMOVIES-black-logo"
+              alt="DATABASEFORMOVIES-logo"
               onMouseEnter={() => setHovered(true)}
               onMouseLeave={() => setHovered(false)}
             />

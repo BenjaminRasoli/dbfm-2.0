@@ -1,8 +1,8 @@
 function ActorSkeletonLoader() {
   return (
     <div className="min-h-screen">
-      <div className="p-3 max-w-[380px] sm:max-w-[500px] md:max-w-[600px] custom-lg:max-w-[900px] 2xl:max-w-[1100px] mx-auto  rounded-lg flex flex-col lg:flex-row animate-pulse">
-        <div className="mr-6 mb-6 w-[320px] h-[450px] bg-gray-300 rounded-lg"></div>
+      <div className="p-7 max-w-[350px] sm:max-w-[500px] md:max-w-[600px] custom-lg:max-w-[900px] 2xl:max-w-[1100px] mx-auto  rounded-lg flex flex-col lg:flex-row animate-pulse">
+        <div className="mr-6 mb-6 w-[280px] h-[450px] bg-gray-300 rounded-lg"></div>
 
         <div className="flex-1">
           <div className="h-8 w-1/2 bg-gray-300 rounded mb-4"></div>
@@ -13,7 +13,7 @@ function ActorSkeletonLoader() {
         </div>
       </div>
 
-      <div className="p-7 max-w-[300px] sm:max-w-[570px] md:max-w-[550px] custom-lg:max-w-[950px] mx-auto">
+      <div className="p-7 max-w-[300px] sm:max-w-[500px] md:max-w-[600px] custom-lg:max-w-[900px] 2xl:max-w-[1100px] mx-auto">
         <h2 className="h-9 w-2/4 bg-gray-300 rounded mb-2 animate-pulse"></h2>
         <div className="flex overflow-auto gap-6 py-6">
           {[...Array(6)].map((_, index) => (
