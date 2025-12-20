@@ -16,7 +16,11 @@ function QueryParams() {
   const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
-    if (pathname === "/" || pathname === "/favorites") {
+    if (
+      pathname === "/" ||
+      pathname === "/favorites" ||
+      pathname === "/watched"
+    ) {
       const currentType = searchParams.get("type") || "all";
       setActiveFilter(currentType);
       setSearchWord("");
@@ -29,10 +33,8 @@ function QueryParams() {
       setSearchWord("");
     }
 
-    if (pathname !== "/favorites") {
-      const currentPage = parseInt(searchParams.get("page") || "1", 10);
-      setPage(currentPage);
-    }
+    const currentPage = parseInt(searchParams.get("page") || "1", 10);
+    setPage(currentPage);
 
     const currentSortOption = searchParams.get("sort") || "standard";
     setSortOption(currentSortOption);
@@ -48,13 +50,15 @@ function QueryParams() {
     if (pathname.startsWith("/search")) {
       if (searchWord) query.set("query", searchWord);
       if (activeFilter) query.set("type", activeFilter);
-    } else if (pathname === "/" || pathname === "/favorites") {
+    } else if (
+      pathname === "/" ||
+      pathname === "/favorites" ||
+      pathname === "/watched"
+    ) {
       if (activeFilter) query.set("type", activeFilter);
     }
 
-    if (pathname !== "/favorites") {
-      query.set("page", page.toString());
-    }
+    query.set("page", page.toString());
     query.set("sort", sortOption);
 
     router.replace(`?${query.toString()}`);

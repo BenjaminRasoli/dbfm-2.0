@@ -17,7 +17,7 @@ function MediaCard({
   favorites,
   setFavorites,
   watched,
-  setWatched
+  setWatched,
 }: MediaCardTypes) {
   const [loadedImages, setLoadedImages] = useState<{ [id: number]: boolean }>(
     {}
@@ -33,13 +33,13 @@ function MediaCard({
             const isImageLoaded = loadedImages[media.id] || false;
 
             const imageSrc =
-              media.media_type === "person" || media.known_for_department
-                ? media.profile_path === null
-                  ? PersonPlaceholder
-                  : `https://image.tmdb.org/t/p/original/${media.profile_path}`
-                : media.poster_path === null
-                ? MovieTvPlaceholder
-                : `https://image.tmdb.org/t/p/original/${media.poster_path}`;
+              media.media_type === "person"
+                ? media.profile_path
+                  ? `https://image.tmdb.org/t/p/original/${media.profile_path}`
+                  : PersonPlaceholder
+                : media.poster_path
+                ? `https://image.tmdb.org/t/p/original/${media.poster_path}`
+                : MovieTvPlaceholder;
 
             const href = media.media_type
               ? `/${media.media_type}/${media.id}`
@@ -71,6 +71,12 @@ function MediaCard({
                       height={700}
                       className="w-full h-full object-cover transition-transform duration-300 ease-in-out scale-100 group-hover:scale-110"
                       onLoad={() =>
+                        setLoadedImages((prev) => ({
+                          ...prev,
+                          [media.id]: true,
+                        }))
+                      }
+                      onError={() =>
                         setLoadedImages((prev) => ({
                           ...prev,
                           [media.id]: true,

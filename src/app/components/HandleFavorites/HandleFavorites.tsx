@@ -26,7 +26,6 @@ function HandleFavorites({ media, favorites, setFavorites }: FavoriteTypes) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [itemToRemove, setItemToRemove] = useState<any | null>(null);
 
-  
   const router = useRouter();
   const { user } = useUser();
 
@@ -75,17 +74,14 @@ function HandleFavorites({ media, favorites, setFavorites }: FavoriteTypes) {
           (favorite) => favorite.id === media.id
         );
 
-        const filteredTitle = (media.title || media.name || "").replace(
-          /[\/\.\#\$\[\]]/g,
-          "-"
-        );
+        const docId = String(media.id);
 
         const favoriteRef = doc(
           db,
           "userFavoriteList",
           user.uid,
           "favorites",
-          filteredTitle
+          docId
         );
 
         if (isAlreadyInFavorites) {
@@ -94,9 +90,7 @@ function HandleFavorites({ media, favorites, setFavorites }: FavoriteTypes) {
         } else {
           const updatedFavorite = {
             id: media.id,
-            title: media.title || null,
-            name: media.name || null,
-            media_type: media.media_type || null,
+            type: media.media_type || null,
           };
           await setDoc(favoriteRef, updatedFavorite);
           if (setFavorites) {
@@ -114,7 +108,7 @@ function HandleFavorites({ media, favorites, setFavorites }: FavoriteTypes) {
           router.refresh();
         }
       } catch (error) {
-        console.error("Error adding/removing movie to/from favorites:", error);
+        console.error("Error adding movie to/from favorites:", error);
       }
     }
   };
@@ -125,17 +119,14 @@ function HandleFavorites({ media, favorites, setFavorites }: FavoriteTypes) {
     setItemToRemove(media);
     if (itemToRemove) {
       try {
-        const filteredTitle = (
-          itemToRemove.title ||
-          itemToRemove.name ||
-          ""
-        ).replace(/[\/\.\#\$\[\]]/g, "-");
+        const docId = String(itemToRemove.id);
+
         const favoriteRef = doc(
           db,
           "userFavoriteList",
           user?.uid || "",
           "favorites",
-          filteredTitle
+          docId
         );
 
         await deleteDoc(favoriteRef);

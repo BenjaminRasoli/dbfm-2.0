@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import clsx from "clsx";
 import { PageSelectorTypes } from "@/app/Types/PageSelectorTypes";
+import { usePathname } from "next/navigation";
 
 function PageSelector({
   currentPage,
@@ -10,6 +11,7 @@ function PageSelector({
   const MAX_PAGES = 500;
   const finalTotalPages = Math.min(totalPages, MAX_PAGES);
 
+  const pathname = usePathname();
   useEffect(() => {
     if (currentPage > 500 || currentPage <= 0) {
       onPageChange(1);
@@ -18,7 +20,12 @@ function PageSelector({
 
   const handlePageChange = (page: number) => {
     if (page < 1 || page > finalTotalPages) page = 1;
-    window.scroll(0, 300);
+    setTimeout(() => {
+      window.scroll({
+        top: pathname !== "/" ? 0 : 300,
+        behavior: "smooth",
+      });
+    }, 50);
     onPageChange(page);
   };
 
