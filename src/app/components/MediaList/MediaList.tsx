@@ -14,10 +14,7 @@ import Loading from "@/app/components/Loading/Loading";
 import PageSelector from "../PageSelector/PageSelector";
 import JsonModal from "../JsonModal/JsonModal";
 
-export default function MediaListClient({
-  initialMedia = [],
-  type,
-}: MediaListClientProps) {
+export default function MediaListClient({ type }: MediaListClientProps) {
   const { user } = useUser();
   type ImportStatus = "idle" | "importing" | "success" | "error";
 
@@ -78,7 +75,7 @@ export default function MediaListClient({
     if (importStatus === "success") {
       fetchFavorites();
     }
-  }, [importStatus]);
+  }, [importStatus, fetchFavorites]);
 
   useEffect(() => {
     setPage(1);
