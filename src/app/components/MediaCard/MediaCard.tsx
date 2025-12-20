@@ -17,11 +17,12 @@ function MediaCard({
   favorites,
   setFavorites,
   watched,
-  setWatched
+  setWatched,
 }: MediaCardTypes) {
   const [loadedImages, setLoadedImages] = useState<{ [id: number]: boolean }>(
     {}
   );
+  const [imageErrors, setImageErrors] = useState<{ [id: number]: boolean }>({});
 
   return (
     <div className="grid grid-cols-1 2-cards:grid-cols-2 3-cards:grid-cols-3 4-cards:grid-cols-4 5-cards:grid-cols-5 gap-8 pt-10">
@@ -31,15 +32,19 @@ function MediaCard({
           ))
         : media.map((media: MediaTypes) => {
             const isImageLoaded = loadedImages[media.id] || false;
+            const hasError = imageErrors[media.id];
 
-            const imageSrc =
-              media.media_type === "person" || media.known_for_department
-                ? media.profile_path === null
-                  ? PersonPlaceholder
-                  : `https://image.tmdb.org/t/p/original/${media.profile_path}`
-                : media.poster_path === null
-                ? MovieTvPlaceholder
-                : `https://image.tmdb.org/t/p/original/${media.poster_path}`;
+            const imageSrc = hasError
+              ? media.media_type === "person"
+                ? PersonPlaceholder
+                : MovieTvPlaceholder
+              : media.media_type === "person" || media.known_for_department
+              ? media.profile_path
+                ? `https://image.tmdb.org/t/p/original/${media.profile_path}`
+                : PersonPlaceholder
+              : media.poster_path
+              ? `https://image.tmdb.org/t/p/original/${media.poster_path}`
+              : MovieTvPlaceholder;
 
             const href = media.media_type
               ? `/${media.media_type}/${media.id}`
@@ -71,6 +76,12 @@ function MediaCard({
                       height={700}
                       className="w-full h-full object-cover transition-transform duration-300 ease-in-out scale-100 group-hover:scale-110"
                       onLoad={() =>
+                        setLoadedImages((prev) => ({
+                          ...prev,
+                          [media.id]: true,
+                        }))
+                      }
+                      onError={() =>
                         setLoadedImages((prev) => ({
                           ...prev,
                           [media.id]: true,
