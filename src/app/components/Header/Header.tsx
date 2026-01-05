@@ -13,6 +13,7 @@ import Link from "next/link";
 import LogoutModal from "../LogoutModal/LogoutModal";
 import ThemeSwitch from "../ThemeSwitch/ThemeSwitch";
 import { HeaderProps } from "@/app/Types/HeaderProps";
+import { useEscapeListener } from "@/app/utils/HandleEsc";
 
 function Header({ genres }: HeaderProps) {
   const [searchWord, setSearchWord] = useState<string>("");
@@ -26,6 +27,7 @@ function Header({ genres }: HeaderProps) {
   const router = useRouter();
   const { user, logout } = useUser();
   const pathname = usePathname();
+  useEscapeListener(setIsLogoutModalOpen);
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();

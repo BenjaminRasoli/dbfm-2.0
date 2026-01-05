@@ -2,14 +2,13 @@
 
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import Link from "next/link";
 import { FaWindowClose } from "react-icons/fa";
 import { LoginModalTypes } from "@/app/Types/LoginModalTypes";
 import { disableOverflow } from "@/app/utils/HandleDOM";
 import { handleOutsideClick } from "@/app/utils/HandleOutsideClick";
 import { useEscapeListener } from "@/app/utils/HandleEsc";
 
-function LoginModal({ isModalOpen, setIsModalOpen }: LoginModalTypes) {
+function JsonModal({ isModalOpen, setIsModalOpen }: LoginModalTypes) {
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -27,8 +26,8 @@ function LoginModal({ isModalOpen, setIsModalOpen }: LoginModalTypes) {
       document.removeEventListener("mousedown", handleClick);
     };
   }, [setIsModalOpen]);
-      useEscapeListener(setIsModalOpen);
-  
+    useEscapeListener(setIsModalOpen);
+
 
   if (!isModalOpen) return null;
 
@@ -38,7 +37,7 @@ function LoginModal({ isModalOpen, setIsModalOpen }: LoginModalTypes) {
 
       <div
         ref={modalRef}
-        className="bg-white dark:bg-dark w-[300px] h-[200px] flex flex-col rounded-lg shadow-lg p-6 relative z-[9999]"
+        className="bg-white dark:bg-dark w-[550px] h-[450px] flex flex-col rounded-lg shadow-lg p-6 m-4 relative z-[9999]"
       >
         <button
           onClick={() => setIsModalOpen(false)}
@@ -47,28 +46,36 @@ function LoginModal({ isModalOpen, setIsModalOpen }: LoginModalTypes) {
           <FaWindowClose size={24} />
         </button>
 
-        <p className="text-lg font-semibold text-center my-auto">
-          Please Register or Login to save media
+        <h2 className="text-xl font-bold text-center mb-4">
+          How to Import Media
+        </h2>
+
+        <p className="text-center mb-4">
+          You can import your media using a JSON file. Each entry should include
+          the TMDB (The Movie DB) ID and the type (tv or movie):
         </p>
 
-        <div className="flex justify-between px-10 mt-6">
-          <Link
-            className="bg-blue hover:bg-blue-hover rounded-lg p-2 text-white"
-            href="/login"
-          >
-            Login
-          </Link>
-          <Link
-            className="bg-blue hover:bg-blue-hover rounded-lg p-2 text-white"
-            href="/register"
-          >
-            Register
-          </Link>
-        </div>
+        <pre className="bg-gray-100 dark:bg-gray-700 p-2 rounded overflow-x-auto text-sm mb-4">
+          {`[
+  {
+    "id": 60743,
+    "type": "tv"
+  },
+  {
+    "id": 62125,
+    "type": "movie"
+  },
+]`}
+        </pre>
+
+        <p className="text-center text-sm text-gray-400 mb-4">
+          Make sure your JSON file follows this format for each media item.
+        </p>
       </div>
     </div>,
+
     document.getElementById("modal-root")!
   );
 }
 
-export default LoginModal;
+export default JsonModal;

@@ -24,6 +24,7 @@ import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import Head from "next/head";
 import HandleWatched from "../HandleWacthed/HandleWacthed";
+import { useEscapeListener } from "@/app/utils/HandleEsc";
 
 type MediaTypes = MovieTypes | TvTypes;
 
@@ -45,6 +46,8 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
     disableOverflow(isModalOpen);
     return () => disableOverflow(false);
   }, [isModalOpen]);
+    useEscapeListener(setIsModalOpen);
+
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) =>
@@ -197,7 +200,7 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
           <div className="absolute inset-0 backdrop-blur-[4px] bg-black/70" />
         </div>
 
-        <div className="mx-auto pt-10 p-3 relative z-10 max-w-[380px] sm:max-w-[500px] md:max-w-[600px] custom-lg:max-w-[900px] 2xl:max-w-[1100px]">
+        <div className="mx-auto pt-10 p-3 relative z-10 max-w-[380px] sm:max-w-[570px] md:max-w-[650px] custom-lg:max-w-[950px] 2xl:max-w-[1250px]">
           <div className="flex flex-col md:flex-row items-center md:items-start">
             <div className="relative overflow-hidden rounded-lg shadow-lg mb-5 min-h-[600px] h-full min-w-[360px] w-full custom-lg:w-auto">
               {!posterLoaded && (

@@ -13,7 +13,7 @@ function SingleSkeletonLoader({
     <div className="relative bg-cover bg-center mt-5">
       <div className="absolute inset-0 z-0 bg-white dark:bg-dark"></div>
 
-      <div className="mx-auto relative z-10 p-3 max-w-[380px] sm:max-w-[500px] md:max-w-[600px] custom-lg:max-w-[900px] 2xl:max-w-[1100px]">
+      <div className="mx-auto relative z-10 p-3 max-w-[380px] sm:max-w-[570px] md:max-w-[650px] custom-lg:max-w-[950px] 2xl:max-w-[1250px]">
         <div className="flex flex-col md:flex-row items-start gap-6">
           <div className="mb-4 lg:mb-0 w-full md:max-w-[300px] custom-lg:max-w-[360px] flex-shrink-0">
             <div className="w-full h-[525px] md:h-[450px] custom-lg:h-[595px]  bg-gray-300 animate-pulse rounded-md" />
@@ -96,13 +96,15 @@ function SingleSkeletonLoader({
 
         <div className="mt-8">
           <div className="w-1/4 h-8 bg-gray-300 animate-pulse rounded-md mb-4" />
-          <div className="flex overflow-x-auto space-x-4 pb-4 max-w-full">
-            {[...Array(2)].map((_, index) => (
+
+          <div className="flex overflow-x-auto space-x-4 pb-4">
+            {[...Array(10)].map((_, index) => (
               <div
                 key={index}
-                className="bg-gray-300 rounded-lg w-40 flex flex-col"
+                className="bg-gray-300 rounded-lg w-[170px] h-[300px] flex-shrink-0 flex flex-col"
               >
                 <div className="w-full h-40 bg-gray-300 animate-pulse rounded-t-lg" />
+
                 <div className="flex flex-col pt-2 px-2">
                   <div className="w-3/4 h-6 bg-white animate-pulse rounded-md mb-2" />
                   <div className="w-1/2 h-6 bg-white animate-pulse rounded-md mb-3" />
@@ -113,7 +115,7 @@ function SingleSkeletonLoader({
         </div>
 
         <div className="mt-8">
-          <div className="w-1/3 h-6 bg-gray-300 animate-pulse rounded-md mb-4" />
+          <div className="w-[120px] h-6 bg-gray-300 animate-pulse rounded-md mb-4" />
           <div className="space-y-4">
             <div className="w-full h-80 bg-gray-300 animate-pulse rounded-md" />
           </div>
