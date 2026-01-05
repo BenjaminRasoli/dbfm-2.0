@@ -7,4 +7,8 @@ export interface ActorKnownForTypes {
   vote_average: number;
   vote_count: number;
   media_type: string;
+  release_date: string;
+  first_air_date: string;
+  first_credit_air_date: string;
+  job: string;
 }

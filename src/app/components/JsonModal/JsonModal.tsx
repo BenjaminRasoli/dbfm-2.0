@@ -6,6 +6,8 @@ import { FaWindowClose } from "react-icons/fa";
 import { LoginModalTypes } from "@/app/Types/LoginModalTypes";
 import { disableOverflow } from "@/app/utils/HandleDOM";
 import { handleOutsideClick } from "@/app/utils/HandleOutsideClick";
+import { useEscapeListener } from "@/app/utils/HandleEsc";
+
 
 function JsonModal({ isModalOpen, setIsModalOpen }: LoginModalTypes) {
   const modalRef = useRef<HTMLDivElement>(null);
@@ -25,6 +27,8 @@ function JsonModal({ isModalOpen, setIsModalOpen }: LoginModalTypes) {
       document.removeEventListener("mousedown", handleClick);
     };
   }, [setIsModalOpen]);
+    useEscapeListener(setIsModalOpen);
+
 
   if (!isModalOpen) return null;
 

@@ -44,7 +44,7 @@ function TopBilledActors({ actors }: { actors: ActorsTypes[] }) {
                   />
                 </div>
                 <div className="flex flex-col pl-1 mt-0 overflow-auto max-h-[100px]">
-                  <h3 className="text-white font-bold text-ellipsis">
+                  <h3 className="text-white pt-2 font-bold text-ellipsis">
                     {actor?.name}
                   </h3>
                   <p className="text-white text-xs">{actor?.character}</p>

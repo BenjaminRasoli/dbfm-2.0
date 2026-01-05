@@ -4,6 +4,7 @@ import { handleOutsideClick } from "@/app/utils/HandleOutsideClick";
 import { useEffect, useRef } from "react";
 import { FaWindowClose } from "react-icons/fa";
 import { createPortal } from "react-dom";
+import { useEscapeListener } from "@/app/utils/HandleEsc";
 
 function RemoveModal({
   isConfirmModalOpen,
@@ -28,6 +29,8 @@ function RemoveModal({
       document.removeEventListener("mousedown", handleClick);
     };
   }, [setIsConfirmModalOpen]);
+    useEscapeListener(setIsConfirmModalOpen);
+
 
   const handleRemoveConfirmation = async () => {
     if (itemToRemove) {

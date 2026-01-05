@@ -4,10 +4,10 @@ import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
 import { FaWindowClose } from "react-icons/fa";
-
 import { LoginModalTypes } from "@/app/Types/LoginModalTypes";
 import { disableOverflow } from "@/app/utils/HandleDOM";
 import { handleOutsideClick } from "@/app/utils/HandleOutsideClick";
+import { useEscapeListener } from "@/app/utils/HandleEsc";
 
 function LoginModal({ isModalOpen, setIsModalOpen }: LoginModalTypes) {
   const modalRef = useRef<HTMLDivElement>(null);
@@ -27,6 +27,8 @@ function LoginModal({ isModalOpen, setIsModalOpen }: LoginModalTypes) {
       document.removeEventListener("mousedown", handleClick);
     };
   }, [setIsModalOpen]);
+      useEscapeListener(setIsModalOpen);
+  
 
   if (!isModalOpen) return null;
 

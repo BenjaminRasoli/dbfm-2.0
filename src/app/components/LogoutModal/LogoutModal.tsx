@@ -5,6 +5,7 @@ import { FaWindowClose } from "react-icons/fa";
 import { disableOverflow } from "@/app/utils/HandleDOM";
 import { handleOutsideClick } from "@/app/utils/HandleOutsideClick";
 import { LogoutModalProps } from "@/app/Types/LogoutModalTypes";
+import { useEscapeListener } from "@/app/utils/HandleEsc";
 
 export default function LogoutModal({
   isOpen,
@@ -28,6 +29,7 @@ export default function LogoutModal({
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
   }, [onCancel]);
+  useEscapeListener(onCancel);
 
   if (!isOpen) return null;
 
