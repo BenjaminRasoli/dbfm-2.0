@@ -76,28 +76,16 @@ function HandleWatched({ media, watched, setWatched }: WatchedTypes) {
         (item) => item.id === media.id
       );
 
-      const filteredTitle = (media.title || media.name || "").replace(
-        /[\/\.\#\$\[\]]/g,
-        "-"
-      );
+      const docId = String(media.id);
 
-      const watchedRef = doc(
-        db,
-        "userWatchedList",
-        user.uid,
-        "watched",
-        filteredTitle
-      );
-
+      const watchedRef = doc(db, "userWatchedList", user.uid, "watched", docId);
       if (isAlreadyInWatched) {
         setItemToRemove(media);
         setIsConfirmModalOpen(true);
       } else {
         const updatedWatched = {
           id: media.id,
-          title: media.title || null,
-          name: media.name || null,
-          media_type: media.media_type || null,
+          type: media.media_type || null,
         };
 
         await setDoc(watchedRef, updatedWatched);
@@ -112,7 +100,7 @@ function HandleWatched({ media, watched, setWatched }: WatchedTypes) {
         router.refresh();
       }
     } catch (error) {
-      console.error("Error adding/removing watched item:", error);
+      console.error("Error adding watched item:", error);
     }
   };
 
@@ -120,21 +108,15 @@ function HandleWatched({ media, watched, setWatched }: WatchedTypes) {
     media: MovieTypes | TvTypes | MediaTypes
   ) => {
     setItemToRemove(media);
-
+    const docId = String(itemToRemove.id);
     if (itemToRemove) {
       try {
-        const filteredTitle = (
-          itemToRemove.title ||
-          itemToRemove.name ||
-          ""
-        ).replace(/[\/\.\#\$\[\]]/g, "-");
-
         const watchedRef = doc(
           db,
           "userWatchedList",
           user?.uid || "",
           "watched",
-          filteredTitle
+          docId
         );
 
         await deleteDoc(watchedRef);

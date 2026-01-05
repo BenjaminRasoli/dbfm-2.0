@@ -8,6 +8,7 @@ import { disableOverflow } from "@/app/utils/HandleDOM";
 import { handleOutsideClick } from "@/app/utils/HandleOutsideClick";
 import { useEscapeListener } from "@/app/utils/HandleEsc";
 
+
 function JsonModal({ isModalOpen, setIsModalOpen }: LoginModalTypes) {
   const modalRef = useRef<HTMLDivElement>(null);
 

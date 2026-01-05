@@ -67,7 +67,7 @@ function RemoveModal({
         <p className="text-lg font-semibold text-center my-auto">
           Are you sure you want to remove &quot;
           <span className="font-bold text-blue break-words">
-            {itemToRemove.title || itemToRemove.name}
+            {itemToRemove.title || itemToRemove.name || "Unknown name"}
           </span>
           &quot;
         </p>

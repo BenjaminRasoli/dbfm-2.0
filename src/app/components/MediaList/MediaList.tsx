@@ -45,6 +45,7 @@ export default function MediaListClient({ type }: MediaListClientProps) {
       setSortedMedia([]);
       setTotal(0);
       return;
+
     }
 
     setLoading(true);
