@@ -46,8 +46,7 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
     disableOverflow(isModalOpen);
     return () => disableOverflow(false);
   }, [isModalOpen]);
-    useEscapeListener(setIsModalOpen);
-
+  useEscapeListener(setIsModalOpen);
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) =>
@@ -200,7 +199,7 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
           <div className="absolute inset-0 backdrop-blur-[4px] bg-black/70" />
         </div>
 
-        <div className="mx-auto pt-10 p-3 relative z-10 max-w-[380px] sm:max-w-[570px] md:max-w-[650px] custom-lg:max-w-[950px] 2xl:max-w-[1250px]">
+        <div className="mx-auto pt-10 p-6 relative z-10 max-w-[380px] sm:max-w-[570px] md:max-w-[750px] custom-lg:max-w-[950px] 2xl:max-w-[1250px]">
           <div className="flex flex-col md:flex-row items-center md:items-start">
             <div className="relative overflow-hidden rounded-lg shadow-lg mb-5 min-h-[600px] h-full min-w-[360px] w-full custom-lg:w-auto">
               {!posterLoaded && (
@@ -227,26 +226,28 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
             </div>
 
             <div className="w-full md:w-2/3 md:ml-8 text-white">
-              <div className="flex justify-between items-start gap-4">
-                <div>
-                  <h1 className="text-4xl font-bold max-w-[300px] leading-snug">
-                    {isMovie(mediaData) ? mediaData.title : mediaData.name}
-                  </h1>
+              <div className="flex justify-between gap-4">
+                <div className="flex-1">
+                  <div className="flex items-center justify-between gap-4">
+                    <h1 className="text-4xl font-bold max-w-[350px] leading-snug">
+                      {isMovie(mediaData) ? mediaData.title : mediaData.name}
+                    </h1>
+
+                    <h3 className="text-gray-400 opacity-80 text-lg whitespace-nowrap">
+                      {isMovie(mediaData) ? "(Movie)" : "(TV)"}
+                    </h3>
+                  </div>
 
                   {(isMovie(mediaData)
                     ? mediaData.title !== mediaData.original_title
                     : mediaData.name !== mediaData.original_name) && (
-                    <h2 className="text-lg text-gray-300 italic mb-4">
+                    <h2 className="text-lg text-gray-300 italic mb-2">
                       {isMovie(mediaData)
                         ? mediaData.original_title
                         : mediaData.original_name}
                     </h2>
                   )}
                 </div>
-
-                <h3 className="text-gray-400 opacity-80 text-lg whitespace-nowrap">
-                  {isMovie(mediaData) ? "(Movie)" : "(Tv)"}
-                </h3>
               </div>
 
               <div className="grid custom-lg:flex">

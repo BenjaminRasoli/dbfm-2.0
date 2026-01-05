@@ -128,7 +128,7 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
 
   return (
     <div className="min-h-screen pb-15">
-      <div className="mx-auto max-w-[380px] sm:max-w-[570px] md:max-w-[650px] custom-lg:max-w-[950px] 2xl:max-w-[1250px] p-3 pt-10">
+      <div className="mx-auto max-w-[380px] sm:max-w-[570px] md:max-w-[750px] custom-lg:max-w-[950px] 2xl:max-w-[1250px] p-6 pt-10">
         <div className="rounded-lg flex flex-col items-center lg:flex-row lg:items-start">
           <Image
             src={
@@ -219,9 +219,17 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
                       </div>
 
                       <div className="pl-1 pt-2 max-h-[120px] overflow-auto text-white">
-                        <h3 className="text-sm font-semibold truncate">
-                          {credit.title || credit.name}
-                        </h3>
+                        <div className="flex justify-between items-center gap-2">
+                          <h3 className="text-sm font-semibold truncate">
+                            {credit.title || credit.name}
+                          </h3>
+                          <h3 className="text-gray-300 opacity-80 text-xs mr-1 whitespace-nowrap">
+                            (
+                            {credit.media_type.charAt(0).toUpperCase() +
+                              credit.media_type.slice(1)}
+                            )
+                          </h3>
+                        </div>
                         <p className="text-sm pt-1 pb-2">
                           Character: {credit.character || "Unknown"}
                         </p>

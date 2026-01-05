@@ -20,10 +20,10 @@ function MovieFilters({
             ? ["A-Z", "Z-A"]
             : [
                 "A-Z",
-                "Date",
-                "Rating",
                 "Z-A",
+                "Date",
                 "Date (Oldest)",
+                "Rating",
                 "Rating (Lowest)",
               ]
         }

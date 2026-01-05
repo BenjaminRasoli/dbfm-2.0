@@ -22,7 +22,6 @@ function MediaCard({
   const [loadedImages, setLoadedImages] = useState<{ [id: number]: boolean }>(
     {}
   );
-
   return (
     <div className="grid grid-cols-1 2-cards:grid-cols-2 3-cards:grid-cols-3 4-cards:grid-cols-4 5-cards:grid-cols-5 gap-8 pt-10">
       {loading || !media || media.length === 0
@@ -33,7 +32,7 @@ function MediaCard({
             const isImageLoaded = loadedImages[media.id] || false;
 
             const imageSrc =
-              media.media_type === "person"
+              media.media_type === "person" || media.gender != null
                 ? media.profile_path
                   ? `https://image.tmdb.org/t/p/original/${media.profile_path}`
                   : PersonPlaceholder

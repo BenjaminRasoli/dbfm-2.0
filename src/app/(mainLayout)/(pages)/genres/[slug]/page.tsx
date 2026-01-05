@@ -79,7 +79,14 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
         </h1>
         <div className="flex justify-end">
           <CustomDropdown
-            options={["A-Z", "Date", "Rating"]}
+            options={[
+              "A-Z",
+              "Z-A",
+              "Date",
+              "Date (Oldest)",
+              "Rating",
+              "Rating (Lowest)",
+            ]}
             selectedOption={
               sortOption === "standard"
                 ? "Sort by"
@@ -87,6 +94,12 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
                 ? "Date"
                 : sortOption === "Rating"
                 ? "Rating"
+                : sortOption === "Z-A"
+                ? "Z-A"
+                : sortOption === "Date (Oldest)"
+                ? "Date (Oldest)"
+                : sortOption === "Rating (Lowest)"
+                ? "Rating (Lowest)"
                 : "A-Z"
             }
             onSelect={(newSort: string) => setSortOption(newSort)}
