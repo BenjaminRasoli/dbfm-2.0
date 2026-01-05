@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useUser } from "@/app/context/UserProvider";
 import { MediaTypes } from "@/app/Types/MediaTypes";
 import { handleStateChange } from "@/app/utils/HandleStateChange";
@@ -37,13 +37,14 @@ export default function MediaListClient({ type }: MediaListClientProps) {
     setActiveFilter,
   } = QueryParams();
 
-  const fetchFavorites = async () => {
+  const fetchFavorites = useCallback(async () => {
     if (user === undefined) return;
 
     if (user === null) {
       setMediaList([]);
       setSortedMedia([]);
       setTotal(0);
+      return;
     }
 
     setLoading(true);
@@ -65,11 +66,11 @@ export default function MediaListClient({ type }: MediaListClientProps) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user, type, page, activeFilter, sortOption]);
 
   useEffect(() => {
     fetchFavorites();
-  }, [user, type, page, activeFilter, sortOption]);
+  }, [user, type, page, activeFilter, sortOption, fetchFavorites]);
 
   useEffect(() => {
     if (importStatus === "success") {
@@ -79,7 +80,7 @@ export default function MediaListClient({ type }: MediaListClientProps) {
 
   useEffect(() => {
     setPage(1);
-  }, [activeFilter]);
+  }, [activeFilter, setPage]);
 
   useEffect(() => {
     const sorted = sortMedia({
