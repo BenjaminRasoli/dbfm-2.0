@@ -8,6 +8,7 @@ import {
   query,
   setDoc,
   deleteDoc,
+  serverTimestamp,
 } from "firebase/firestore";
 import { db } from "../../config/FireBaseConfig";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
@@ -91,6 +92,7 @@ function HandleFavorites({ media, favorites, setFavorites }: FavoriteTypes) {
           const updatedFavorite = {
             id: media.id,
             type: media.media_type || null,
+            createdAt: serverTimestamp(),
           };
           await setDoc(favoriteRef, updatedFavorite);
           if (setFavorites) {

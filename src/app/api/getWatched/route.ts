@@ -21,7 +21,8 @@ export async function GET(req: Request) {
     let query: Query<DocumentData> = db
       .collection("userWatchedList")
       .doc(userId)
-      .collection("watched");
+      .collection("watched")
+      .orderBy("createdAt", "desc");
 
     if (type && type !== "all") {
       query = query.where("type", "==", type);

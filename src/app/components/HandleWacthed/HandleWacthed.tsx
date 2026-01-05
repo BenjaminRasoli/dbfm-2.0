@@ -8,6 +8,7 @@ import {
   query,
   setDoc,
   deleteDoc,
+  serverTimestamp,
 } from "firebase/firestore";
 import { db } from "../../config/FireBaseConfig";
 import { ImCheckmark, ImCheckmark2 } from "react-icons/im";
@@ -86,6 +87,7 @@ function HandleWatched({ media, watched, setWatched }: WatchedTypes) {
         const updatedWatched = {
           id: media.id,
           type: media.media_type || null,
+          createdAt: serverTimestamp(),
         };
 
         await setDoc(watchedRef, updatedWatched);
