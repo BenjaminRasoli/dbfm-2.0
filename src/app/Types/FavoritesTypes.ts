@@ -4,6 +4,7 @@ import { MovieTypes } from "./MovieTypes";
 import { TvTypes } from "./TvTypes";
 
 export interface FavoriteTypes {
+  isRecommendations?: boolean;
   media: MovieTypes | TvTypes | MediaTypes;
   favorites?: Array<MovieTypes | TvTypes | MediaTypes>;
   setFavorites?: Dispatch<SetStateAction<MediaTypes[]>> | undefined;

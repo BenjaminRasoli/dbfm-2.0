@@ -19,7 +19,7 @@ function Seasons({ mediaData }: { mediaData: TvTypes }) {
       <h1 className="text-2xl font-bold text-white mb-4">
         Total Episodes: {mediaData.number_of_episodes || 0}
       </h1>
-      <div className="flex overflow-auto max-w-[900px] h-full gap-4">
+      <div className="flex overflow-auto max-w-[380px] sm:max-w-[570px] md:max-w-[750px] custom-lg:max-w-[950px] 2xl:max-w-[1550px] h-full gap-4">
         {mediaData.seasons.map((season) => {
           const isImageLoaded = loadedImages[season.id] || false;
           const imageSrc = season.poster_path

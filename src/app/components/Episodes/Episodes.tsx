@@ -20,7 +20,7 @@ function Episodes({
   const [hasSeasonZero, setHasSeasonZero] = useState<boolean>(false);
   const [notFound, setNotFound] = useState<boolean>(false);
   const [loadedImages, setLoadedImages] = useState<{ [id: number]: boolean }>(
-    {}
+    {},
   );
 
   useEffect(() => {
@@ -31,11 +31,11 @@ function Episodes({
 
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getEpisodes?id=${slug}&seasonNumber=${seasonNumber}`
+          `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getEpisodes?id=${slug}&seasonNumber=${seasonNumber}`,
         );
 
         const tvResponse = await fetch(
-          `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getSingleMovieOrTv?id=${slug}&type=tv`
+          `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getSingleMovieOrTv?id=${slug}&type=tv`,
         );
 
         if (!response.ok || !tvResponse.ok) {
@@ -86,7 +86,7 @@ function Episodes({
         style={{ backgroundColor: "rgba(0, 0, 0, 0.8)" }}
       ></div>
 
-      <div className="relative mx-auto z-10 pt-10 p-6 max-w-[380px] sm:max-w-[570px] md:max-w-[750px] custom-lg:max-w-[950px] 2xl:max-w-[1250px]">
+      <div className="relative mx-auto z-10 pt-10 p-6 max-w-[380px] sm:max-w-[570px] md:max-w-[750px] custom-lg:max-w-[950px] 2xl:max-w-[1550px]">
         <Link
           href={`/tv/${slug}`}
           className="text-white bg-blue px-4 mb-5 py-2 rounded-lg hover:bg-blue-hover"

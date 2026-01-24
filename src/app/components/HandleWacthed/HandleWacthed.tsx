@@ -19,8 +19,14 @@ import { MediaTypes } from "@/app/Types/MediaTypes";
 import { MovieTypes } from "@/app/Types/MovieTypes";
 import { TvTypes } from "@/app/Types/TvTypes";
 import { useRouter } from "next/navigation";
+import clsx from "clsx";
 
-function HandleWatched({ media, watched, setWatched }: WatchedTypes) {
+function HandleWatched({
+  media,
+  watched,
+  setWatched,
+  isRecommendations,
+}: WatchedTypes) {
   const [localWatched, setLocalWatched] = useState<MediaTypes[]>([]);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -29,6 +35,7 @@ function HandleWatched({ media, watched, setWatched }: WatchedTypes) {
 
   const router = useRouter();
   const { user } = useUser();
+  const iconSize = isRecommendations ? 25 : 40;
 
   useEffect(() => {
     const fetchWatchedFromFirebase = async (userId: string) => {
@@ -61,7 +68,7 @@ function HandleWatched({ media, watched, setWatched }: WatchedTypes) {
   }, [user, watched, setWatched]);
 
   function isMediaType(
-    media: MovieTypes | TvTypes | MediaTypes
+    media: MovieTypes | TvTypes | MediaTypes,
   ): media is MediaTypes {
     return (media as MediaTypes).id !== undefined;
   }
@@ -74,7 +81,7 @@ function HandleWatched({ media, watched, setWatched }: WatchedTypes) {
 
     try {
       const isAlreadyInWatched = (watched ?? localWatched)?.some(
-        (item) => item.id === media.id
+        (item) => item.id === media.id,
       );
 
       const docId = String(media.id);
@@ -107,7 +114,7 @@ function HandleWatched({ media, watched, setWatched }: WatchedTypes) {
   };
 
   const handleRemoveWatched = async (
-    media: MovieTypes | TvTypes | MediaTypes
+    media: MovieTypes | TvTypes | MediaTypes,
   ) => {
     setItemToRemove(media);
     const docId = String(itemToRemove.id);
@@ -118,13 +125,13 @@ function HandleWatched({ media, watched, setWatched }: WatchedTypes) {
           "userWatchedList",
           user?.uid || "",
           "watched",
-          docId
+          docId,
         );
 
         await deleteDoc(watchedRef);
 
         const updatedWatched = (watched ?? localWatched)?.filter(
-          (item) => item.id !== itemToRemove.id
+          (item) => item.id !== itemToRemove.id,
         );
 
         if (setWatched) {
@@ -133,7 +140,7 @@ function HandleWatched({ media, watched, setWatched }: WatchedTypes) {
 
         if (!watched) {
           setLocalWatched((prev) =>
-            prev.filter((item) => item.id !== itemToRemove.id)
+            prev.filter((item) => item.id !== itemToRemove.id),
           );
         }
         router.refresh();
@@ -151,7 +158,10 @@ function HandleWatched({ media, watched, setWatched }: WatchedTypes) {
       {media.media_type !== "person" && media.gender == null && (
         <div
           title="Add to watched"
-          className="absolute top-18 left-2 z-10 p-2 cursor-pointer bg-dark-100 text-white rounded-lg"
+          className={clsx(
+            "absolute left-2 z-10 p-2 cursor-pointer bg-dark-100 text-white rounded-lg",
+            isRecommendations ? "top-14" : "top-18",
+          )}
           onClick={() => {
             if (isMediaType(media)) {
               handleBookmarkClick(media);
@@ -161,11 +171,11 @@ function HandleWatched({ media, watched, setWatched }: WatchedTypes) {
           onMouseLeave={() => setIsHovered(false)}
         >
           {(watched ?? localWatched)?.some((item) => item.id === media.id) ? (
-            <ImCheckmark className="text-blue" size={40} />
+            <ImCheckmark className="text-blue" size={iconSize} />
           ) : isHovered ? (
-            <ImCheckmark className="text-blue" size={40} />
+            <ImCheckmark className="text-blue" size={iconSize} />
           ) : (
-            <ImCheckmark2 size={40} />
+            <ImCheckmark2 size={iconSize} />
           )}
         </div>
       )}
