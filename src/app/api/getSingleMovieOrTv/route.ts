@@ -25,7 +25,6 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    // Fetch all necessary data
     const mediaData = await fetchFromTMDB({ type, id, endpoint: "" });
     const videoData = await fetchFromTMDB({ type, id, endpoint: "/videos" });
     const actorsData = await fetchFromTMDB({
@@ -44,9 +43,9 @@ export async function GET(req: NextRequest) {
       },
       {
         headers: {
-          "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=7200", // Cache headers
+          "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=7200",
         },
-      }
+      },
     );
   } catch (error: any) {
     return new Response(JSON.stringify({ error: error.message }), {

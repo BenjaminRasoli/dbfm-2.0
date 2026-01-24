@@ -13,7 +13,7 @@ function SingleSkeletonLoader({
     <div className="relative bg-cover bg-center mt-5">
       <div className="absolute inset-0 z-0 bg-white dark:bg-dark"></div>
 
-      <div className="mx-auto relative z-10 p-6 max-w-[380px] sm:max-w-[570px] md:max-w-[750px] custom-lg:max-w-[950px] 2xl:max-w-[1250px]">
+      <div className="mx-auto relative z-10 p-6 max-w-[380px] sm:max-w-[570px] md:max-w-[750px] custom-lg:max-w-[950px] 2xl:max-w-[1550px]">
         <div className="flex flex-col md:flex-row items-start gap-6">
           <div className="mb-4 lg:mb-0 w-full md:max-w-[300px] custom-lg:max-w-[360px] flex-shrink-0">
             <div className="w-full h-[525px] md:h-[450px] custom-lg:h-[595px]  bg-gray-300 animate-pulse rounded-md" />
@@ -76,17 +76,18 @@ function SingleSkeletonLoader({
           <div className="mt-8">
             <div className="w-1/4 h-8 bg-gray-300 animate-pulse rounded-md mb-4" />
             <div className="w-1/5 h-8 bg-gray-300 animate-pulse rounded-md mb-4" />
-            <div className="flex overflow-x-auto space-x-4 pb-4 max-w-full">
-              {[...Array(2)].map((_, index) => (
+            <div className="flex overflow-x-auto space-x-4 pb-4">
+              {[...Array(4)].map((_, index) => (
                 <div
                   key={index}
-                  className="bg-gray-300 rounded-lg p-3 w-60 flex flex-col"
+                  className="bg-gray-300 rounded-lg flex-shrink-0 p-3 w-[230px] flex flex-col"
                 >
-                  <div className="w-full h-40 bg-white animate-pulse rounded-lg" />
+                  <div className="w-full h-[290px] bg-white animate-pulse rounded-lg" />
                   <div className="flex flex-col pt-2">
                     <div className="w-3/4 h-6 bg-white animate-pulse rounded-md mb-2" />
                     <div className="w-1/2 h-6 bg-white animate-pulse rounded-md mb-2" />
-                    <div className="w-1/2 h-6 bg-white animate-pulse rounded-md" />
+                    <div className="w-1/2 h-6 bg-white animate-pulse rounded-md mb-2" />
+                    <div className="w-3/4 h-6 bg-white animate-pulse rounded-md" />
                   </div>
                 </div>
               ))}
@@ -118,6 +119,27 @@ function SingleSkeletonLoader({
           <div className="w-[120px] h-6 bg-gray-300 animate-pulse rounded-md mb-4" />
           <div className="space-y-4">
             <div className="w-full h-80 bg-gray-300 animate-pulse rounded-md" />
+          </div>
+        </div>
+        <div className="mt-8">
+          <div className="w-1/4 h-8 bg-gray-300 animate-pulse rounded-md mb-4" />
+          <div className="flex gap-6 overflow-x-auto pb-4 no-scrollbar">
+            {[...Array(10)].map((_, index) => (
+              <div
+                key={index}
+                className="flex-shrink-0 w-[180px] bg-dark rounded-lg shadow-lg animate-pulse"
+              >
+                <div className="relative w-full h-[220px] bg-gray-300 rounded-t-lg" />
+
+                <div className="p-2 bg-gray-300 rounded-b-lg py-4">
+                  <div className="w-full h-4 bg-white rounded-md mb-2" />
+                  <div className="flex justify-between items-center text-xs">
+                    <div className="flex items-center gap-1 w-12 h-3 bg-white rounded-md" />
+                    <div className="w-10 h-3 bg-white rounded-md" />
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

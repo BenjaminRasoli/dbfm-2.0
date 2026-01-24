@@ -16,7 +16,7 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
   const [actorCrew, setActorCrew] = useState<ActorKnownForTypes[] | null>(null);
   const [showFullBio, setShowFullBio] = useState<boolean>(false);
   const [loadedImages, setLoadedImages] = useState<{ [id: number]: boolean }>(
-    {}
+    {},
   );
   const bioRef = useRef<HTMLParagraphElement>(null);
 
@@ -43,10 +43,10 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
 
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getActor?id=${slug}`
+          `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getActor?id=${slug}`,
         );
         const knownForResponse = await fetch(
-          `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getActorKnownFor?id=${slug}`
+          `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getActorKnownFor?id=${slug}`,
         );
         const data = await response.json();
         const knownForData = await knownForResponse.json();
@@ -58,14 +58,14 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
         const sortedCrewByDate = crewCredits
           .filter(
             (credit: ActorKnownForTypes) =>
-              credit.release_date || credit.first_credit_air_date
+              credit.release_date || credit.first_credit_air_date,
           )
           .sort((a, b) => {
             const dateA = new Date(
-              a.release_date || a.first_credit_air_date
+              a.release_date || a.first_credit_air_date,
             ).getTime();
             const dateB = new Date(
-              b.release_date || b.first_credit_air_date
+              b.release_date || b.first_credit_air_date,
             ).getTime();
             return dateB - dateA;
           });
@@ -73,14 +73,14 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
         const sortedCastByDate = castCredits
           .filter(
             (credit: ActorKnownForTypes) =>
-              credit.release_date || credit.first_credit_air_date
+              credit.release_date || credit.first_credit_air_date,
           )
           .sort((a, b) => {
             const dateA = new Date(
-              a.release_date || a.first_credit_air_date
+              a.release_date || a.first_credit_air_date,
             ).getTime();
             const dateB = new Date(
-              b.release_date || b.first_credit_air_date
+              b.release_date || b.first_credit_air_date,
             ).getTime();
             return dateB - dateA;
           });
@@ -88,7 +88,7 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
         const sortedCredits = allCredits
           .filter(
             (credit: ActorKnownForTypes) =>
-              credit.vote_average > 0 && credit.vote_count > 10
+              credit.vote_average > 0 && credit.vote_count > 10,
           )
           .sort((a, b) => {
             const scoreA = a.vote_average * 10 + a.vote_count;
@@ -128,7 +128,7 @@ function Page({ params }: { params: Promise<{ slug: string }> }) {
 
   return (
     <div className="min-h-screen pb-15">
-      <div className="mx-auto max-w-[380px] sm:max-w-[570px] md:max-w-[750px] custom-lg:max-w-[950px] 2xl:max-w-[1250px] p-6 pt-10">
+      <div className="mx-auto max-w-[380px] sm:max-w-[570px] md:max-w-[750px] custom-lg:max-w-[950px] 2xl:max-w-[1550px] p-6 pt-10">
         <div className="rounded-lg flex flex-col items-center lg:flex-row lg:items-start">
           <Image
             src={

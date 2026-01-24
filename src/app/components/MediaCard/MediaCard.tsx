@@ -20,7 +20,7 @@ function MediaCard({
   setWatched,
 }: MediaCardTypes) {
   const [loadedImages, setLoadedImages] = useState<{ [id: number]: boolean }>(
-    {}
+    {},
   );
   return (
     <div className="grid grid-cols-1 2-cards:grid-cols-2 3-cards:grid-cols-3 4-cards:grid-cols-4 5-cards:grid-cols-5 gap-8 pt-10">
@@ -37,14 +37,14 @@ function MediaCard({
                   ? `https://image.tmdb.org/t/p/original/${media.profile_path}`
                   : PersonPlaceholder
                 : media.poster_path
-                ? `https://image.tmdb.org/t/p/original/${media.poster_path}`
-                : MovieTvPlaceholder;
+                  ? `https://image.tmdb.org/t/p/original/${media.poster_path}`
+                  : MovieTvPlaceholder;
 
             const href = media.media_type
               ? `/${media.media_type}/${media.id}`
               : media.known_for_department
-              ? `/person/${media.id}`
-              : `/movie/${media.id}`;
+                ? `/person/${media.id}`
+                : `/movie/${media.id}`;
 
             return (
               <div key={media.id} className="relative">

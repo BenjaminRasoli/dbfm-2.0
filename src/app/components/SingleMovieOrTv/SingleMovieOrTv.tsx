@@ -25,20 +25,27 @@ import "react-circular-progressbar/dist/styles.css";
 import Head from "next/head";
 import HandleWatched from "../HandleWacthed/HandleWacthed";
 import { useEscapeListener } from "@/app/utils/HandleEsc";
+import { RiStarSFill } from "react-icons/ri";
+import Link from "next/link";
 
 type MediaTypes = MovieTypes | TvTypes;
 
 function SingleMovieOrTv({ params }: { params: { slug: string } }) {
   const [mediaData, setMediaData] = useState<MediaTypes | null>(null);
+  const [similar, setSimilar] = useState<MediaTypes[]>([]);
   const [video, setVideo] = useState<VideoTypes[]>([]);
   const [actors, setActors] = useState<ActorsTypes[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [trailerUrl, setTrailerUrl] = useState<string>("");
   const [reviews, setReviews] = useState<ReviewTypes[]>([]);
   const [posterLoaded, setPosterLoaded] = useState<boolean>(false);
+  const [recoPosterLoaded, setRecoPosterLoaded] = useState<{
+    [id: number]: boolean;
+  }>({});
+
   const [notFound, setNotFound] = useState<boolean>(false);
   const [whereToWatch, setWhereToWatch] = useState<WatchResultsTypes | null>(
-    null
+    null,
   );
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -72,7 +79,7 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
       const { slug } = params;
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getSingleMovieOrTv?id=${slug}&type=${type}`
+          `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getSingleMovieOrTv?id=${slug}&type=${type}`,
         );
 
         if (!response.ok) {
@@ -88,7 +95,7 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
         }
 
         const wereToWatchResponse = await fetch(
-          `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getWhereToWatch?id=${slug}&type=${type}`
+          `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getWhereToWatch?id=${slug}&type=${type}`,
         );
         const wereToWatchData = await wereToWatchResponse.json();
 
@@ -102,7 +109,6 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
         setVideo(data.videoData.results);
         setActors(data.actorsData);
         setWhereToWatch(wereToWatchData.results);
-        console.log(data);
       } catch (error) {
         console.error("Fetch error:", error);
         setNotFound(true);
@@ -110,6 +116,28 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
     };
 
     fetchData();
+  }, [params, type]);
+
+  useEffect(() => {
+    const fetchSimilar = async () => {
+      const { slug } = params;
+
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getRecommendations?id=${slug}&type=${type}`,
+        );
+
+        if (!res.ok) return;
+
+        const data = await res.json();
+
+        setSimilar(data?.results || []);
+      } catch (err) {
+        console.error("Similar fetch error:", err);
+      }
+    };
+
+    fetchSimilar();
   }, [params, type]);
 
   const handlePlayTrailer = (video: VideoTypes[]) => {
@@ -123,6 +151,8 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
   const isMovie = (data: MediaTypes): data is MovieTypes => {
     return (data as MovieTypes).original_title !== undefined;
   };
+
+  console.log(similar);
 
   useEffect(() => {
     if (mediaData) {
@@ -147,12 +177,12 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
     userScore >= 90
       ? "#166534"
       : userScore >= 75
-      ? "#22c55e"
-      : userScore >= 50
-      ? "#ca8a04"
-      : userScore >= 30
-      ? "#ea580c"
-      : "#ef4444";
+        ? "#22c55e"
+        : userScore >= 50
+          ? "#ca8a04"
+          : userScore >= 30
+            ? "#ea580c"
+            : "#ef4444";
 
   return (
     <>
@@ -199,7 +229,7 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
           <div className="absolute inset-0 backdrop-blur-[4px] bg-black/70" />
         </div>
 
-        <div className="mx-auto pt-10 p-6 relative z-10 max-w-[380px] sm:max-w-[570px] md:max-w-[750px] custom-lg:max-w-[950px] 2xl:max-w-[1250px]">
+        <div className="mx-auto my-4 p-6 relative z-10 max-w-[380px] sm:max-w-[570px] md:max-w-[750px] custom-lg:max-w-[950px] 2xl:max-w-[1550px]">
           <div className="flex flex-col md:flex-row items-center md:items-start">
             <div className="relative overflow-hidden rounded-lg shadow-lg mb-5 min-h-[600px] h-full min-w-[360px] w-full custom-lg:w-auto">
               {!posterLoaded && (
@@ -255,12 +285,12 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
                   {isMovie(mediaData)
                     ? mediaData.release_date || "Unknown Date"
                     : mediaData.first_air_date || mediaData.last_air_date
-                    ? `${mediaData.first_air_date || ""}${
-                        mediaData.first_air_date && mediaData.last_air_date
-                          ? " - "
-                          : ""
-                      }${mediaData.last_air_date || ""}`
-                    : "Unknown Date"}
+                      ? `${mediaData.first_air_date || ""}${
+                          mediaData.first_air_date && mediaData.last_air_date
+                            ? " - "
+                            : ""
+                        }${mediaData.last_air_date || ""}`
+                      : "Unknown Date"}
                 </p>
 
                 {(isMovie(mediaData) && mediaData.runtime > 0) ||
@@ -361,6 +391,72 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
             mediaData.seasons.length > 0 && <Seasons mediaData={mediaData} />}
           <TopBilledActors actors={actors} />
           <Reviews reviews={reviews} />
+          {similar.length > 0 && (
+            <div className="mt-10">
+              <h2 className="text-2xl font-bold text-white mb-4">
+                Recommendations
+              </h2>
+
+              <div className="flex gap-6 overflow-x-auto pb-4 no-scrollbar">
+                {similar.map((item) => {
+                  const isImageLoaded = recoPosterLoaded[item.id] || false;
+
+                  return (
+                    <Link
+                      href={`/${item.media_type}/${item.id}`}
+                      key={item.id}
+                      className="relative cursor-pointer flex-shrink-0 w-[180px] rounded-t-lg bg-blue shadow-lg"
+                    >
+                      <HandleFavorites isRecommendations media={item} />
+                      <HandleWatched isRecommendations media={item} />
+
+                      <div className="relative w-full aspect-[2/3] overflow-hidden rounded-t-lg">
+                        {!isImageLoaded && (
+                          <div className="absolute inset-0 bg-gray-300 animate-pulse z-10 rounded-t-lg" />
+                        )}
+
+                        <Image
+                          src={
+                            item.poster_path
+                              ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
+                              : MovieTvPlaceholder
+                          }
+                          alt={isMovie(item) ? item.title : item.name}
+                          width={600}
+                          height={600}
+                          onLoad={() =>
+                            setRecoPosterLoaded((prev) => ({
+                              ...prev,
+                              [item.id]: true,
+                            }))
+                          }
+                          className="object-cover"
+                        />
+                      </div>
+
+                      <div className="p-2 bg-blue rounded-b-lg">
+                        <p className="text-sm text-white font-semibold truncate">
+                          {isMovie(item) ? item.title : item.name}
+                        </p>
+
+                        <div className="flex justify-between items-center mt-1 text-sm">
+                          <span className="flex items-center gap-1 text-yellow-400">
+                            <RiStarSFill size={15} /> {item.vote_average || 0}
+                          </span>
+
+                          <span className="text-white">
+                            {isMovie(item)
+                              ? item.release_date
+                              : item.first_air_date}
+                          </span>
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
 
         {isModalOpen && trailerUrl && (

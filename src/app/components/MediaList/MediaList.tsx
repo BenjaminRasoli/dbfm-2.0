@@ -44,8 +44,8 @@ export default function MediaListClient({ type }: MediaListClientProps) {
       setMediaList([]);
       setSortedMedia([]);
       setTotal(0);
+      setLoading(false);
       return;
-
     }
 
     setLoading(true);
@@ -180,8 +180,8 @@ export default function MediaListClient({ type }: MediaListClientProps) {
             {activeFilter === "movie"
               ? "Movies"
               : activeFilter === "tv"
-              ? "Tv-Shows"
-              : "Movies/Tv-Shows"}
+                ? "Tv-Shows"
+                : "Movies/Tv-Shows"}
           </h4>
         </div>
         {user && (
@@ -201,10 +201,10 @@ export default function MediaListClient({ type }: MediaListClientProps) {
         importStatus === "importing"
           ? "bg-gray-400 cursor-not-allowed pointer-events-none"
           : importStatus === "success"
-          ? "bg-green-500"
-          : importStatus === "error"
-          ? "bg-red-500"
-          : "bg-blue hover:bg-blue-hover"
+            ? "bg-green-500"
+            : importStatus === "error"
+              ? "bg-red-500"
+              : "bg-blue hover:bg-blue-hover"
       }
       text-white
     `}
@@ -212,10 +212,10 @@ export default function MediaListClient({ type }: MediaListClientProps) {
               {importStatus === "importing"
                 ? "Importing..."
                 : importStatus === "success"
-                ? "Import successful"
-                : importStatus === "error"
-                ? importError ?? "Invalid file"
-                : "Import media"}
+                  ? "Import successful"
+                  : importStatus === "error"
+                    ? (importError ?? "Invalid file")
+                    : "Import media"}
 
               <input
                 type="file"

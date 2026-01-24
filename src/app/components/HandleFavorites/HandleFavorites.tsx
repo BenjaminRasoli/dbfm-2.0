@@ -20,7 +20,12 @@ import { MovieTypes } from "@/app/Types/MovieTypes";
 import { TvTypes } from "@/app/Types/TvTypes";
 import { useRouter } from "next/navigation";
 
-function HandleFavorites({ media, favorites, setFavorites }: FavoriteTypes) {
+function HandleFavorites({
+  media,
+  favorites,
+  setFavorites,
+  isRecommendations,
+}: FavoriteTypes) {
   const [localFavorites, setLocalFavorites] = useState<MediaTypes[]>([]);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -29,6 +34,7 @@ function HandleFavorites({ media, favorites, setFavorites }: FavoriteTypes) {
 
   const router = useRouter();
   const { user } = useUser();
+  const iconSize = isRecommendations ? 25 : 40;
 
   useEffect(() => {
     const fetchFavoritesFromFirebase = async (userId: string) => {
@@ -60,7 +66,7 @@ function HandleFavorites({ media, favorites, setFavorites }: FavoriteTypes) {
   }, [user, favorites, setFavorites]);
 
   function isMediaType(
-    media: MovieTypes | TvTypes | MediaTypes
+    media: MovieTypes | TvTypes | MediaTypes,
   ): media is MediaTypes {
     return (media as MediaTypes).id !== undefined;
   }
@@ -72,7 +78,7 @@ function HandleFavorites({ media, favorites, setFavorites }: FavoriteTypes) {
     } else if (user) {
       try {
         const isAlreadyInFavorites = (favorites ?? localFavorites)?.some(
-          (favorite) => favorite.id === media.id
+          (favorite) => favorite.id === media.id,
         );
 
         const docId = String(media.id);
@@ -82,7 +88,7 @@ function HandleFavorites({ media, favorites, setFavorites }: FavoriteTypes) {
           "userFavoriteList",
           user.uid,
           "favorites",
-          docId
+          docId,
         );
 
         if (isAlreadyInFavorites) {
@@ -116,7 +122,7 @@ function HandleFavorites({ media, favorites, setFavorites }: FavoriteTypes) {
   };
 
   const handleRemoveFavorite = async (
-    media: MovieTypes | TvTypes | MediaTypes
+    media: MovieTypes | TvTypes | MediaTypes,
   ) => {
     setItemToRemove(media);
     if (itemToRemove) {
@@ -128,19 +134,19 @@ function HandleFavorites({ media, favorites, setFavorites }: FavoriteTypes) {
           "userFavoriteList",
           user?.uid || "",
           "favorites",
-          docId
+          docId,
         );
 
         await deleteDoc(favoriteRef);
         const updatedFavorites = (favorites ?? localFavorites)?.filter(
-          (favorite) => favorite.id !== itemToRemove.id
+          (favorite) => favorite.id !== itemToRemove.id,
         );
         if (setFavorites) {
           setFavorites(updatedFavorites as MediaTypes[]);
         }
         if (!favorites) {
           setLocalFavorites((prevFavorites) =>
-            prevFavorites.filter((favorite) => favorite.id !== itemToRemove.id)
+            prevFavorites.filter((favorite) => favorite.id !== itemToRemove.id),
           );
         }
         router.refresh();
@@ -168,13 +174,13 @@ function HandleFavorites({ media, favorites, setFavorites }: FavoriteTypes) {
           onMouseLeave={() => setIsHovered(false)}
         >
           {(favorites ?? localFavorites)?.some(
-            (favorite) => favorite.id === media.id
+            (favorite) => favorite.id === media.id,
           ) ? (
-            <FaBookmark className="text-blue" size={40} />
+            <FaBookmark className="text-blue" size={iconSize} />
           ) : isHovered ? (
-            <FaBookmark className="text-blue" size={40} />
+            <FaBookmark className="text-blue" size={iconSize} />
           ) : (
-            <FaRegBookmark size={40} />
+            <FaRegBookmark size={iconSize} />
           )}
         </div>
       )}

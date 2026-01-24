@@ -2,7 +2,7 @@ function EpisodesSkeletonLoader() {
   return (
     <div className="relative bg-cover bg-center pt-[30px]">
       <div className="absolute inset-0 z-0  bg-white dark:bg-dark"></div>
-      <div className="relative mx-auto z-10 p-6 max-w-[380px] sm:max-w-[570px] md:max-w-[750px] custom-lg:max-w-[950px] 2xl:max-w-[1250px]">
+      <div className="relative mx-auto z-10 p-6 max-w-[380px] sm:max-w-[570px] md:max-w-[750px] custom-lg:max-w-[950px] 2xl:max-w-[1550px]">
         <div className="bg-gray-300 h-8 w-16 rounded-lg mb-5 animate-pulse"></div>
         <div className="flex gap-3 flex-col md:flex-row md:justify-between md:items-center mb-6 mt-6">
           <div className="bg-gray-300 h-10 w-38 rounded-lg animate-pulse"></div>
@@ -16,7 +16,7 @@ function EpisodesSkeletonLoader() {
           {[...Array(6)].map((_, index) => (
             <div
               key={index}
-              className="bg-gray-300 rounded-lg min-w-[250px] sm:min-w-[330px] animate-pulse"
+              className="bg-gray-300 rounded-lg min-w-[250px] sm:min-w-[300px] animate-pulse"
             >
               <div className="bg-gray-400 rounded-t-lg h-48 w-full"></div>
               <div className="p-4">
