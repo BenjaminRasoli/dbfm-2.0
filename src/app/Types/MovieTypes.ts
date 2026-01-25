@@ -28,6 +28,29 @@ interface BelongsToCollection {
   backdrop_path: string;
 }
 
+export interface CollectionType {
+  id: number;
+  name: string;
+  original_language: string;
+  original_name: string;
+  overview: string;
+  poster_path: string | null;
+  backdrop_path: string | null;
+  parts: CollectionMovie[];
+}
+
+export interface CollectionMovie {
+  id: number;
+  title: string;
+  name?: string;
+  poster_path: string | null;
+  backdrop_path: string | null;
+  release_date?: string;
+  first_air_date?: string;
+  vote_average: number;
+  media_type: "movie" | "tv";
+}
+
 export interface MovieTypes {
   gender: string;
   media_type: string;
