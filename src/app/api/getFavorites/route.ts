@@ -49,7 +49,7 @@ export async function GET(req: Request) {
 
     const favoritesWithDetails = await Promise.all(
       items.map(async (item: any) => {
-        const mediaType = item.type === "movie" ? "movie" : "tv";
+        const mediaType = item.type;
 
         try {
           const res = await fetch(

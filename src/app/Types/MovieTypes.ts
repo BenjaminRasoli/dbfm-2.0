@@ -65,6 +65,7 @@ export interface MovieTypes {
   origin_country: string[];
   original_language: string;
   original_title: string;
+  first_air_date: string;
   overview: string;
   popularity: number;
   poster_path: string;

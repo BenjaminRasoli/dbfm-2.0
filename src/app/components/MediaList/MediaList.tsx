@@ -181,7 +181,9 @@ export default function MediaListClient({ type }: MediaListClientProps) {
               ? "Movies"
               : activeFilter === "tv"
                 ? "Tv-Shows"
-                : "Movies/Tv-Shows"}
+                  : activeFilter === "collection"
+                ? "Collections"
+                : "Movies/Tv-Shows/Collections"}
           </h4>
         </div>
         {user && (

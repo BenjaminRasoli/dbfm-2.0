@@ -44,7 +44,9 @@ function MediaCard({
               ? `/${media.media_type}/${media.id}`
               : media.known_for_department
                 ? `/person/${media.id}`
-                : `/movie/${media.id}`;
+                : !media.release_date && !media.first_air_date
+                  ? `/collection/${media.id}`
+                  : `/movie/${media.id}`;
 
             return (
               <div key={media.id} className="relative">
@@ -86,17 +88,20 @@ function MediaCard({
 
                   <>
                     <div className="pb-4 p-2 shadow-2xl rounded-b-lg h-[120px]">
-                      {media.media_type === "person" ||
-                        (media.gender == null && (
-                          <div className="flex mt-2">
-                            <span className="text-yellow-400">
-                              <RiStarSFill size={20} />
-                            </span>
-                            <span className="ml-1 text-sm">
-                              {media.vote_average || 0}
-                            </span>
-                          </div>
-                        ))}
+                      <div className="h-[24px] flex items-center">
+                        {(media.media_type === "movie" ||
+                          media.media_type === "tv") &&
+                          media.gender == null && (
+                            <>
+                              <span className="text-yellow-400">
+                                <RiStarSFill size={20} />
+                              </span>
+                              <span className="ml-1 text-sm">
+                                {media.vote_average || 0}
+                              </span>
+                            </>
+                          )}
+                      </div>
 
                       <div className="mt-2">
                         <h1 className="text-xl font-semibold overflow-hidden text-ellipsis whitespace-nowrap">
@@ -104,7 +109,8 @@ function MediaCard({
                         </h1>
                       </div>
                       <div className="flex justify-between">
-                        {media.media_type !== "person" &&
+                        {(media.media_type === "movie" ||
+                          media.media_type === "tv") &&
                           media.gender == null && (
                             <p>
                               {media.release_date ||
@@ -120,7 +126,9 @@ function MediaCard({
                               {media.media_type
                                 ? media.media_type.charAt(0).toUpperCase() +
                                   media.media_type.slice(1)
-                                : "Movie"}
+                                : media.release_date && media.first_air_date
+                                  ? "Movie"
+                                  : "Collection"}
                               )
                             </p>
                           )}

@@ -1,7 +1,7 @@
 function CollectionSkeletonLoader() {
   return (
     <>
-      <div className="w-full h-[50vh] relative bg-gray-300 animate-pulse" />
+      <div className="w-full h-[35dvh] relative bg-gray-300 animate-pulse" />
 
       <div className="maxW">
         <div className="bg-gray-300 h-10 w-48 rounded-lg mb-4 animate-pulse"></div>
