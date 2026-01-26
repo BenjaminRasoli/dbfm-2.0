@@ -43,6 +43,10 @@ function FilterButtons({
     filterOptions.push({ label: "Actors", value: "person" });
   }
 
+  if (pathname === "/search" || pathname === "/favorites") {
+    filterOptions.push({ label: "Collections", value: "collection" });
+  }
+
   return (
     <div className="flex gap-4 custom-sm:gap-5 overflow-auto">
       {filterOptions.map((filter) => (

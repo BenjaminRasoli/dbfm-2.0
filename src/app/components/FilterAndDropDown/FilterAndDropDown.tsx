@@ -16,7 +16,7 @@ function MovieFilters({
       />
       <CustomDropdown
         options={
-          activeFilter === "person"
+          activeFilter === "person" || activeFilter === "collection"
             ? ["A-Z", "Z-A"]
             : [
                 "A-Z",

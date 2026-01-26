@@ -155,30 +155,31 @@ function HandleWatched({
 
   return (
     <>
-      {media.media_type !== "person" && media.gender == null && (
-        <div
-          title="Add to watched"
-          className={clsx(
-            "absolute left-2 z-10 p-2 cursor-pointer bg-dark-100 text-white rounded-lg",
-            isRecommendations ? "top-14" : "top-18",
-          )}
-          onClick={() => {
-            if (isMediaType(media)) {
-              handleBookmarkClick(media);
-            }
-          }}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-        >
-          {(watched ?? localWatched)?.some((item) => item.id === media.id) ? (
-            <ImCheckmark className="text-blue" size={iconSize} />
-          ) : isHovered ? (
-            <ImCheckmark className="text-blue" size={iconSize} />
-          ) : (
-            <ImCheckmark2 size={iconSize} />
-          )}
-        </div>
-      )}
+      {(media.media_type === "movie" || media.media_type === "tv") &&
+        media.gender == null && (
+          <div
+            title="Add to watched"
+            className={clsx(
+              "absolute left-2 z-10 p-2 cursor-pointer bg-dark-100 text-white rounded-lg",
+              isRecommendations ? "top-14" : "top-18",
+            )}
+            onClick={() => {
+              if (isMediaType(media)) {
+                handleBookmarkClick(media);
+              }
+            }}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
+            {(watched ?? localWatched)?.some((item) => item.id === media.id) ? (
+              <ImCheckmark className="text-blue" size={iconSize} />
+            ) : isHovered ? (
+              <ImCheckmark className="text-blue" size={iconSize} />
+            ) : (
+              <ImCheckmark2 size={iconSize} />
+            )}
+          </div>
+        )}
 
       <RemoveModal
         isConfirmModalOpen={isConfirmModalOpen}

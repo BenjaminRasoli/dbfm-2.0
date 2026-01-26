@@ -93,6 +93,7 @@ export interface TvTypes {
   id: number;
   in_production: boolean;
   languages: string[];
+  release_date: string;
   last_air_date: string;
   last_episode_to_air: LastEpisode;
   name: string;

@@ -152,8 +152,6 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
     return (data as MovieTypes).original_title !== undefined;
   };
 
-  console.log(similar);
-
   useEffect(() => {
     if (mediaData) {
       const title = isMovie(mediaData) ? mediaData.title : mediaData.name;
@@ -391,6 +389,38 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
             mediaData.seasons.length > 0 && <Seasons mediaData={mediaData} />}
           <TopBilledActors actors={actors} />
           <Reviews reviews={reviews} />
+
+          {isMovie(mediaData) && mediaData.belongs_to_collection && (
+            <div className="w-full h-[50vh]  mt-24 relative overflow-hidden rounded-lg shadow-lg">
+              <Image
+                src={
+                  mediaData.belongs_to_collection.poster_path
+                    ? `https://image.tmdb.org/t/p/original${mediaData.belongs_to_collection.poster_path}`
+                    : MovieTvPlaceholder
+                }
+                alt={mediaData.belongs_to_collection.name}
+                fill
+                className="object-cover"
+              />
+
+              <div className="absolute inset-0 bg-black/70" />
+
+              <div className="absolute inset-0 bg-gradient-to-tl from-blue/60 to-transparent" />
+
+              <div className="absolute top-1/4 left-12 text-white flex flex-col gap-3 max-w-lg">
+                <h2 className="text-2xl md:text-3xl font-bold drop-shadow-lg">
+                  Part of the {mediaData.belongs_to_collection.name}
+                </h2>
+                <Link
+                  href={`/collection/${mediaData.belongs_to_collection.id}`}
+                  className="bg-blue hover:bg-blue-hover text-white font-semibold py-2 px-5 rounded-lg shadow-lg w-max transition duration-300 ease-in-out"
+                >
+                  View the collection
+                </Link>
+              </div>
+            </div>
+          )}
+
           {similar.length > 0 && (
             <div className="mt-10">
               <h2 className="text-2xl font-bold text-white mb-4">

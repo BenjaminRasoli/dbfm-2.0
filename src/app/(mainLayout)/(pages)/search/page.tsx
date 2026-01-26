@@ -60,15 +60,19 @@ function Page() {
               filter: activeFilter === "all" ? "multi" : activeFilter,
               page,
             }),
-          }
+          },
         );
         const data = await movieRes.json();
 
         const updatedResults = data.results.map((item: MediaTypes) => ({
           ...item,
-          ...(activeFilter === "movie" || activeFilter === "tv"
-            ? { media_type: activeFilter }
-            : {}),
+          media_type:
+            item.media_type ??
+            (item.release_date
+              ? "movie"
+              : item.first_air_date
+                ? "tv"
+                : "collection"),
         }));
 
         setTotalResults(data.total_results);
