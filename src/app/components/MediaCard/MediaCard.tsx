@@ -25,7 +25,7 @@ function MediaCard({
   return (
     <div className="grid grid-cols-1 2-cards:grid-cols-2 3-cards:grid-cols-3 4-cards:grid-cols-4 5-cards:grid-cols-5 gap-8 pt-10">
       {loading || !media || media.length === 0
-        ? Array.from({ length: 12 }, (_, index) => (
+        ? Array.from({ length: 15 }, (_, index) => (
             <SkeletonLoader key={index} />
           ))
         : media.map((media: MediaTypes) => {
@@ -90,7 +90,8 @@ function MediaCard({
                     <div className="pb-4 p-2 shadow-2xl rounded-b-lg h-[120px]">
                       <div className="h-[24px] flex items-center">
                         {(media.media_type === "movie" ||
-                          media.media_type === "tv") &&
+                          media.media_type === "tv" ||
+                          media.release_date) &&
                           media.gender == null && (
                             <>
                               <span className="text-yellow-400">
@@ -110,7 +111,8 @@ function MediaCard({
                       </div>
                       <div className="flex justify-between">
                         {(media.media_type === "movie" ||
-                          media.media_type === "tv") &&
+                          media.media_type === "tv" ||
+                          media.release_date) &&
                           media.gender == null && (
                             <p>
                               {media.release_date ||
@@ -126,9 +128,11 @@ function MediaCard({
                               {media.media_type
                                 ? media.media_type.charAt(0).toUpperCase() +
                                   media.media_type.slice(1)
-                                : media.release_date && media.first_air_date
+                                : media.release_date
                                   ? "Movie"
-                                  : "Collection"}
+                                  : media.first_air_date
+                                    ? "Tv"
+                                    : "Collection"}
                               )
                             </p>
                           )}

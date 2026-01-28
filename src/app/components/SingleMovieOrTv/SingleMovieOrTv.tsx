@@ -22,7 +22,6 @@ import { handleOutsideClick } from "@/app/utils/HandleOutsideClick";
 import HandleFavorites from "../HandleFavorites/HandleFavorites";
 import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import Head from "next/head";
 import HandleWatched from "../HandleWacthed/HandleWacthed";
 import { useEscapeListener } from "@/app/utils/HandleEsc";
 import { RiStarSFill } from "react-icons/ri";
@@ -148,18 +147,16 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
     }
   };
 
+  const formatUSD = (value: number) =>
+    new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      maximumFractionDigits: 0,
+    }).format(value);
+
   const isMovie = (data: MediaTypes): data is MovieTypes => {
     return (data as MovieTypes).original_title !== undefined;
   };
-
-  useEffect(() => {
-    if (mediaData) {
-      const title = isMovie(mediaData) ? mediaData.title : mediaData.name;
-      document.title = `DBFM | ${title}`;
-    } else {
-      document.title = "DBFM | Details";
-    }
-  }, [mediaData]);
 
   if (notFound) {
     return <NotFound />;
@@ -183,263 +180,230 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
             : "#ef4444";
 
   return (
-    <>
-      <Head>
-        <meta
-          name="description"
-          content={
-            mediaData?.overview ||
-            "DBFM is a movie & TV site to discover actors and latest releases."
-          }
-        />
-        {mediaData?.poster_path && (
-          <>
-            <meta
-              property="og:image"
-              content={`https://image.tmdb.org/t/p/original${mediaData.poster_path}`}
-            />
-            <meta
-              name="twitter:image"
-              content={`https://image.tmdb.org/t/p/original${mediaData.poster_path}`}
-            />
-          </>
-        )}
-        <meta
-          property="og:description"
-          content={
-            mediaData?.overview ||
-            "DBFM is a movie & TV site to discover actors and latest releases."
-          }
-        />
-        <meta
-          property="og:type"
-          content={isMovie(mediaData!) ? "movie" : "tv_show"}
-        />
-      </Head>
-      <div className="relative overflow-hidden">
-        <div
-          className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `url('https://image.tmdb.org/t/p/original${mediaData.backdrop_path}')`,
-            backgroundAttachment: "fixed",
-          }}
-        >
-          <div className="absolute inset-0 backdrop-blur-[4px] bg-black/70" />
-        </div>
+    <div className="relative overflow-hidden">
+      <div
+        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `url('https://image.tmdb.org/t/p/original${mediaData.backdrop_path}')`,
+          backgroundAttachment: "fixed",
+        }}
+      >
+        <div className="absolute inset-0 backdrop-blur-[4px] bg-black/70" />
+      </div>
 
-        <div className="mx-auto my-4 p-6 relative z-10 max-w-[380px] sm:max-w-[570px] md:max-w-[750px] custom-lg:max-w-[950px] 2xl:max-w-[1550px]">
-          <div className="flex flex-col md:flex-row items-center md:items-start">
-            <div className="relative overflow-hidden rounded-lg shadow-lg mb-5 min-h-[600px] h-full min-w-[360px] w-full custom-lg:w-auto">
-              {!posterLoaded && (
-                <div className="absolute inset-0 bg-gray-300 animate-pulse z-10 rounded-lg" />
-              )}
+      <div className="mx-auto my-4 p-6 relative z-10 max-w-[380px] sm:max-w-[570px] md:max-w-[750px] custom-lg:max-w-[950px] 2xl:max-w-[1550px]">
+        <div className="flex flex-col md:flex-row items-center md:items-start">
+          <div className="relative overflow-hidden rounded-lg shadow-lg mb-5 min-h-[600px] h-full min-w-[360px] w-full custom-lg:w-auto">
+            {!posterLoaded && (
+              <div className="absolute inset-0 bg-gray-300 animate-pulse z-10 rounded-lg" />
+            )}
 
-              <Image
-                src={
-                  mediaData.poster_path
-                    ? `https://image.tmdb.org/t/p/original${mediaData.poster_path}`
-                    : MovieTvPlaceholder
-                }
-                alt={
-                  isMovie(mediaData)
-                    ? mediaData.original_title
-                    : mediaData.original_name
-                }
-                fill
-                className="rounded-lg shadow-lg w-full h-full object-cover"
-                onLoad={() => setPosterLoaded(true)}
-              />
-              <HandleFavorites media={mediaData} />
-              <HandleWatched media={mediaData} />
+            <Image
+              src={
+                mediaData.poster_path
+                  ? `https://image.tmdb.org/t/p/original${mediaData.poster_path}`
+                  : MovieTvPlaceholder
+              }
+              alt={
+                isMovie(mediaData)
+                  ? mediaData.original_title
+                  : mediaData.original_name
+              }
+              fill
+              className="rounded-lg shadow-lg w-full h-full object-cover"
+              onLoad={() => setPosterLoaded(true)}
+            />
+            <HandleFavorites media={mediaData} />
+            <HandleWatched media={mediaData} />
+          </div>
+
+          <div className="w-full md:ml-8 text-white">
+            <div className="flex justify-between gap-4">
+              <div className="flex-1">
+                <div className="flex items-center justify-between gap-4">
+                  <h1 className="text-4xl font-bold max-w-[350px] leading-snug">
+                    {isMovie(mediaData) ? mediaData.title : mediaData.name}
+                  </h1>
+
+                  <h3 className="text-gray-400 opacity-80 text-lg whitespace-nowrap">
+                    {isMovie(mediaData) ? "(Movie)" : "(TV)"}
+                  </h3>
+                </div>
+
+                {(isMovie(mediaData)
+                  ? mediaData.title !== mediaData.original_title
+                  : mediaData.name !== mediaData.original_name) && (
+                  <h2 className="text-lg text-gray-300 italic mb-2">
+                    {isMovie(mediaData)
+                      ? mediaData.original_title
+                      : mediaData.original_name}
+                  </h2>
+                )}
+              </div>
             </div>
 
-            <div className="w-full md:w-2/3 md:ml-8 text-white">
-              <div className="flex justify-between gap-4">
-                <div className="flex-1">
-                  <div className="flex items-center justify-between gap-4">
-                    <h1 className="text-4xl font-bold max-w-[350px] leading-snug">
-                      {isMovie(mediaData) ? mediaData.title : mediaData.name}
-                    </h1>
-
-                    <h3 className="text-gray-400 opacity-80 text-lg whitespace-nowrap">
-                      {isMovie(mediaData) ? "(Movie)" : "(TV)"}
-                    </h3>
-                  </div>
-
-                  {(isMovie(mediaData)
-                    ? mediaData.title !== mediaData.original_title
-                    : mediaData.name !== mediaData.original_name) && (
-                    <h2 className="text-lg text-gray-300 italic mb-2">
-                      {isMovie(mediaData)
-                        ? mediaData.original_title
-                        : mediaData.original_name}
-                    </h2>
-                  )}
-                </div>
-              </div>
-
-              <div className="grid custom-lg:flex">
-                <p className="text-lg">
-                  {isMovie(mediaData)
-                    ? mediaData.release_date || "Unknown Date"
-                    : mediaData.first_air_date || mediaData.last_air_date
-                      ? `${mediaData.first_air_date || ""}${
-                          mediaData.first_air_date && mediaData.last_air_date
-                            ? " - "
-                            : ""
-                        }${mediaData.last_air_date || ""}`
-                      : "Unknown Date"}
-                </p>
-
-                {(isMovie(mediaData) && mediaData.runtime > 0) ||
-                (!isMovie(mediaData) && mediaData.episode_run_time[0] > 0) ? (
-                  <>
-                    <span className="hidden custom-lg:block text-lg mx-2">
-                      •
-                    </span>
-                    <p className="text-lg">
-                      {isMovie(mediaData)
-                        ? `${mediaData.runtime} mins`
-                        : `${mediaData.episode_run_time[0]} mins`}
-                    </p>
-                  </>
-                ) : null}
-              </div>
-
-              <div className="flex flex-col items-start space-y-2 mb-6">
-                <p className="text-xl font-bold">User Score</p>
-                <div className="w-14 h-14">
-                  <CircularProgressbar
-                    value={userScore}
-                    text={`${userScore}%`}
-                    styles={buildStyles({
-                      pathColor: scoreColor,
-                      textColor: scoreColor,
-                      textSize: "24px",
-                    })}
-                  />
-                </div>
-              </div>
-
-              <h1 className="font-bold text-xl">Overview</h1>
-              <p className="text-lg mb-6">
-                {mediaData.overview || "No overview"}
+            <div className="grid custom-lg:flex">
+              <p className="text-lg">
+                {isMovie(mediaData)
+                  ? mediaData.release_date || "Unknown Date"
+                  : mediaData.first_air_date || mediaData.last_air_date
+                    ? `${mediaData.first_air_date || ""}${
+                        mediaData.first_air_date && mediaData.last_air_date
+                          ? " - "
+                          : ""
+                      }${mediaData.last_air_date || ""}`
+                    : "Unknown Date"}
               </p>
 
-              <div className="space-x-1 mb-6">
-                <p className="text-xl font-bold">Genres</p>
-                {mediaData?.genres?.length > 0
-                  ? mediaData?.genres?.map((genre, index) => (
-                      <span key={genre.id} className="text-lg">
-                        {genre.name ?? "Unknown Genre"}
-                        {index < mediaData.genres.length - 1 && ", "}
-                      </span>
-                    ))
-                  : "Unknown Genre"}
-              </div>
-
-              {!isMovie(mediaData) && (
-                <div className="space-x-1 mb-6">
-                  <p className="text-xl font-bold">Status</p>
-                  {mediaData?.status ? (
-                    <span className="text-lg">{mediaData.status}</span>
-                  ) : (
-                    "Unknown Status"
-                  )}
-                </div>
-              )}
-              {isMovie(mediaData) && (
+              {(isMovie(mediaData) && mediaData.runtime > 0) ||
+              (!isMovie(mediaData) && mediaData.episode_run_time[0] > 0) ? (
                 <>
-                  {(mediaData.budget > 0 || mediaData.revenue > 0) && (
-                    <>
-                      {mediaData.budget > 0 && (
-                        <>
-                          <h1 className="font-bold text-xl">Budget</h1>
-                          <p className="text-lg mb-6">
-                            {"$" + mediaData.budget}
-                          </p>
-                        </>
-                      )}
-
-                      {mediaData.revenue > 0 && (
-                        <>
-                          <h1 className="font-bold text-xl">Revenue</h1>
-                          <p className="text-lg mb-4">
-                            {"$" + mediaData.revenue}
-                          </p>
-                        </>
-                      )}
-                    </>
-                  )}
+                  <span className="hidden custom-lg:block text-lg mx-2">•</span>
+                  <p className="text-lg">
+                    {isMovie(mediaData)
+                      ? `${mediaData.runtime} mins`
+                      : `${mediaData.episode_run_time[0]} mins`}
+                  </p>
                 </>
-              )}
-              {video.some((vid) => vid.type === "Trailer") && (
-                <button
-                  className="bg-blue hover:bg-blue-hover text-white py-2 mb-2 px-4 rounded-full cursor-pointer"
-                  onClick={() => handlePlayTrailer(video)}
-                >
-                  Play Trailer
-                </button>
-              )}
+              ) : null}
+            </div>
+
+            <div className="flex flex-col items-start space-y-2 mb-6">
+              <p className="text-xl font-bold">User Score</p>
+              <div className="w-14 h-14">
+                <CircularProgressbar
+                  value={userScore}
+                  text={`${userScore}%`}
+                  styles={buildStyles({
+                    pathColor: scoreColor,
+                    textColor: scoreColor,
+                    textSize: "24px",
+                  })}
+                />
+              </div>
+            </div>
+
+            <h1 className="font-bold text-xl">Overview</h1>
+            <p className="text-lg mb-6 max-w-3xl">
+              {mediaData.overview || "No overview"}
+            </p>
+
+            <div className="space-x-1 mb-6">
+              <p className="text-xl font-bold">Genres</p>
+              {mediaData?.genres?.length > 0
+                ? mediaData?.genres?.map((genre, index) => (
+                    <span key={genre.id} className="text-lg">
+                      {genre.name ?? "Unknown Genre"}
+                      {index < mediaData.genres.length - 1 && ", "}
+                    </span>
+                  ))
+                : "Unknown Genre"}
+            </div>
+
+            {!isMovie(mediaData) && (
+              <div className="space-x-1 mb-6">
+                <p className="text-xl font-bold">Status</p>
+                {mediaData?.status ? (
+                  <span className="text-lg">{mediaData.status}</span>
+                ) : (
+                  "Unknown Status"
+                )}
+              </div>
+            )}
+            {isMovie(mediaData) && (
+              <>
+                {(mediaData.budget > 0 || mediaData.revenue > 0) && (
+                  <>
+                    {mediaData.budget > 0 && (
+                      <>
+                        <h1 className="font-bold text-xl">Budget</h1>
+                        <p className="text-lg mb-6">
+                          {formatUSD(mediaData.budget)}
+                        </p>
+                      </>
+                    )}
+
+                    {mediaData.revenue > 0 && (
+                      <>
+                        <h1 className="font-bold text-xl">Revenue</h1>
+                        <p className="text-lg mb-4">
+                          {formatUSD(mediaData.revenue)}
+                        </p>
+                      </>
+                    )}
+                  </>
+                )}
+              </>
+            )}
+            {video.some((vid) => vid.type === "Trailer") && (
+              <button
+                className="bg-blue hover:bg-blue-hover text-white py-2 mb-2 px-4 rounded-full cursor-pointer"
+                onClick={() => handlePlayTrailer(video)}
+              >
+                Play Trailer
+              </button>
+            )}
+          </div>
+        </div>
+        <WhereToWatch whereToWatch={whereToWatch!} />
+        {!isMovie(mediaData) &&
+          mediaData.seasons &&
+          mediaData.seasons.length > 0 && <Seasons mediaData={mediaData} />}
+        <TopBilledActors actors={actors} />
+        <Reviews reviews={reviews} />
+
+        {isMovie(mediaData) && mediaData.belongs_to_collection && (
+          <div className="w-full h-[50vh]  mt-24 relative overflow-hidden rounded-lg shadow-lg">
+            <Image
+              src={
+                mediaData.belongs_to_collection.poster_path
+                  ? `https://image.tmdb.org/t/p/original${mediaData.belongs_to_collection.poster_path}`
+                  : MovieTvPlaceholder
+              }
+              alt={mediaData.belongs_to_collection.name}
+              fill
+              className="object-cover"
+            />
+
+            <div className="absolute inset-0 bg-black/70" />
+
+            <div className="absolute inset-0 bg-gradient-to-tl from-blue/60 to-transparent" />
+
+            <div className="absolute top-1/4 left-12 text-white flex flex-col gap-3 max-w-lg">
+              <h2 className="text-2xl md:text-3xl font-bold drop-shadow-lg">
+                Part of the {mediaData.belongs_to_collection.name}
+              </h2>
+              <Link
+                href={`/collection/${mediaData.belongs_to_collection.id}`}
+                className="bg-blue hover:bg-blue-hover text-white font-semibold py-2 px-5 rounded-lg shadow-lg w-max transition duration-300 ease-in-out"
+              >
+                View the collection
+              </Link>
             </div>
           </div>
-          <WhereToWatch whereToWatch={whereToWatch!} />
-          {!isMovie(mediaData) &&
-            mediaData.seasons &&
-            mediaData.seasons.length > 0 && <Seasons mediaData={mediaData} />}
-          <TopBilledActors actors={actors} />
-          <Reviews reviews={reviews} />
+        )}
 
-          {isMovie(mediaData) && mediaData.belongs_to_collection && (
-            <div className="w-full h-[50vh]  mt-24 relative overflow-hidden rounded-lg shadow-lg">
-              <Image
-                src={
-                  mediaData.belongs_to_collection.poster_path
-                    ? `https://image.tmdb.org/t/p/original${mediaData.belongs_to_collection.poster_path}`
-                    : MovieTvPlaceholder
-                }
-                alt={mediaData.belongs_to_collection.name}
-                fill
-                className="object-cover"
-              />
+        {similar.length > 0 && (
+          <div className="mt-10">
+            <h2 className="text-2xl font-bold text-white mb-4">
+              Recommendations
+            </h2>
 
-              <div className="absolute inset-0 bg-black/70" />
+            <div className="flex gap-6 overflow-x-auto pb-4 no-scrollbar">
+              {similar.map((item) => {
+                const isImageLoaded = recoPosterLoaded[item.id] || false;
 
-              <div className="absolute inset-0 bg-gradient-to-tl from-blue/60 to-transparent" />
-
-              <div className="absolute top-1/4 left-12 text-white flex flex-col gap-3 max-w-lg">
-                <h2 className="text-2xl md:text-3xl font-bold drop-shadow-lg">
-                  Part of the {mediaData.belongs_to_collection.name}
-                </h2>
-                <Link
-                  href={`/collection/${mediaData.belongs_to_collection.id}`}
-                  className="bg-blue hover:bg-blue-hover text-white font-semibold py-2 px-5 rounded-lg shadow-lg w-max transition duration-300 ease-in-out"
-                >
-                  View the collection
-                </Link>
-              </div>
-            </div>
-          )}
-
-          {similar.length > 0 && (
-            <div className="mt-10">
-              <h2 className="text-2xl font-bold text-white mb-4">
-                Recommendations
-              </h2>
-
-              <div className="flex gap-6 overflow-x-auto pb-4 no-scrollbar">
-                {similar.map((item) => {
-                  const isImageLoaded = recoPosterLoaded[item.id] || false;
-
-                  return (
+                return (
+                  <div
+                    className="relative cursor-pointer flex-shrink-0 w-[180px] rounded-lg bg-blue shadow-lg"
+                    key={item.id}
+                  >
+                    <HandleFavorites isRecommendations media={item} />
+                    <HandleWatched isRecommendations media={item} />
                     <Link
                       href={`/${item.media_type}/${item.id}`}
-                      key={item.id}
-                      className="relative cursor-pointer flex-shrink-0 w-[180px] rounded-t-lg bg-blue shadow-lg"
+                      className="cursor-pointer flex-shrink-0 w-[180px] bg-blue shadow-lg"
                     >
-                      <HandleFavorites isRecommendations media={item} />
-                      <HandleWatched isRecommendations media={item} />
-
                       <div className="relative w-full aspect-[2/3] overflow-hidden rounded-t-lg">
                         {!isImageLoaded && (
                           <div className="absolute inset-0 bg-gray-300 animate-pulse z-10 rounded-t-lg" />
@@ -482,44 +446,44 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
                         </div>
                       </div>
                     </Link>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-        </div>
-
-        {isModalOpen && trailerUrl && (
-          <div className="fixed inset-0 flex justify-center items-center z-[55]">
-            <div className="absolute inset-0 bg-black opacity-50"></div>
-            <div
-              ref={modalRef}
-              className="
-    bg-white dark:bg-dark p-7 rounded-lg w-[95%] h-[40%] custom-md:h-[60%] md:h-[80%] lg:h-[95%] relative z-10"
-            >
-              <div className="flex justify-between">
-                <h4 className="text-xl"> Play Trailer</h4>
-                <button
-                  onClick={() => setIsModalOpen(false)}
-                  className="text-2xl font-bold pb-5 cursor-pointer hover:text-red-hover"
-                >
-                  <FaWindowClose />
-                </button>
-              </div>
-              <iframe
-                className="pb-5"
-                width="100%"
-                height="95%"
-                src={trailerUrl}
-                title="Trailer"
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}
       </div>
-    </>
+
+      {isModalOpen && trailerUrl && (
+        <div className="fixed inset-0 flex justify-center items-center z-[55]">
+          <div className="absolute inset-0 bg-black opacity-50"></div>
+          <div
+            ref={modalRef}
+            className="
+    bg-white dark:bg-dark p-7 rounded-lg w-[95%] h-[40%] custom-md:h-[60%] md:h-[80%] lg:h-[95%] relative z-10"
+          >
+            <div className="flex justify-between">
+              <h4 className="text-xl"> Play Trailer</h4>
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="text-2xl font-bold pb-5 cursor-pointer hover:text-red-hover"
+              >
+                <FaWindowClose />
+              </button>
+            </div>
+            <iframe
+              className="pb-5"
+              width="100%"
+              height="95%"
+              src={trailerUrl}
+              title="Trailer"
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 

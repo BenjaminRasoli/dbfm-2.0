@@ -1,14 +1,16 @@
 import Link from "next/link";
+import EmptyState from "./components/EmptyState/EmptyState";
+import { IoIosHome } from "react-icons/io";
 
 function NotFound() {
   return (
-    <div className="min-h-[70dvh] p-7 text-center flex flex-col justify-center items-center">
-      <h1 className="text-2xl font-bold">404 - Page Not Found</h1>
-      <p>The page youre looking for doesnt exist.</p>
-      <h1 className="text-2xl text-blue pt-5">
-        <Link href="/"> Get Back Home </Link>
-      </h1>
-    </div>
+    <EmptyState
+      title="404 - Page Not Found"
+      description="The page youre looking for doesnt exist."
+      linkHref="/"
+      linkText="Get Back Home"
+      icon={<IoIosHome size={24} />}
+    />
   );
 }
 

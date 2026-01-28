@@ -1,18 +1,18 @@
 "use client";
-
 import { useCallback, useEffect, useState } from "react";
 import { useUser } from "@/app/context/UserProvider";
 import { MediaTypes } from "@/app/Types/MediaTypes";
 import { handleStateChange } from "@/app/utils/HandleStateChange";
 import { sortMedia } from "@/app/components/DropDown/DropDown";
 import { MediaListClientProps } from "../../Types/MediaListClientProps";
-import Link from "next/link";
 import MediaCard from "@/app/components/MediaCard/MediaCard";
 import MovieFilters from "@/app/components/FilterAndDropDown/FilterAndDropDown";
 import QueryParams from "@/app/hooks/QueryParams";
 import Loading from "@/app/components/Loading/Loading";
 import PageSelector from "../PageSelector/PageSelector";
 import JsonModal from "../JsonModal/JsonModal";
+import EmptyState from "../EmptyState/EmptyState";
+import { IoIosHome, IoIosPerson } from "react-icons/io";
 
 export default function MediaListClient({ type }: MediaListClientProps) {
   const { user } = useUser();
@@ -169,7 +169,6 @@ export default function MediaListClient({ type }: MediaListClientProps) {
 
   return (
     <>
-      <title>DBFM | {title}</title>
       <div className="p-7">
         <div className="flex flex-col md:flex-row justify-between pb-5">
           <h1 className="text-blue text-3xl">{title}</h1>
@@ -181,9 +180,9 @@ export default function MediaListClient({ type }: MediaListClientProps) {
               ? "Movies"
               : activeFilter === "tv"
                 ? "Tv-Shows"
-                  : activeFilter === "collection"
-                ? "Collections"
-                : "Movies/Tv-Shows/Collections"}
+                : activeFilter === "collection"
+                  ? "Collections"
+                  : "Movies/Tv-Shows/Collections"}
           </h4>
         </div>
         {user && (
@@ -246,43 +245,23 @@ export default function MediaListClient({ type }: MediaListClientProps) {
             <Loading size={100} />
           </div>
         ) : !loading && sortedMedia.length === 0 ? (
-          <div className="text-xl text-center pt-10 min-h-[70dvh]">
+          <div className="text-center pt-10 min-h-[70dvh]">
             {user === null ? (
-              <div className="flex flex-col items-center space-y-4">
-                <h2 className="text-2xl font-bold text-blue">
-                  You must be logged in
-                </h2>
-                <p>to view your {title.toLowerCase()} list.</p>
-                <div className="flex gap-4">
-                  <Link
-                    href="/login"
-                    className="bg-blue hover:bg-blue-hover text-white px-4 py-2 rounded-lg transition"
-                  >
-                    Login
-                  </Link>
-                  <Link
-                    href="/register"
-                    className="bg-blue hover:bg-blue-hover text-white px-4 py-2 rounded-lg transition"
-                  >
-                    Register
-                  </Link>
-                </div>
-              </div>
+              <EmptyState
+                title="You must be logged in"
+                description={`to view your ${title.toLowerCase()} list.`}
+                linkHref="/login"
+                linkText="Login"
+                icon={<IoIosPerson size={24} />}
+              />
             ) : (
-              <div className="flex flex-col items-center space-y-4">
-                <h2 className="text-2xl font-bold text-blue">
-                  No {title.toLowerCase()} yet!
-                </h2>
-                <Link
-                  href="/"
-                  className="bg-blue hover:bg-blue-hover text-white px-4 py-2 rounded-lg transition"
-                >
-                  Home
-                </Link>
-                <h2 className="text-xl font-bold text-gray-400">
-                  Start adding some of your favorite content
-                </h2>
-              </div>
+              <EmptyState
+                title={`No ${title.toLowerCase()} yet!`}
+                description="Start adding some of your favorite content"
+                linkHref="/"
+                linkText="Get Back Home"
+                icon={<IoIosHome size={24} />}
+              />
             )}
           </div>
         ) : (

@@ -155,7 +155,7 @@ function HandleWatched({
 
   return (
     <>
-      {(media.media_type === "movie" || media.media_type === "tv") &&
+      {(media.media_type === "movie" || media.media_type === "tv" || media.release_date) &&
         media.gender == null && (
           <div
             title="Add to watched"

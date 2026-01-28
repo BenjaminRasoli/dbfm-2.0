@@ -55,7 +55,7 @@ function RemoveModal({
 
       <div
         ref={modalRef}
-        className="bg-white dark:bg-dark w-[300px] min-h-[250px] flex flex-col rounded-lg shadow-lg p-6 relative z-[9999]"
+        className="bg-white dark:bg-dark max-w-[350px] min-h-[250px] flex flex-col rounded-lg shadow-lg p-6 relative z-[9999]"
       >
         <button
           onClick={() => setIsConfirmModalOpen(false)}
@@ -72,16 +72,16 @@ function RemoveModal({
           &quot;
         </p>
 
-        <div className="flex justify-between px-5 gap-2 mt-6">
+        <div className="flex justify-between px-5 gap-4 mt-6">
           <button
             onClick={handleRemoveConfirmation}
-            className="cursor-pointer bg-red hover:bg-red-hover rounded-lg p-2 text-white"
+            className="cursor-pointer bg-red hover:bg-red-hover w-1/2 rounded-lg p-2 text-white"
           >
             Yes, Remove
           </button>
           <button
             onClick={handleCancel}
-            className="cursor-pointer bg-gray-300 hover:bg-gray-400 rounded-lg p-2 text-black"
+            className="cursor-pointer bg-gray-300 hover:bg-gray-400 w-1/2 rounded-lg p-2 text-black"
           >
             Cancel
           </button>

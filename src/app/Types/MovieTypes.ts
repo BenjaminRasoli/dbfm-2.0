@@ -37,6 +37,7 @@ export interface CollectionType {
   poster_path: string | null;
   backdrop_path: string | null;
   parts: CollectionMovie[];
+  success: boolean;
 }
 
 export interface CollectionMovie {

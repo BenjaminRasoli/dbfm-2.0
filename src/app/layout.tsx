@@ -11,14 +11,21 @@ import Loading from "./components/Loading/Loading";
 const roboto = Roboto({
   variable: "--font-roboto",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const cinzel = Cinzel({
   variable: "--font-cinzel",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://dbfm.vercel.app"),
+  title: {
+    default: "DBFM | Movies & TV Shows",
+    template: "%s | DBFM",
+  },
   description:
     "DBFM is a movies website where you can check out the latest Movies and TV shows.",
   icons: {
@@ -36,22 +43,23 @@ export default function RootLayout({
       <body
         className={`${roboto.variable} ${cinzel.variable} antialiased bg-white dark:bg-dark flex flex-col`}
       >
-        <Suspense
-          fallback={
-            <div className="flex justify-center items-center">
-              <Loading size={100} />
-            </div>
-          }
-        >
-          <Snowfall />
-          <div id="modal-root"></div>
-          <Providers>
-            <UserProvider>
+        <Providers>
+          <UserProvider>
+            <Suspense
+              fallback={
+                <div className="flex justify-center items-center min-h-screen">
+                  <Loading size={100} />
+                </div>
+              }
+            >
+              <Snowfall />
+              <div id="modal-root"></div>
+
               {children}
-              <Footer />
-            </UserProvider>
-          </Providers>
-        </Suspense>
+            </Suspense>
+            <Footer />
+          </UserProvider>
+        </Providers>
       </body>
     </html>
   );

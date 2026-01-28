@@ -27,8 +27,7 @@ function LoginModal({ isModalOpen, setIsModalOpen }: LoginModalTypes) {
       document.removeEventListener("mousedown", handleClick);
     };
   }, [setIsModalOpen]);
-      useEscapeListener(setIsModalOpen);
-  
+  useEscapeListener(setIsModalOpen);
 
   if (!isModalOpen) return null;
 
@@ -38,7 +37,7 @@ function LoginModal({ isModalOpen, setIsModalOpen }: LoginModalTypes) {
 
       <div
         ref={modalRef}
-        className="bg-white dark:bg-dark w-[300px] h-[200px] flex flex-col rounded-lg shadow-lg p-6 relative z-[9999]"
+        className="bg-white dark:bg-dark max-w-[350px] h-[200px] flex flex-col rounded-lg shadow-lg p-6 relative z-[9999]"
       >
         <button
           onClick={() => setIsModalOpen(false)}
@@ -51,15 +50,15 @@ function LoginModal({ isModalOpen, setIsModalOpen }: LoginModalTypes) {
           Please Register or Login to save media
         </p>
 
-        <div className="flex justify-between px-10 mt-6">
+        <div className="flex justify-between px-10 mt-6 gap-4">
           <Link
-            className="bg-blue hover:bg-blue-hover rounded-lg p-2 text-white"
+            className="bg-blue hover:bg-blue-hover w-1/2 text-center rounded-lg p-2 text-white"
             href="/login"
           >
             Login
           </Link>
           <Link
-            className="bg-blue hover:bg-blue-hover rounded-lg p-2 text-white"
+            className="bg-blue hover:bg-blue-hover w-1/2 text-center rounded-lg p-2 text-white"
             href="/register"
           >
             Register
@@ -67,7 +66,7 @@ function LoginModal({ isModalOpen, setIsModalOpen }: LoginModalTypes) {
         </div>
       </div>
     </div>,
-    document.getElementById("modal-root")!
+    document.getElementById("modal-root")!,
   );
 }
 

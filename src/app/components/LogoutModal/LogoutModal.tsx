@@ -39,7 +39,7 @@ export default function LogoutModal({
 
       <div
         ref={modalRef}
-        className="bg-white dark:bg-dark w-[320px] h-[200px] flex flex-col rounded-lg shadow-lg p-6 relative z-[9999]"
+        className="bg-white dark:bg-dark max-w-[350px] h-[200px] flex flex-col rounded-lg shadow-lg p-6 relative z-[9999]"
       >
         <button
           onClick={onCancel}
@@ -52,22 +52,22 @@ export default function LogoutModal({
           Are you sure you want to log out?
         </p>
 
-        <div className="flex justify-between px-5 gap-2">
+        <div className="flex justify-between px-5 gap-4">
           <button
             onClick={onConfirm}
-            className="cursor-pointer bg-red hover:bg-red-hover rounded-lg p-2 text-white"
+            className="cursor-pointer bg-red hover:bg-red-hover  w-1/2 rounded-lg p-2 text-white"
           >
             Yes, Logout
           </button>
           <button
             onClick={onCancel}
-            className="cursor-pointer bg-gray-300 hover:bg-gray-400 rounded-lg p-2 text-black"
+            className="cursor-pointer bg-gray-300 hover:bg-gray-400 w-1/2 rounded-lg p-2 text-black"
           >
             Cancel
           </button>
         </div>
       </div>
     </div>,
-    document.getElementById("modal-root")!
+    document.getElementById("modal-root")!,
   );
 }

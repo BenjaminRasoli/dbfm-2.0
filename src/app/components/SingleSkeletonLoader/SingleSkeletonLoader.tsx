@@ -21,14 +21,14 @@ function SingleSkeletonLoader({
 
           <div className="w-full text-white">
             <div className="flex justify-between items-center gap-2">
-              <div className="w-2/4 h-8 bg-gray-300 animate-pulse rounded-md" />
-              <div className="w-1/6 h-8 bg-gray-300 animate-pulse rounded-md" />
+              <div className="w-[150px] h-8 bg-gray-300 animate-pulse rounded-md" />
+              <div className="w-[70px] h-8 bg-gray-300 animate-pulse rounded-md" />
             </div>
 
-            <div className="flex flex-wrap gap-2 my-4">
-              <div className="w-1/4 h-6 bg-gray-300 animate-pulse rounded-md" />
+            <div className="grid custom-lg:flex flex-wrap gap-2 my-4">
+              <div className="w-[200px] h-6 bg-gray-300 animate-pulse rounded-md" />
               {!isMovie && (
-                <div className="w-1/4 h-6 bg-gray-300 animate-pulse rounded-md" />
+                <div className="w-[80px] h-6 bg-gray-300 animate-pulse rounded-md" />
               )}
             </div>
 
@@ -37,15 +37,15 @@ function SingleSkeletonLoader({
             <div className="w-12 h-12 bg-gray-300 animate-pulse mb-4 rounded-full" />
 
             <div className="w-1/4 h-6 bg-gray-300 animate-pulse rounded-md mb-4" />
-            <div className="w-full h-40 bg-gray-300 animate-pulse rounded-md mb-4" />
+            <div className="max-w-3xl h-40 bg-gray-300 animate-pulse rounded-md mb-4" />
 
-            <div className="w-1/3 h-6 bg-gray-300 animate-pulse rounded-md mb-4" />
-            <div className="w-1/2 h-6 bg-gray-300 animate-pulse rounded-md mb-4" />
+            <div className="w-[80px] h-6 bg-gray-300 animate-pulse rounded-md mb-4" />
+            <div className="w-[180px] h-6 bg-gray-300 animate-pulse rounded-md mb-4" />
 
             {!isMovie ? (
               <>
-                <div className="w-1/3 h-6 bg-gray-300 animate-pulse rounded-md mb-4 " />
-                <div className="w-1/4 h-6 bg-gray-300 animate-pulse rounded-md mb-4" />
+                <div className="w-[80px] h-6 bg-gray-300 animate-pulse rounded-md mb-4 " />
+                <div className="w-[70px] h-6 bg-gray-300 animate-pulse rounded-md mb-4" />
               </>
             ) : (
               <>
@@ -66,7 +66,7 @@ function SingleSkeletonLoader({
             {[...Array(3)].map((_, index) => (
               <div
                 key={index}
-                className="bg-gray-300 animate-pulse rounded-lg w-32 h-[150px]"
+                className="bg-gray-300 animate-pulse rounded-lg w-28 h-[105px]"
               />
             ))}
           </div>
@@ -95,27 +95,25 @@ function SingleSkeletonLoader({
           </div>
         )}
 
-        {!isMovie && (
-          <div className="mt-8">
-            <div className="w-1/4 h-8 bg-gray-300 animate-pulse rounded-md mb-4" />
+        <div className="mt-8">
+          <div className="w-1/4 h-8 bg-gray-300 animate-pulse rounded-md mb-4" />
 
-            <div className="flex overflow-x-auto space-x-4 pb-4">
-              {[...Array(10)].map((_, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-300 rounded-lg w-[170px] h-[300px] flex-shrink-0 flex flex-col"
-                >
-                  <div className="w-full h-40 bg-gray-300 animate-pulse rounded-t-lg" />
+          <div className="flex overflow-x-auto space-x-4 pb-4">
+            {[...Array(10)].map((_, index) => (
+              <div
+                key={index}
+                className="bg-gray-300 rounded-lg w-[170px] h-[300px] flex-shrink-0 flex flex-col"
+              >
+                <div className="w-full h-40 bg-gray-300 animate-pulse rounded-t-lg" />
 
-                  <div className="flex flex-col pt-2 px-2">
-                    <div className="w-3/4 h-6 bg-white animate-pulse rounded-md mb-2" />
-                    <div className="w-1/2 h-6 bg-white animate-pulse rounded-md mb-3" />
-                  </div>
+                <div className="flex flex-col pt-2 px-2">
+                  <div className="w-3/4 h-6 bg-white animate-pulse rounded-md mb-2" />
+                  <div className="w-1/2 h-6 bg-white animate-pulse rounded-md mb-3" />
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
-        )}
+        </div>
 
         <div className="mt-8">
           <div className="w-[120px] h-6 bg-gray-300 animate-pulse rounded-md mb-4" />

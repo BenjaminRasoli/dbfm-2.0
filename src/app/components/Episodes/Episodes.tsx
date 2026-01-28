@@ -86,7 +86,7 @@ function Episodes({
         style={{ backgroundColor: "rgba(0, 0, 0, 0.8)" }}
       ></div>
 
-      <div className="relative mx-auto z-10 pt-10 p-6 max-w-[380px] sm:max-w-[570px] md:max-w-[750px] custom-lg:max-w-[950px] 2xl:max-w-[1550px]">
+      <div className="relative mx-auto z-10 pt-30 p-6 max-w-[380px] sm:max-w-[570px] md:max-w-[750px] custom-lg:max-w-[950px] 2xl:max-w-[1550px]">
         <Link
           href={`/tv/${slug}`}
           className="text-white bg-blue px-4 mb-5 py-2 rounded-lg hover:bg-blue-hover"
@@ -139,16 +139,16 @@ function Episodes({
             return (
               <div
                 key={episode.id}
-                className="bg-blue rounded-lg overflow-hidden shadow-lg flex-shrink-0 w-[250px] sm:w-[300px] flex flex-col"
+                className="bg-blue rounded-lg  hadow-lg flex-shrink-0 w-[250px] sm:w-[300px] flex flex-col"
               >
                 <div className="relative w-full aspect-[16/9] overflow-hidden">
                   {!isImageLoaded && (
-                    <div className="absolute inset-0 bg-gray-300 animate-pulse z-10" />
+                    <div className="absolute rounded-t-lg inset-0 bg-gray-300 animate-pulse z-10" />
                   )}
                   <Image
                     src={imageSrc}
                     alt={episode?.name || "Episode image"}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full rounded-t-lg object-cover"
                     height={700}
                     width={700}
                     onLoad={() =>
