@@ -5,7 +5,7 @@ import { CollectionType } from "@/app/Types/MovieTypes";
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
 

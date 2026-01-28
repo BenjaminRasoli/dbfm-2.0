@@ -46,7 +46,7 @@ function Header({ genres }: HeaderProps) {
 
   useEffect(() => {
     setSearchLoading(false);
-  }, [searchParams?.toString()]);
+  }, [searchParams]);
 
   useEffect(() => {
     window.scroll(0, 0);

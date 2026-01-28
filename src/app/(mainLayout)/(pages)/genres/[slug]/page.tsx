@@ -4,7 +4,7 @@ import Genre from "./Genre";
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
 
@@ -33,7 +33,11 @@ export async function generateMetadata({
   }
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
 
   return <Genre params={{ slug }} />;

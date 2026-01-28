@@ -4,9 +4,9 @@ import { EpisodesTypes } from "@/app/Types/EpisodesTypes";
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string; seasonNumber: number };
+  params: Promise<{ slug: string; seasonNumber: number }>;
 }) {
-  const { slug, seasonNumber } = params;
+  const { slug, seasonNumber } = await params;
 
   try {
     const res = await fetch(

@@ -1,5 +1,4 @@
 import { EmptyStateProps } from "@/app/Types/EmptyStateProps";
-import { IoIosHome } from "react-icons/io";
 import Button from "../Button/Button";
 
 export default function EmptyState({
