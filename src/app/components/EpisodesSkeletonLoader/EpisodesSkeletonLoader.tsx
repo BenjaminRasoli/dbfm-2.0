@@ -1,6 +1,6 @@
 function EpisodesSkeletonLoader() {
   return (
-    <div className="relative bg-cover bg-center pt-[30px]">
+    <div className="relative bg-cover bg-center pt-30">
       <div className="absolute inset-0 z-0  bg-white dark:bg-dark"></div>
       <div className="relative mx-auto z-10 p-6 max-w-[380px] sm:max-w-[570px] md:max-w-[750px] custom-lg:max-w-[950px] 2xl:max-w-[1550px]">
         <div className="bg-gray-300 h-8 w-16 rounded-lg mb-5 animate-pulse"></div>
@@ -18,7 +18,7 @@ function EpisodesSkeletonLoader() {
               key={index}
               className="bg-gray-300 rounded-lg min-w-[250px] sm:min-w-[300px] animate-pulse"
             >
-              <div className="bg-gray-400 rounded-t-lg h-48 w-full"></div>
+              <div className="bg-gray-400 rounded-t-lg h-72 w-full"></div>
               <div className="p-4">
                 <div className="flex justify-between">
                   <div className="bg-gray-400 rounded h-4 w-24 mb-2 animate-pulse"></div>

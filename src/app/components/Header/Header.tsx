@@ -3,7 +3,7 @@ import { useUser } from "@/app/context/UserProvider";
 import { GenresType } from "@/app/Types/Genres.Types";
 import { disableOverflow } from "@/app/utils/HandleDOM";
 import { handleOutsideClick } from "@/app/utils/HandleOutsideClick";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { IoIosLogOut, IoIosSearch } from "react-icons/io";
 import clsx from "clsx";
@@ -14,9 +14,11 @@ import LogoutModal from "../LogoutModal/LogoutModal";
 import ThemeSwitch from "../ThemeSwitch/ThemeSwitch";
 import { HeaderProps } from "@/app/Types/HeaderProps";
 import { useEscapeListener } from "@/app/utils/HandleEsc";
+import { ClipLoader } from "react-spinners";
 
 function Header({ genres }: HeaderProps) {
   const [searchWord, setSearchWord] = useState<string>("");
+  const [searchLoading, setSearchLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState<boolean>(false);
   const [isHamburgerOpen, setIsHamburgerOpen] = useState<boolean>(false);
@@ -28,20 +30,23 @@ function Header({ genres }: HeaderProps) {
   const { user, logout } = useUser();
   const pathname = usePathname();
   useEscapeListener(setIsLogoutModalOpen);
+  const searchParams = useSearchParams();
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (searchWord.trim() !== "") {
-      router.push(`/search?query=${encodeURIComponent(searchWord)}`);
-    }
+    if (searchWord.trim() === "") return;
 
-    if (inputRef.current) {
-      inputRef.current.blur();
-    }
-
+    setSearchLoading(true);
+    router.push(`/search?query=${encodeURIComponent(searchWord)}`);
     setSearchWord("");
+
+    if (inputRef.current) inputRef.current.blur();
   };
+
+  useEffect(() => {
+    setSearchLoading(false);
+  }, [searchParams]);
 
   useEffect(() => {
     window.scroll(0, 0);
@@ -131,7 +136,7 @@ function Header({ genres }: HeaderProps) {
         <div
           className={clsx(
             "h-full absolute top-0 left-0 z-[100] lg:hidden border-r border-gray-600 dark:border-gray-800 flex items-center",
-            { "border-none": isHamburgerOpen }
+            { "border-none": isHamburgerOpen },
           )}
         >
           <div className="bg-white dark:bg-dark rounded-sm">
@@ -152,7 +157,11 @@ function Header({ genres }: HeaderProps) {
               onClick={handleSearch}
               aria-label="Search movies and TV shows"
             >
-              <IoIosSearch size={20} />
+              {searchLoading ? (
+                <ClipLoader size={20} color="#ffffff" />
+              ) : (
+                <IoIosSearch size={20} aria-hidden />
+              )}
             </button>
             <input
               type="text"

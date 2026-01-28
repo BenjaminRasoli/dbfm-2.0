@@ -8,25 +8,20 @@ import BottomMenu from "../components/BottomMenu/BottomMenu";
 import { GenresType } from "../Types/Genres.Types";
 
 export const metadata: Metadata = {
-  title: "DBFM - Discover Movies & TV Shows",
+  title: "DBFM | Discover Movies & TV Shows",
   description:
     "DBFM is a movie and TV website where you can check out the latest releases and discover actors.",
   icons: {
     icon: "/black_favicon.png",
   },
   metadataBase: new URL("https://dbfm.vercel.app"),
-  openGraph: {
-    title: "DBFM - Discover Movies & TV Shows",
-    description: "Check out the latest movies, TV shows, and actors on DBFM.",
-    url: "https://dbfm.vercel.app",
-    siteName: "DBFM",
-  },
 };
+
 async function getGenres(): Promise<GenresType[]> {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getNavbarGenres`,
-      { cache: "force-cache", next: { revalidate: 3600 } }
+      { cache: "force-cache", next: { revalidate: 3600 } },
     );
     const data = await res.json();
     return data.genres || [];

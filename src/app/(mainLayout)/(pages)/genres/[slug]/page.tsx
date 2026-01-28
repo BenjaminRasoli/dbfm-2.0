@@ -1,124 +1,44 @@
-"use client";
-import CustomDropdown, { sortMedia } from "@/app/components/DropDown/DropDown";
-import { useState, useEffect } from "react";
-import PageSelector from "@/app/components/PageSelector/PageSelector";
-import QueryParams from "@/app/hooks/QueryParams";
-import { handleStateChange } from "@/app/utils/HandleStateChange";
-import { MediaTypes } from "@/app/Types/MediaTypes";
-import MediaCard from "@/app/components/MediaCard/MediaCard";
+import React from "react";
+import Genre from "./Genre";
 
-function Page({ params }: { params: Promise<{ slug: string }> }) {
-  const [totalPages, setTotalPages] = useState(1);
-  const [media, setMedia] = useState<MediaTypes[]>([]);
-  const [genreName, setGenreName] = useState<string>("");
-  const [sortedMedia, setSortedMedia] = useState<MediaTypes[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [genreSlug, setGenreSlug] = useState<string>("");
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
 
-  const { page, sortOption, setPage, setSortOption } = QueryParams();
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getNavbarGenres`,
+    );
 
-  useEffect(() => {
-    const resolveParams = async () => {
-      const resolvedParams = await params;
-      setGenreSlug(resolvedParams.slug);
-    };
+    if (!res.ok) return { title: "Genre Not Found" };
 
-    resolveParams();
-  }, [params]);
+    const genresData = await res.json();
+    const genresArray = genresData.genres;
+    const genre = genresArray.find(
+      (g: { id: number }) => g.id === parseInt(slug),
+    );
 
-  useEffect(() => {
-    if (!genreSlug) return;
+    if (!genre) return { title: "Genre Not Found" };
 
-    setLoading(true);
-    const fetchData = async () => {
-      try {
-        const movieRes = await fetch(
-          `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getGenreMovies?genre=${genreSlug}&page=${page}`
-        );
-        const data = await movieRes.json();
-        setMedia(data.results);
-        setTotalPages(data.total_pages);
+    const title = `${genre.name} | DBFM`;
+    const description = `Browse movies and TV shows in the ${genre.name} genre.`;
 
-        const genreRes = await fetch(
-          `${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/getNavbarGenres`
-        );
-        const genreData = await genreRes.json();
-
-        const genre = genreData.genres.find(
-          (genre: { id: number }) => genre.id === parseInt(genreSlug)
-        );
-        setGenreName(genre.name);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [genreSlug, page]);
-
-  useEffect(() => {
-    if (genreName) {
-      document.title = `DBFM | ${genreName}`;
-    }
-  }, [genreName]);
-
-  useEffect(() => {
-    if (media?.length > 0) {
-      const sorted = sortMedia({ sortType: sortOption, media });
-      setSortedMedia(sorted);
-    }
-  }, [sortOption, media]);
-
-  return (
-    <div className="p-7">
-      <section className="border-b-1 border-gray-600 dark:border-gray-800">
-        <h1 className="text-3xl max-w-xl text-blue pb-5">
-          {genreName && genreName} Movies
-        </h1>
-        <div className="flex justify-end">
-          <CustomDropdown
-            options={[
-              "A-Z",
-              "Z-A",
-              "Date",
-              "Date (Oldest)",
-              "Rating",
-              "Rating (Lowest)",
-            ]}
-            selectedOption={
-              sortOption === "standard"
-                ? "Sort by"
-                : sortOption === "Date"
-                ? "Date"
-                : sortOption === "Rating"
-                ? "Rating"
-                : sortOption === "Z-A"
-                ? "Z-A"
-                : sortOption === "Date (Oldest)"
-                ? "Date (Oldest)"
-                : sortOption === "Rating (Lowest)"
-                ? "Rating (Lowest)"
-                : "A-Z"
-            }
-            onSelect={(newSort: string) => setSortOption(newSort)}
-            sortOption={sortOption}
-          />
-        </div>
-      </section>
-      <MediaCard media={sortedMedia} loading={loading} />
-      {media?.length === 0 || loading ? null : (
-        <PageSelector
-          currentPage={page}
-          totalPages={totalPages}
-          onPageChange={(newPage) =>
-            handleStateChange(setPage, false)(newPage, setPage)
-          }
-        />
-      )}
-    </div>
-  );
+    return { title, description };
+  } catch (error) {
+    console.error("Metadata fetch error:", error);
+    return { title: "Genre Not Found" };
+  }
 }
 
-export default Page;
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+
+  return <Genre params={{ slug }} />;
+}

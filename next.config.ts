@@ -20,7 +20,7 @@ const nextConfig: NextConfig = {
         hostname: "avatars.githubusercontent.com",
       },
     ],
-    unoptimized: true,
+    unoptimized: process.env.UNOPTIMIZED === "true",
   },
   compress: true,
   poweredByHeader: false,
