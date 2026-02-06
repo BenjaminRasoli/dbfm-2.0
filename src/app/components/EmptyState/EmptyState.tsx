@@ -15,7 +15,7 @@ export default function EmptyState({
       </h1>
 
       {description && (
-        <p className="text-gray-600 dark:text-gray-300 max-w-lg mx-auto mb-6 text-lg">
+        <p className="text-gray-800 dark:text-gray-300 max-w-lg mx-auto mb-6 text-lg">
           {description}
         </p>
       )}

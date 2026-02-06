@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaHome, FaStar, FaUser } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 import { useUser } from "@/app/context/UserProvider";
@@ -9,6 +9,11 @@ import { ImCheckmark } from "react-icons/im";
 function BottomMenu() {
   const pathname = usePathname();
   const { user } = useUser();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const isActive = (path: string) => pathname === path;
 
@@ -37,7 +42,20 @@ function BottomMenu() {
         <span className="text-sm">Favorites</span>
       </Link>
 
-      {user ? (
+      {!mounted ? (
+        <Link
+          href="/login"
+          className={`flex flex-col items-center px-6 py-2 rounded-lg transition ${
+            isActive("/login") ? "text-blue" : "hover:text-blue"
+          }`}
+        >
+          <FaUser
+            size={24}
+            color={isActive("/login") ? "#2d99ff" : "currentColor"}
+          />
+          <span className="text-sm">Login</span>
+        </Link>
+      ) : user ? (
         <Link
           href="/watched"
           className={`flex flex-col items-center px-6 py-2 rounded-lg transition ${
@@ -54,12 +72,12 @@ function BottomMenu() {
         <Link
           href="/login"
           className={`flex flex-col items-center px-6 py-2 rounded-lg transition ${
-            isActive("/Login") ? "text-blue" : "hover:text-blue"
+            isActive("/login") ? "text-blue" : "hover:text-blue"
           }`}
         >
           <FaUser
             size={24}
-            color={isActive("/Login") ? "#2d99ff" : "currentColor"}
+            color={isActive("/login") ? "#2d99ff" : "currentColor"}
           />
           <span className="text-sm">Login</span>
         </Link>

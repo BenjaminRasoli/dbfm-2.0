@@ -38,7 +38,10 @@ export default function Collection({ params }: { params: { slug: string } }) {
         if (!data || !data.parts || !Array.isArray(data.parts)) {
           setCollectionData(null);
         } else {
-          setCollectionData(data);
+          setCollectionData({
+            ...data,
+            media_type: "collection",
+          });
         }
       } catch (err) {
         console.error("Error fetching collection:", err);
@@ -76,7 +79,8 @@ export default function Collection({ params }: { params: { slug: string } }) {
             className="object-cover"
           />
           <div className="absolute inset-0 bg-black/60"></div>
-          <div className="flex flex-col mt-16 gap-3 maxW">
+          <div className="flex flex-col mt-16 gap-3 customContainer">
+            <HandleFavorites media={collectionData as any} />
             <h1 className="text-2xl md:text-4xl font-bold drop-shadow-lg">
               {collectionData.name}
             </h1>
@@ -88,7 +92,7 @@ export default function Collection({ params }: { params: { slug: string } }) {
           </div>
         </div>
 
-        <div className="maxW">
+        <div className="customContainer">
           <h2 className="text-2xl text-dark dark:text-white font-bold mb-6">
             Collection Parts
           </h2>

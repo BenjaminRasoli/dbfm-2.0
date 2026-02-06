@@ -22,9 +22,14 @@ function Header({ genres }: HeaderProps) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState<boolean>(false);
   const [isHamburgerOpen, setIsHamburgerOpen] = useState<boolean>(false);
+  const [mounted, setMounted] = useState<boolean>(false);
   const modalRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const sidebarRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const router = useRouter();
   const { user, logout } = useUser();
@@ -158,7 +163,7 @@ function Header({ genres }: HeaderProps) {
               aria-label="Search movies and TV shows"
             >
               {searchLoading ? (
-                <ClipLoader size={20} color="#ffffff" />
+                <ClipLoader size={20} color="#2d99ff" />
               ) : (
                 <IoIosSearch size={20} aria-hidden />
               )}
@@ -175,7 +180,7 @@ function Header({ genres }: HeaderProps) {
           </form>
 
           <div className="flex items-center gap-3 relative">
-            {user ? (
+            {!mounted ? null : user ? (
               <>
                 <h3 className="hidden sm:block">{user.userName}</h3>
                 <div

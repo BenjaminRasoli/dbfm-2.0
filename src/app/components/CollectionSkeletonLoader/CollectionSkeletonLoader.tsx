@@ -3,7 +3,7 @@ function CollectionSkeletonLoader() {
     <>
       <div className="w-full h-[35dvh] relative bg-gray-300 animate-pulse" />
 
-      <div className="maxW">
+      <div className="customContainer">
         <div className="bg-gray-300 h-10 w-48 rounded-lg mb-4 animate-pulse"></div>
         <div className="flex gap-6 overflow-x-auto pb-4 no-scrollbar">
           {[...Array(6)].map((_, index) => (
