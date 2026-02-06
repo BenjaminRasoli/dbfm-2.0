@@ -191,7 +191,7 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
         <div className="absolute inset-0 backdrop-blur-[4px] bg-black/70" />
       </div>
 
-      <div className="mx-auto my-4 p-6 relative z-10 max-w-[380px] sm:max-w-[570px] md:max-w-[750px] custom-lg:max-w-[950px] 2xl:max-w-[1550px]">
+      <div className="customContainer my-4 pt-6 lg:p-6 relative z-10 ">
         <div className="flex flex-col md:flex-row items-center md:items-start">
           <div className="relative overflow-hidden rounded-lg shadow-lg mb-5 min-h-[600px] h-full min-w-[360px] w-full custom-lg:w-auto">
             {!posterLoaded && (
@@ -369,13 +369,13 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
 
             <div className="absolute inset-0 bg-gradient-to-tl from-blue/60 to-transparent" />
 
-            <div className="absolute top-1/4 left-12 text-white flex flex-col gap-3 max-w-lg">
+            <div className="pt-16 pl-10 text-white flex flex-col gap-3 max-w-lg">
               <h2 className="text-2xl md:text-3xl font-bold drop-shadow-lg">
                 Part of the {mediaData.belongs_to_collection.name}
               </h2>
               <Link
                 href={`/collection/${mediaData.belongs_to_collection.id}`}
-                className="bg-blue hover:bg-blue-hover text-white font-semibold py-2 px-5 rounded-lg shadow-lg w-max transition duration-300 ease-in-out"
+                className="bg-blue z-10 hover:bg-blue-hover text-white font-semibold py-2 px-5 rounded-lg shadow-lg w-max transition duration-300 ease-in-out"
               >
                 View the collection
               </Link>

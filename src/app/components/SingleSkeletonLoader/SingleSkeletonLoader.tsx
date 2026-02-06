@@ -13,7 +13,7 @@ function SingleSkeletonLoader({
     <div className="relative bg-cover bg-center mt-5">
       <div className="absolute inset-0 z-0 bg-white dark:bg-dark"></div>
 
-      <div className="mx-auto relative z-10 p-6 max-w-[380px] sm:max-w-[570px] md:max-w-[750px] custom-lg:max-w-[950px] 2xl:max-w-[1550px]">
+      <div className="relative z-10 pt-6 lg:p-6 customContainer">
         <div className="flex flex-col md:flex-row items-start gap-6">
           <div className="mb-4 lg:mb-0 w-full md:max-w-[300px] custom-lg:max-w-[360px] flex-shrink-0">
             <div className="w-full h-[525px] md:h-[450px] custom-lg:h-[595px]  bg-gray-300 animate-pulse rounded-md" />

@@ -86,7 +86,7 @@ function Episodes({
         style={{ backgroundColor: "rgba(0, 0, 0, 0.8)" }}
       ></div>
 
-      <div className="relative mx-auto z-10 pt-30 p-6 max-w-[380px] sm:max-w-[570px] md:max-w-[750px] custom-lg:max-w-[950px] 2xl:max-w-[1550px]">
+      <div className="relative z-10 !pt-30 customContainer">
         <Link
           href={`/tv/${slug}`}
           className="text-white bg-blue px-4 mb-5 py-2 rounded-lg hover:bg-blue-hover"

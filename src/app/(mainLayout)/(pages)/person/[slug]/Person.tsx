@@ -120,7 +120,7 @@ function Person({ params }: { params: { slug: string } }) {
 
   return (
     <div className="min-h-screen pb-15">
-      <div className="mx-auto max-w-[380px] sm:max-w-[570px] md:max-w-[750px] custom-lg:max-w-[950px] 2xl:max-w-[1550px] p-6 pt-10">
+      <div className="customContainer !pt-10">
         <div className="rounded-lg flex flex-col items-center lg:flex-row lg:items-start">
           <Image
             src={
@@ -188,7 +188,7 @@ function Person({ params }: { params: { slug: string } }) {
                 return (
                   <Link
                     href={`/${credit.media_type}/${credit.id}`}
-                    key={credit.id - index}
+                    key={`${credit.id}-${credit.media_type}-${index}`}
                   >
                     <div className="w-44 h-[350px] flex-shrink-0 bg-blue rounded-lg shadow-md overflow-hidden">
                       <div className="relative w-full h-[230px]">
@@ -243,7 +243,7 @@ function Person({ params }: { params: { slug: string } }) {
             {actorAll && actorAll.length > 0 ? (
               actorAll.map((credit, i) => (
                 <li
-                  key={credit.id - i}
+                  key={`${credit.id}-${credit.media_type}-${i}`}
                   className="border-b border-gray-700 pb-2"
                 >
                   <p className="font-semibold">
@@ -277,7 +277,7 @@ function Person({ params }: { params: { slug: string } }) {
             {actorCrew && actorCrew.length > 0 ? (
               actorCrew.map((credit, i) => (
                 <li
-                  key={credit.id - i}
+                  key={`${credit.id}-${credit.media_type}-${i}`}
                   className="border-b border-gray-700 pb-2"
                 >
                   <p className="font-semibold">
