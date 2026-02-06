@@ -32,10 +32,15 @@ function HandleWatched({
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [itemToRemove, setItemToRemove] = useState<any | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   const router = useRouter();
   const { user } = useUser();
   const iconSize = isRecommendations ? 25 : 40;
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const fetchWatchedFromFirebase = async (userId: string) => {
@@ -173,7 +178,9 @@ function HandleWatched({
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
-            {(watched ?? localWatched)?.some((item) => item.id === media.id) ? (
+            {!mounted ? (
+              <ImCheckmark2 size={iconSize} />
+            ) : (watched ?? localWatched)?.some((item) => item.id === media.id) ? (
               <ImCheckmark className="text-blue" size={iconSize} />
             ) : isHovered ? (
               <ImCheckmark className="text-blue" size={iconSize} />
