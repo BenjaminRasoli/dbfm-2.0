@@ -193,7 +193,7 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
 
       <div className="customContainer my-4 pt-6 lg:p-6 relative z-10 ">
         <div className="flex flex-col md:flex-row items-center md:items-start">
-          <div className="relative overflow-hidden rounded-lg shadow-lg mb-5 min-h-[600px] h-full min-w-[360px] w-full custom-lg:w-auto">
+          <div className="relative overflow-hidden rounded-lg shadow-lg mb-5 w-full max-w-[360px] h-[600px]">
             {!posterLoaded && (
               <div className="absolute inset-0 bg-gray-300 animate-pulse z-10 rounded-lg" />
             )}
@@ -210,7 +210,7 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
                   : mediaData.original_name
               }
               fill
-              className="rounded-lg shadow-lg w-full h-full object-cover"
+              className="object-cover w-full h-full rounded-lg"
               onLoad={() => setPosterLoaded(true)}
             />
             <HandleFavorites media={mediaData} />

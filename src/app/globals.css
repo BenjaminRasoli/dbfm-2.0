@@ -39,5 +39,5 @@ body {
 }
 
 .customContainer {
-  @apply max-w-[380px] sm:max-w-[570px] md:max-w-[750px] custom-lg:max-w-[950px] 2xl:max-w-[1550px] mx-auto p-6;
+  @apply max-w-[410px] sm:max-w-[570px] md:max-w-[750px] custom-lg:max-w-[950px] 2xl:max-w-[1550px] mx-auto p-6;
 }

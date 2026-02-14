@@ -9,7 +9,7 @@ function MovieFilters({
   handleSortChange,
 }: MediaFiltersTypes) {
   return (
-    <section className="border-b-1 border-gray-600 dark:border-gray-800 pt-5 flex justify-between">
+    <section className="border-b-1 gap-4 border-gray-600 dark:border-gray-800 pt-5 flex justify-between">
       <FilterButtons
         activeFilter={activeFilter}
         handleFilterChange={handleFilterChange}
