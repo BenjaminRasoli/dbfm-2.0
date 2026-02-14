@@ -229,7 +229,7 @@ function Header({ genres }: HeaderProps) {
                 )}
               </>
             ) : (
-              <Link href="/login" className="hover:text-blue">
+              <Link href="/login" className="hidden md:block hover:text-blue">
                 Login
               </Link>
             )}

@@ -180,9 +180,9 @@ function Register() {
       {!user && (
         <div className="w-full max-w-md bg-white dark:bg-dark-2 p-8 rounded-lg shadow-xl">
           <div className="relative flex items-center mb-4 w-full">
-            <h3 className="text-lg text-blue absolute left-0 hover:text-blue-hover">
+            <h3 className="text-md text-blue absolute left-0 hover:text-blue-hover">
               <Link className="flex items-center" href="/login">
-                <IoIosArrowRoundBack size={20} />
+                <IoIosArrowRoundBack size={25} />
                 Back
               </Link>
             </h3>

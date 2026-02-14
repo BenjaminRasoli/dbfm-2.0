@@ -12,7 +12,8 @@ import Loading from "@/app/components/Loading/Loading";
 import PageSelector from "../PageSelector/PageSelector";
 import JsonModal from "../JsonModal/JsonModal";
 import EmptyState from "../EmptyState/EmptyState";
-import { IoIosHome, IoIosPerson } from "react-icons/io";
+import { IoIosHome } from "react-icons/io";
+import { FiLogIn } from "react-icons/fi";
 
 export default function MediaListClient({ type }: MediaListClientProps) {
   const { user } = useUser();
@@ -254,7 +255,7 @@ export default function MediaListClient({ type }: MediaListClientProps) {
                 description={`to view your ${title.toLowerCase()} list.`}
                 linkHref="/login"
                 linkText="Login"
-                icon={<IoIosPerson size={24} />}
+                icon={<FiLogIn size={24} />}
               />
             ) : (
               <EmptyState

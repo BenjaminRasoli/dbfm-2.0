@@ -18,6 +18,7 @@ function Banner({ backdropPath }: BannerProps) {
             fill
             className="object-cover"
             priority
+            loading="eager"
           />
         ) : (
           <div className="w-full h-full bg-gray-500 flex items-center justify-center">
