@@ -11,6 +11,7 @@ export default function LogoutModal({
   isOpen,
   onCancel,
   onConfirm,
+  text = "Are you sure you want to log out?",
 }: LogoutModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -48,16 +49,14 @@ export default function LogoutModal({
           <FaWindowClose size={24} />
         </button>
 
-        <p className="text-lg font-semibold text-center my-auto">
-          Are you sure you want to log out?
-        </p>
+        <p className="text-lg font-semibold text-center my-auto">{text}</p>
 
         <div className="flex justify-between px-5 gap-4">
           <button
             onClick={onConfirm}
             className="cursor-pointer bg-red hover:bg-red-hover  w-1/2 rounded-lg p-2 text-white"
           >
-            Yes, Logout
+            Yes
           </button>
           <button
             onClick={onCancel}

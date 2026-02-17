@@ -1,14 +1,8 @@
 "use client";
-import {
-  useContext,
-  createContext,
-  useState,
-  useEffect,
-  ReactNode,
-} from "react";
-import { UserContextTypes } from "../Types/UserContextTypes";
-import { UserDataSavedTypes } from "../Types/UserDataTypes";
+import { useContext, createContext, useState, ReactNode } from "react";
 import { useRouter } from "next/navigation";
+import { UserContextTypes, UserProviderProps } from "../Types/UserContextTypes";
+import { UserDataSavedTypes } from "../Types/UserDataTypes";
 
 const UserContext = createContext<UserContextTypes | null>(null);
 
@@ -20,9 +14,7 @@ export const useUser = (): UserContextTypes => {
   return context;
 };
 
-interface UserProviderProps {
-  children: ReactNode;
-}
+
 
 async function updateCookie(action: "set" | "remove", userId?: string) {
   await fetch(`${process.env.NEXT_PUBLIC_DBFM_SERVER}/api/userCookie`, {
@@ -32,34 +24,21 @@ async function updateCookie(action: "set" | "remove", userId?: string) {
   });
 }
 
-export const UserProvider = ({ children }: UserProviderProps) => {
-  const [user, setUser] = useState<UserDataSavedTypes | null>(null);
+export const UserProvider = ({
+  children,
+  initialUser = null,
+}: UserProviderProps) => {
+  const [user, setUser] = useState<UserDataSavedTypes | null>(initialUser);
   const router = useRouter();
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      const userData = JSON.parse(storedUser);
-      setUser(userData);
-      if (userData.uid) {
-        updateCookie("set", userData.uid);
-      }
-    }
-  }, []);
-
-  const login = (userData: UserDataSavedTypes) => {
-    localStorage.setItem("user", JSON.stringify(userData));
+  const login = async (userData: UserDataSavedTypes) => {
     setUser(userData);
-    if (userData.uid) {
-      updateCookie("set", userData.uid);
-    }
+    if (userData.uid) await updateCookie("set", userData.uid);
   };
 
-  const logout = () => {
-    localStorage.removeItem("user");
-    updateCookie("remove");
+  const logout = async () => {
     setUser(null);
-
+    await updateCookie("remove");
     router.push("/");
   };
 

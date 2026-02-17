@@ -17,7 +17,7 @@ function WhereToWatch({ whereToWatch }: { whereToWatch: WatchResultsTypes }) {
 
   const uniqueProviders = allProviders.filter(
     (provider, index, self) =>
-      index === self.findIndex((p) => p.provider_id === provider.provider_id)
+      index === self.findIndex((p) => p.provider_id === provider.provider_id),
   );
 
   return (
@@ -30,6 +30,7 @@ function WhereToWatch({ whereToWatch }: { whereToWatch: WatchResultsTypes }) {
             href={countryData.link}
             target="_blank"
             rel="noopener noreferrer"
+            className="group"
           >
             <div className="bg-blue rounded-lg h-full w-28 p-2 flex flex-col items-center">
               <Image
@@ -39,7 +40,7 @@ function WhereToWatch({ whereToWatch }: { whereToWatch: WatchResultsTypes }) {
                 height={80}
                 width={80}
               />
-              <p className="text-center text-white font-semibold text-sm">
+              <p className="group-hover:underline text-center text-white font-semibold text-sm">
                 {provider.provider_name}
               </p>
             </div>

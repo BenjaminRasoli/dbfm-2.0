@@ -1,3 +1,6 @@
+import { ReactNode } from "react";
+import { UserDataSavedTypes } from "./UserDataTypes";
+
 export interface UserTypes {
   email: string;
   firstName: string;
@@ -19,4 +22,9 @@ export interface UserContextTypes {
   user: UserTypes | null;
   login: (user: UserLoginDataTypes) => void;
   logout: () => void;
+}
+
+export interface UserProviderProps {
+  children: ReactNode;
+  initialUser?: UserDataSavedTypes | null;
 }

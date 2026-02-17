@@ -7,7 +7,7 @@ import { ActorsTypes } from "@/app/Types/ActorsTypes";
 
 function TopBilledActors({ actors }: { actors: ActorsTypes[] }) {
   const [loadedImages, setLoadedImages] = useState<{ [id: number]: boolean }>(
-    {}
+    {},
   );
 
   return (
@@ -23,7 +23,7 @@ function TopBilledActors({ actors }: { actors: ActorsTypes[] }) {
             : PersonPlaceholder;
 
           return (
-            <Link key={actor.id} href={`/person/${actor.id}`}>
+            <Link className="group" key={actor.id} href={`/person/${actor.id}`}>
               <div className="bg-blue rounded-lg w-43 flex flex-col h-[350px] overflow-hidden">
                 <div className="relative w-full h-[250px] overflow-hidden rounded-t-lg">
                   {!isImageLoaded && (
@@ -44,7 +44,7 @@ function TopBilledActors({ actors }: { actors: ActorsTypes[] }) {
                   />
                 </div>
                 <div className="flex flex-col pl-1 mt-0 overflow-auto max-h-[100px]">
-                  <h3 className="text-white pt-2 font-bold text-ellipsis">
+                  <h3 className="text-white group-hover:underline pt-2 font-bold text-ellipsis">
                     {actor?.name}
                   </h3>
                   <p className="text-white text-xs">{actor?.character}</p>
