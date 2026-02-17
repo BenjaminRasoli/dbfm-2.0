@@ -402,7 +402,7 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
                     <HandleWatched isRecommendations media={item} />
                     <Link
                       href={`/${item.media_type}/${item.id}`}
-                      className="cursor-pointer flex-shrink-0 w-[180px] bg-blue shadow-lg"
+                      className="cursor-pointer group flex-shrink-0 w-[180px] bg-blue shadow-lg"
                     >
                       <div className="relative w-full aspect-[2/3] overflow-hidden rounded-t-lg">
                         {!isImageLoaded && (
@@ -429,7 +429,7 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
                       </div>
 
                       <div className="p-2 bg-blue rounded-b-lg">
-                        <p className="text-sm text-white font-semibold truncate">
+                        <p className="text-sm text-white group-hover:underline font-semibold truncate">
                           {isMovie(item) ? item.title : item.name}
                         </p>
 

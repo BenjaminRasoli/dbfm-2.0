@@ -7,6 +7,8 @@ import Snowfall from "./components/Snowfall/Snowfall";
 import "./globals.css";
 import { Suspense } from "react";
 import Loading from "./components/Loading/Loading";
+import { SafeBanner } from "./components/SafeBanner/SafeBanner";
+import { getServerUser } from "./utils/getServerUser";
 
 const roboto = Roboto({
   variable: "--font-roboto",
@@ -33,18 +35,20 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const serverUser = await getServerUser();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${roboto.variable} ${cinzel.variable} antialiased bg-white dark:bg-dark flex flex-col`}
       >
         <Providers>
-          <UserProvider>
+          <UserProvider initialUser={serverUser}>
             <Suspense
               fallback={
                 <div className="flex justify-center items-center min-h-screen">
@@ -54,8 +58,8 @@ export default function RootLayout({
             >
               <Snowfall />
               <div id="modal-root"></div>
-
               {children}
+              <SafeBanner />
             </Suspense>
             <Footer />
           </UserProvider>

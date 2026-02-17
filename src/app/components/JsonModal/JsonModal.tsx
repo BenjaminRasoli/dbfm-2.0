@@ -8,7 +8,6 @@ import { disableOverflow } from "@/app/utils/HandleDOM";
 import { handleOutsideClick } from "@/app/utils/HandleOutsideClick";
 import { useEscapeListener } from "@/app/utils/HandleEsc";
 
-
 function JsonModal({ isModalOpen, setIsModalOpen }: LoginModalTypes) {
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -27,8 +26,7 @@ function JsonModal({ isModalOpen, setIsModalOpen }: LoginModalTypes) {
       document.removeEventListener("mousedown", handleClick);
     };
   }, [setIsModalOpen]);
-    useEscapeListener(setIsModalOpen);
-
+  useEscapeListener(setIsModalOpen);
 
   if (!isModalOpen) return null;
 
@@ -51,20 +49,23 @@ function JsonModal({ isModalOpen, setIsModalOpen }: LoginModalTypes) {
           How to Import Media
         </h2>
 
-        <p className="text-center mb-4">
+        <p className="mb-4">
           You can import your media using a JSON file. Each entry should include
-          the TMDB (The Movie DB) ID and the type (tv or movie):
+          the TMDB (The Movie DB) ID,the type (tv or movie) and createdAt
+          (date):
         </p>
 
         <pre className="bg-gray-100 dark:bg-gray-700 p-2 rounded overflow-x-auto text-sm mb-4">
           {`[
   {
     "id": 60743,
-    "type": "tv"
+    "type": "tv",
+    "createdAt": 2020-01-01
   },
   {
     "id": 62125,
-    "type": "movie"
+    "type": "movie",
+    "createdAt": 2023-04-21
   },
 ]`}
         </pre>
@@ -75,7 +76,7 @@ function JsonModal({ isModalOpen, setIsModalOpen }: LoginModalTypes) {
       </div>
     </div>,
 
-    document.getElementById("modal-root")!
+    document.getElementById("modal-root")!,
   );
 }
 

@@ -206,13 +206,22 @@ function Header({ genres }: HeaderProps) {
                     className="absolute top-[60px] right-0 w-48 bg-white dark:bg-dark shadow-md p-4 rounded-lg"
                   >
                     <h3 className="pb-4">{user.userName}</h3>
-
+                    <Link
+                      href={"/connections"}
+                      onClick={() => {
+                        setIsModalOpen(false);
+                      }}
+                      className="bg-blue hover:bg-blue-hover text-white mb-4 rounded-lg w-full p-2 flex items-center gap-2 text-sm cursor-pointer"
+                      aria-label="Logout from DBFM"
+                    >
+                      Connections
+                    </Link>
                     <button
                       onClick={() => {
                         setIsLogoutModalOpen(true);
                         setIsModalOpen(false);
                       }}
-                      className="bg-red hover:bg-red-hover rounded-lg w-full p-2 flex items-center gap-2 text-sm cursor-pointer"
+                      className="bg-red hover:bg-red-hover text-white rounded-lg w-full p-2 flex items-center gap-2 text-sm cursor-pointer"
                       aria-label="Logout from DBFM"
                     >
                       Logout <IoIosLogOut />

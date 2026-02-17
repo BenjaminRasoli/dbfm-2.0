@@ -28,7 +28,7 @@ function Seasons({ mediaData }: { mediaData: TvTypes }) {
 
           return (
             <Link
-              className="pb-4"
+              className="pb-4 group"
               key={season.id}
               href={`/tv/${mediaData.id}/season/${season.season_number}`}
             >
@@ -54,7 +54,7 @@ function Seasons({ mediaData }: { mediaData: TvTypes }) {
                     Season {season.season_number || 0}
                   </div>
                 </div>
-                <h2 className="text-xl font-bold text-white mt-4">
+                <h2 className="group-hover:underline text-xl font-bold text-white mt-4">
                   {season.name}
                 </h2>
 
