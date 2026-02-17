@@ -31,6 +31,7 @@ export default function SettingsPage() {
   const [traktToken, setTraktToken] = useState<string | null>(null);
   const [history, setHistory] = useState<any[] | null>(null);
   const [historyLoading, setHistoryLoading] = useState(false);
+  const [initialHistoryLoading, setInitialHistoryLoading] = useState(true);
   const [tmdbDetails, setTmdbDetails] = useState<Record<string, any>>({});
   const [historyPage, setHistoryPage] = useState(1);
   const [hasMoreHistory, setHasMoreHistory] = useState(true);
@@ -344,26 +345,41 @@ export default function SettingsPage() {
         return;
       }
 
-      setImportResult(`Importing ${itemsToImport.length} items...`);
-
-      const importRes = await fetch("/api/trakt/import", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          type: "watched",
-          data: itemsToImport,
-          userId: user.uid,
-        }),
-      });
-
-      const importJson = await importRes.json();
-      if (!importRes.ok) {
-        throw new Error(importJson?.error || "Import failed");
+      const chunkSize = 20;
+      const chunkedItems = [];
+      for (let i = 0; i < itemsToImport.length; i += chunkSize) {
+        chunkedItems.push(itemsToImport.slice(i, i + chunkSize));
       }
 
-      const written =
-        importJson.written || importJson.writtenCount || itemsToImport.length;
-      setImportResult(`Successfully imported ${written} items`);
+      let totalImported = 0;
+
+      for (const chunk of chunkedItems) {
+        const importRes = await fetch("/api/trakt/import", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            type: "watched",
+            data: chunk,
+            userId: user.uid,
+          }),
+        });
+
+        const importJson = await importRes.json();
+        if (!importRes.ok) {
+          throw new Error(importJson?.error || "Import failed");
+        }
+
+        const written =
+          importJson.written || importJson.writtenCount || chunk.length;
+
+        totalImported += written;
+
+        setImportResult(`Importing ${totalImported}/${itemsToImport.length}`);
+
+        await new Promise((resolve) => setTimeout(resolve, 500));
+      }
+
+      setImportResult(`Successfully imported ${totalImported} items`);
       router.refresh();
     } catch (e: any) {
       console.error("Import error:", e);
@@ -382,6 +398,7 @@ export default function SettingsPage() {
       const pageData = await fetchHistoryPage(1);
       setHistory(pageData);
       setHasMoreHistory((pageData?.length || 0) >= 20);
+      setInitialHistoryLoading(false);
     })();
   }, [traktToken, traktUser]);
 
@@ -544,7 +561,7 @@ export default function SettingsPage() {
                       <h5 className="font-medium dark:text-white mt-10">
                         History
                       </h5>
-                      {historyLoading ? (
+                      {initialHistoryLoading ? (
                         <div className="overflow-x-auto py-2">
                           <div className="flex gap-4 w-max">
                             {Array.from({ length: 4 }).map((_, idx) => (
