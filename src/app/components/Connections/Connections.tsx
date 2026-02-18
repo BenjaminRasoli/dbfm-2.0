@@ -10,8 +10,16 @@ import MovieTvPlaceholder from "../../images/MediaImagePlaceholder.jpg";
 import TraktLogo from "../../images/TraktLogo.webp";
 import Image from "next/image";
 import Loading from "@/app/components/Loading/Loading";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  setDoc,
+} from "firebase/firestore";
 import { db } from "@/app/config/FireBaseConfig";
+import { MediaTypes } from "@/app/Types/MediaTypes";
 
 interface TraktUser {
   username: string;
@@ -324,24 +332,45 @@ export default function SettingsPage() {
 
       const itemsToImport: any[] = [];
 
+      const fetchWatchedFromFirebase = async (userId: string) => {
+        const q = query(collection(db, "userWatchedList", userId, "watched"));
+        try {
+          const querySnapshot = await getDocs(q);
+          const fetchedWatched: MediaTypes[] = querySnapshot.docs.map(
+            (doc) => doc.data() as MediaTypes,
+          );
+          return fetchedWatched;
+        } catch (error) {
+          console.error("Error fetching watched list: ", error);
+          return [];
+        }
+      };
+
+      const fetchedWatched = await fetchWatchedFromFirebase(user.uid);
+      const existingWatched = new Set(fetchedWatched.map((media) => media.id));
+
       moviesMap.forEach(({ id, watchedAt }) => {
-        itemsToImport.push({
-          id,
-          type: "movie",
-          createdAt: watchedAt ? watchedAt.toISOString() : undefined,
-        });
+        if (!existingWatched.has(id)) {
+          itemsToImport.push({
+            id,
+            type: "movie",
+            createdAt: watchedAt ? watchedAt.toISOString() : undefined,
+          });
+        }
       });
 
       showsMap.forEach(({ id, watchedAt }) => {
-        itemsToImport.push({
-          id,
-          type: "tv",
-          createdAt: watchedAt ? watchedAt.toISOString() : undefined,
-        });
+        if (!existingWatched.has(id)) {
+          itemsToImport.push({
+            id,
+            type: "tv",
+            createdAt: watchedAt ? watchedAt.toISOString() : undefined,
+          });
+        }
       });
 
       if (itemsToImport.length === 0) {
-        setImportResult("No importable items found (missing TMDB ids)");
+        setImportResult("No new items to import");
         return;
       }
 
@@ -374,7 +403,7 @@ export default function SettingsPage() {
 
         totalImported += written;
 
-        setImportResult(`Importing ${totalImported}/${itemsToImport.length}`);
+        setImportResult(`Importing ${totalImported}/${itemsToImport.length} items.`);
 
         await new Promise((resolve) => setTimeout(resolve, 500));
       }
@@ -552,7 +581,7 @@ export default function SettingsPage() {
                             : "Import watched media from Trakt"}
                         </button>
                         {importResult && (
-                          <span className="text-sm text-green-400">
+                          <span className="text-sm text-green">
                             {importResult}
                           </span>
                         )}
