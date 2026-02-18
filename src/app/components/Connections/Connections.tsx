@@ -30,7 +30,7 @@ interface TraktUser {
   };
 }
 
-export default function SettingsPage() {
+function Connections() {
   const { user } = useUser();
   const [traktUser, setTraktUser] = useState<TraktUser | null>(null);
   const [loadingUser, setLoadingUser] = useState(true);
@@ -403,7 +403,9 @@ export default function SettingsPage() {
 
         totalImported += written;
 
-        setImportResult(`Importing ${totalImported}/${itemsToImport.length} items.`);
+        setImportResult(
+          `Importing ${totalImported}/${itemsToImport.length} items.`,
+        );
 
         await new Promise((resolve) => setTimeout(resolve, 500));
       }
@@ -570,7 +572,7 @@ export default function SettingsPage() {
                 {traktUser && (
                   <div className="mt-6 space-y-3">
                     <div className="mt-4">
-                      <div className="mb-4 flex items-center gap-2">
+                      <div className="mb-4 flex flex-col lg:flex-row items-start lg:items-center gap-2">
                         <button
                           onClick={handleImportAll}
                           disabled={importingAll || !user}
@@ -737,3 +739,5 @@ export default function SettingsPage() {
     </>
   );
 }
+
+export default Connections;
