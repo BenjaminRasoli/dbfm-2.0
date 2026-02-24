@@ -490,7 +490,7 @@ function Connections() {
         <div className="min-h-screen bg-white dark:bg-dark px-4 py-16">
           <div className="customContainer">
             {error && (
-              <div className="mb-6 p-4 text-white bg-red rounded-lg">
+              <div className="mb-6 p-4 text-white break-all bg-red rounded-lg">
                 {error}
                 <button
                   onClick={() => setError(null)}
@@ -516,57 +516,54 @@ function Connections() {
                 }}
               />
               <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 rounded-lg flex items-center justify-center">
-                      <Image
-                        src={TraktLogo}
-                        alt={""}
-                        width={1000}
-                        height={1000}
-                      />
-                    </div>
-                    <div>
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 rounded-lg flex items-center justify-center">
+                    <Image src={TraktLogo} alt="" width={1000} height={1000} />
+                  </div>
+
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between">
                       <h3 className="text-lg font-semibold dark:text-white">
                         Trakt
                       </h3>
-                      <p className="text-sm dark:text-gray-300">
-                        Sync your watched media.
-                      </p>
-                    </div>
-                  </div>
 
-                  {traktUser ? (
-                    <div className="flex items-center space-x-4">
-                      <div className="text-right">
-                        <p className="font-semibold dark:text-white">
-                          {traktUser.username}
-                        </p>
+                      {traktUser ? (
+                        <div className="flex items-center space-x-4">
+                          <p className="font-semibold dark:text-white">
+                            {traktUser.username}
+                          </p>
+
+                          <button
+                            onClick={() => setIsLogoutModalOpen(true)}
+                            disabled={loading}
+                            className="text-sm text-red hover:text-red-hover cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                          >
+                            {loading ? "Disconnecting..." : "Disconnect"}
+                          </button>
+
+                          {traktUser.avatar && (
+                            <img
+                              src={traktUser.avatar}
+                              alt={traktUser.username}
+                              className="w-8 h-8 rounded-full"
+                            />
+                          )}
+                        </div>
+                      ) : (
                         <button
-                          onClick={() => setIsLogoutModalOpen(true)}
+                          onClick={handleConnectTrakt}
                           disabled={loading}
-                          className="text-sm text-red hover:text-red-hover cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="px-6 py-2 bg-blue text-white rounded-lg transition font-medium cursor-pointer hover:bg-blue-hover disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-blue"
                         >
-                          {loading ? "Disconnecting..." : "Disconnect"}
+                          {loading ? "Connecting..." : "Connect"}
                         </button>
-                      </div>
-                      {traktUser.avatar && (
-                        <img
-                          src={traktUser.avatar}
-                          alt={traktUser.username}
-                          className="w-12 h-12 rounded-full"
-                        />
                       )}
                     </div>
-                  ) : (
-                    <button
-                      onClick={handleConnectTrakt}
-                      disabled={loading}
-                      className="px-6 py-2 bg-blue text-white rounded-lg transition font-medium cursor-pointer hover:bg-blue-hover disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-blue"
-                    >
-                      {loading ? "Connecting..." : "Connect"}
-                    </button>
-                  )}
+
+                    <p className="text-sm dark:text-gray-300">
+                      Sync your watched media.
+                    </p>
+                  </div>
                 </div>
 
                 {traktUser && (

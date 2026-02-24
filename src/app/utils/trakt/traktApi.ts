@@ -13,6 +13,9 @@ export async function exchangeCodeForToken(
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "trakt-api-version": "2",
+      "trakt-api-key": TRAKT_CLIENT_ID,
+      "User-Agent": "DBFM/1.0.0 (https://dbfm.vercel.app)",
     },
     body: JSON.stringify({
       code,
@@ -60,6 +63,7 @@ export async function getTraktUser(accessToken: string): Promise<TraktUser> {
       Authorization: `Bearer ${accessToken}`,
       "trakt-api-version": "2",
       "trakt-api-key": TRAKT_CLIENT_ID,
+      "User-Agent": "DBFM/1.0.0 (https://dbfm.vercel.app)",
     },
   });
 
@@ -88,6 +92,7 @@ export async function getUserHistory(
         Authorization: `Bearer ${accessToken}`,
         "trakt-api-version": "2",
         "trakt-api-key": TRAKT_CLIENT_ID,
+        "User-Agent": "DBFM/1.0.0 (https://dbfm.vercel.app)",
       },
     });
 
@@ -116,6 +121,7 @@ export async function getUserHistory(
         Authorization: `Bearer ${accessToken}`,
         "trakt-api-version": "2",
         "trakt-api-key": TRAKT_CLIENT_ID,
+        "User-Agent": "DBFM/1.0.0 (https://dbfm.vercel.app)",
       },
     });
 
