@@ -19,7 +19,7 @@ function ActorSkeletonLoader() {
           <div className="h-9 w-[120px] bg-gray-300 rounded mb-6 animate-pulse" />
 
           <div className="flex overflow-x-auto gap-6 pb-4">
-            {[...Array(6)].map((_, index) => (
+            {[...Array(12)].map((_, index) => (
               <div
                 key={index}
                 className="w-44 min-h-[350px] flex-shrink-0 bg-gray-300 rounded-lg shadow-md overflow-hidden animate-pulse"

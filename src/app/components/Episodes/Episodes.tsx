@@ -97,9 +97,9 @@ function Episodes({
         <div className="flex flex-col gap-3 md:flex-row md:justify-between md:items-center mb-3 mt-6">
           <Link
             href={`/tv/${slug}/season/${Number(currentSeason) - 1}`}
-            className={`text-white bg-blue px-4 py-2 rounded-lg w-[160px] ${
+            className={`text-white bg-blue text-center px-2 py-2 rounded-lg w-[140px] ${
               isFirstSeason
-                ? "cursor-not-allowed opacity-50 bg-red"
+                ? "cursor-not-allowed opacity-50 bg-red pointer-events-none"
                 : "hover:bg-blue-hover"
             }`}
             onClick={(e) => isFirstSeason && e.preventDefault()}
@@ -109,9 +109,9 @@ function Episodes({
 
           <Link
             href={`/tv/${slug}/season/${Number(currentSeason) + 1}`}
-            className={`text-white bg-blue px-4 py-2 rounded-lg w-[160px] ${
+            className={`text-white bg-blue px-2 py-2 text-center rounded-lg w-[140px] ${
               isLastSeason
-                ? "cursor-not-allowed opacity-50 bg-red"
+                ? "cursor-not-allowed opacity-50 bg-red pointer-events-none"
                 : "hover:bg-blue-hover"
             }`}
             onClick={(e) => isLastSeason && e.preventDefault()}
@@ -168,7 +168,7 @@ function Episodes({
                     </span>
                   </div>
                   <h3>{episode?.name}</h3>
-                  <p className="text-sm text-white">
+                  <p className="text-sm max-h-45 my-4 overflow-auto text-white">
                     {episode?.overview || "No Overview"}
                   </p>
 

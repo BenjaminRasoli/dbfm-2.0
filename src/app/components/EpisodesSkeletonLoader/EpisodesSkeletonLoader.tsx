@@ -18,7 +18,7 @@ function EpisodesSkeletonLoader() {
               key={index}
               className="bg-gray-300 rounded-lg min-w-[250px] sm:min-w-[300px] animate-pulse"
             >
-              <div className="bg-gray-400 rounded-t-lg h-72 w-full"></div>
+              <div className="bg-gray-400 rounded-t-lg h-42 w-full"></div>
               <div className="p-4">
                 <div className="flex justify-between">
                   <div className="bg-gray-400 rounded h-4 w-24 mb-2 animate-pulse"></div>
@@ -26,7 +26,7 @@ function EpisodesSkeletonLoader() {
                 </div>
 
                 <div className="bg-gray-400 rounded h-3 w-30 mb-2 animate-pulse"></div>
-                <div className="bg-gray-400 rounded h-15 w-50 mb-2 animate-pulse"></div>
+                <div className="bg-gray-400 rounded h-30 my-4 w-50 mb-2 animate-pulse"></div>
                 <div className="bg-gray-400 rounded h-3 w-30 mb-2 animate-pulse"></div>
                 <div className="bg-gray-400 rounded h-3 w-40 animate-pulse"></div>
               </div>

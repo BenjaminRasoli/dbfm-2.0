@@ -9,7 +9,7 @@ import {
   GithubAuthProvider,
 } from "firebase/auth";
 import { useUser } from "../../../context/UserProvider";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { MdErrorOutline } from "react-icons/md";
 import { IoIosCheckbox, IoIosArrowRoundBack } from "react-icons/io";
@@ -25,14 +25,21 @@ function Login() {
   const [emailError, setEmailError] = useState<string>("");
   const [passwordError, setPasswordError] = useState<string>("");
   const [loginText, setLoginText] = useState<string>("");
+
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect");
 
   const googleProvider = new GoogleAuthProvider();
   const githubProvider = new GithubAuthProvider();
 
   useEffect(() => {
     if (user) {
-      router.push("/");
+      if (redirect && redirect.startsWith("/")) {
+        router.push(redirect);
+      } else {
+        router.push("/");
+      }
     }
   }, [user, router]);
 
@@ -86,7 +93,11 @@ function Login() {
         };
 
         login(completeUserData);
-        router.push("/");
+        if (redirect && redirect.startsWith("/")) {
+          router.push(redirect);
+        } else {
+          router.push("/");
+        }
         setEmail("");
         setPassword("");
         setLoginText("Login successful.");
@@ -122,7 +133,11 @@ function Login() {
         };
 
         login(completeUserData);
-        router.push("/");
+        if (redirect && redirect.startsWith("/")) {
+          router.push(redirect);
+        } else {
+          router.push("/");
+        }
       } else {
         const newUserData = {
           firstName: user.displayName?.split(" ")[0] || "First",
@@ -143,7 +158,11 @@ function Login() {
         };
 
         login(completeUserData);
-        router.push("/");
+        if (redirect && redirect.startsWith("/")) {
+          router.push(redirect);
+        } else {
+          router.push("/");
+        }
       }
     } catch (error: any) {
       setPasswordError(error.message);

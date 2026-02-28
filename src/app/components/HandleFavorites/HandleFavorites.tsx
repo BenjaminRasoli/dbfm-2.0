@@ -11,7 +11,7 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 import { db } from "../../config/FireBaseConfig";
-import { FaBookmark, FaRegBookmark } from "react-icons/fa";
+import { MdFavoriteBorder, MdOutlineFavorite } from "react-icons/md";
 import RemoveModal from "../RemoveModal/RemoveModal";
 import LoginModal from "../LoginModal/LoginModal";
 import { FavoriteTypes } from "../../Types/FavoritesTypes";
@@ -28,7 +28,6 @@ function HandleFavorites({
 }: FavoriteTypes) {
   const [localFavorites, setLocalFavorites] = useState<MediaTypes[]>([]);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
-  const [isHovered, setIsHovered] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [itemToRemove, setItemToRemove] = useState<any | null>(null);
 
@@ -164,23 +163,28 @@ function HandleFavorites({
       {media.media_type !== "person" && media.gender == null && (
         <div
           title="Add to favorites"
-          className="absolute top-2 left-2 z-10 p-2 cursor-pointer bg-dark-100 text-white rounded-lg"
+          className="absolute top-2 left-2 z-10 p-2 cursor-pointer bg-dark-100 text-white rounded-lg group"
           onClick={() => {
             if (isMediaType(media)) {
               handleBookmarkClick(media);
             }
           }}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
         >
           {(favorites ?? localFavorites)?.some(
             (favorite) => favorite.id === media.id,
           ) ? (
-            <FaBookmark className="text-blue" size={iconSize} />
-          ) : isHovered ? (
-            <FaBookmark className="text-blue" size={iconSize} />
+            <MdOutlineFavorite className="text-blue" size={iconSize} />
           ) : (
-            <FaRegBookmark size={iconSize} />
+            <>
+              <MdFavoriteBorder
+                className="block group-hover:hidden"
+                size={iconSize}
+              />
+              <MdOutlineFavorite
+                className="hidden group-hover:block text-blue"
+                size={iconSize}
+              />
+            </>
           )}
         </div>
       )}

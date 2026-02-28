@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { FaStar } from "react-icons/fa";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useUser } from "@/app/context/UserProvider";
 import { ImCheckmark } from "react-icons/im";
 import { FiLogIn, FiUserPlus } from "react-icons/fi";
@@ -9,6 +9,12 @@ import { IoIosHome } from "react-icons/io";
 
 function BottomMenu() {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const fullPath =
+    searchParams.toString().length > 0
+      ? `${pathname}?${searchParams.toString()}`
+      : pathname;
   const { user } = useUser();
 
   const isActive = (path: string) => pathname === path;
@@ -21,7 +27,10 @@ function BottomMenu() {
           isActive("/") ? "text-blue" : "hover:text-blue"
         }`}
       >
-        <IoIosHome size={24} color={isActive("/") ? "#2d99ff" : "currentColor"} />
+        <IoIosHome
+          size={24}
+          color={isActive("/") ? "#2d99ff" : "currentColor"}
+        />
         <span className="text-sm">Home</span>
       </Link>
 
@@ -55,7 +64,7 @@ function BottomMenu() {
       ) : (
         <>
           <Link
-            href="/login"
+            href={`/login?redirect=${encodeURIComponent(pathname)}`}
             className={`flex flex-col items-center px-6 py-2 rounded-lg transition ${
               isActive("/login") ? "text-blue" : "hover:text-blue"
             }`}
@@ -68,7 +77,7 @@ function BottomMenu() {
           </Link>
 
           <Link
-            href="/register"
+            href={`/login?redirect=${encodeURIComponent(fullPath)}`}
             className={`flex flex-col items-center px-6 py-2 rounded-lg transition ${
               isActive("/register") ? "text-blue" : "hover:text-blue"
             }`}
