@@ -174,12 +174,14 @@ function HandleWatched({
             {(watched ?? localWatched)?.some((item) => item.id === media.id) ? (
               <ImCheckmark className="text-blue" size={iconSize} />
             ) : (
-              <ImCheckmark2 size={iconSize} className="group-hover:hidden" />
+              <>
+                <ImCheckmark2 size={iconSize} className="block group-hover:hidden" />
+                <ImCheckmark
+                  className="hidden group-hover:block text-blue"
+                  size={iconSize}
+                />
+              </>
             )}
-            <ImCheckmark
-              className="hidden group-hover:block text-blue"
-              size={iconSize}
-            />
           </div>
         )}
 
