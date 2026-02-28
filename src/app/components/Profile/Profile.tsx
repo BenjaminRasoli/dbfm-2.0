@@ -29,11 +29,13 @@ function Profile() {
     );
   };
 
-  const formattedDate = new Date(currentUser.date).toLocaleDateString("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  });
+  const formattedDate = currentUser.date
+    ? new Date(currentUser.date).toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      })
+    : "";
 
   return (
     <div className="customContainer">

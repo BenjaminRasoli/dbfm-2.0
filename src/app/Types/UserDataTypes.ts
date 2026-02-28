@@ -6,7 +6,7 @@ export interface UserDataTypes {
   lastName: string;
   password: string;
   photoURL?: string;
-  date: string;
+  date?: string;
 }
 
 export interface UserDataSavedTypes {
@@ -15,5 +15,5 @@ export interface UserDataSavedTypes {
   firstName: string;
   lastName: string;
   uid: string;
-  date: string;
+  date?: string;
 }

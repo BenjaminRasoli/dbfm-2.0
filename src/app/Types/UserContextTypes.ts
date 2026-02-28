@@ -8,7 +8,7 @@ export interface UserTypes {
   userName: string;
   photoURL?: string;
   uid: string;
-  date: string;
+  date?: string;
 }
 
 export interface UserLoginDataTypes {
@@ -17,7 +17,7 @@ export interface UserLoginDataTypes {
   userName: string;
   firstName: string;
   lastName: string;
-  date: string;
+  date?: string;
 }
 
 export interface UserContextTypes {
