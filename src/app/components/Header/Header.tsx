@@ -34,8 +34,13 @@ function Header({ genres }: HeaderProps) {
   const router = useRouter();
   const { user, logout } = useUser();
   const pathname = usePathname();
-  useEscapeListener(setIsLogoutModalOpen);
   const searchParams = useSearchParams();
+  const fullPath =
+    searchParams.toString().length > 0
+      ? `${pathname}?${searchParams.toString()}`
+      : pathname;
+
+  useEscapeListener(setIsLogoutModalOpen);
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -238,7 +243,10 @@ function Header({ genres }: HeaderProps) {
                 )}
               </>
             ) : (
-              <Link href="/login" className="hidden md:block hover:text-blue">
+              <Link
+                href={`/login?redirect=${encodeURIComponent(fullPath)}`}
+                className="hidden md:block hover:text-blue"
+              >
                 Login
               </Link>
             )}

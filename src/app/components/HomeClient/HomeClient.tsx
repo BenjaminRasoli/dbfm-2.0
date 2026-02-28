@@ -62,7 +62,6 @@ export default function HomeClient({
 
   return (
     <>
-      <title>DBFM | Home</title>
       <Banner backdropPath={banner} />
       <div className="p-7">
         <h1 className="text-3xl text-blue pt-5">Trending</h1>
