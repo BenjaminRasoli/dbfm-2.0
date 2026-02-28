@@ -52,17 +52,15 @@ export async function POST(req: Request) {
           continue;
         }
 
-        const providedTs = item.createdAt || item.watchedAt || item.watched_at;
+        const providedTs = item.createdAt;
 
         let createdAtValue: any = admin.firestore.FieldValue.serverTimestamp();
-        let watchedAtValue: any = undefined;
 
         if (providedTs) {
           const parsed = new Date(providedTs);
           if (!isNaN(parsed.getTime())) {
             const ts = admin.firestore.Timestamp.fromDate(parsed);
             createdAtValue = ts;
-            watchedAtValue = ts;
           }
         }
 
@@ -77,7 +75,6 @@ export async function POST(req: Request) {
         const docData = {
           ...item,
           createdAt: createdAtValue,
-          ...(watchedAtValue ? { watchedAt: watchedAtValue } : {}),
         };
 
         await collectionRef.doc(docId).set(docData, { merge: true });
