@@ -317,7 +317,7 @@ function Register() {
                 aria-label="Register button"
                 disabled={loading}
                 className={clsx(
-                  "w-full py-3 rounded-md text-white transition duration-200",
+                  "w-full py-3 rounded-md flex justify-center text-white transition duration-200",
                   loading
                     ? "bg-gray-400 cursor-not-allowed"
                     : "bg-blue hover:bg-blue-hover cursor-pointer",

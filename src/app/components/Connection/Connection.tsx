@@ -20,15 +20,7 @@ import {
 } from "firebase/firestore";
 import { db } from "@/app/config/FireBaseConfig";
 import { MediaTypes } from "@/app/Types/MediaTypes";
-
-interface TraktUser {
-  username: string;
-  name: string;
-  avatar: string;
-  ids: {
-    slug: string;
-  };
-}
+import { TraktUser } from "@/app/Types/TraktTypes";
 
 function Connections() {
   const { user } = useUser();
@@ -487,250 +479,242 @@ function Connections() {
           <Loading size={100} />
         </div>
       ) : (
-        <div className="min-h-screen bg-white dark:bg-dark px-4 py-16">
-          <div className="customContainer">
-            {error && (
-              <div className="mb-6 p-4 text-white break-all bg-red rounded-lg">
-                {error}
-                <button
-                  onClick={() => setError(null)}
-                  className="ml-4 text-sm hover:underline cursor-pointer"
-                >
-                  Dismiss
-                </button>
-              </div>
-            )}
+        <div className="min-h-screen bg-white dark:bg-dark py-8">
+          {error && (
+            <div className="mb-6 p-4 text-white break-all bg-red rounded-lg">
+              {error}
+              <button
+                onClick={() => setError(null)}
+                className="ml-4 text-sm hover:underline cursor-pointer"
+              >
+                Dismiss
+              </button>
+            </div>
+          )}
 
-            <section className="p-6 dark:bg-dark rounded-lg border border-gray-200 dark:border-gray-800">
-              <h2 className="text-2xl font-semibold mb-6 dark:text-white">
-                Connect Third-Party Services
-              </h2>
+          <section className="p-6 dark:bg-dark rounded-lg border border-gray-200 dark:border-gray-800">
+            <h2 className="text-2xl font-semibold mb-6 dark:text-white">
+              Connect Third-Party Services
+            </h2>
 
-              <LogoutModal
-                isOpen={isLogoutModalOpen}
-                text="Are you sure you want to disconnect?"
-                onCancel={() => setIsLogoutModalOpen(false)}
-                onConfirm={() => {
-                  handleDisconnectTrakt();
-                  setIsLogoutModalOpen(false);
-                }}
-              />
-              <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 rounded-lg flex items-center justify-center">
-                    <Image src={TraktLogo} alt="" width={1000} height={1000} />
-                  </div>
+            <LogoutModal
+              isOpen={isLogoutModalOpen}
+              text="Are you sure you want to disconnect?"
+              onCancel={() => setIsLogoutModalOpen(false)}
+              onConfirm={() => {
+                handleDisconnectTrakt();
+                setIsLogoutModalOpen(false);
+              }}
+            />
+            <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
+              <div className="flex items-start space-x-4">
+                <div className="w-14 h-auto rounded-lg flex items-center justify-center">
+                  <Image src={TraktLogo} alt="" width={1000} height={1000} />
+                </div>
 
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between">
+                <div className="flex-1">
+                  <div className="flex flex-row sm:items-center justify-between">
+                    <div className="flex flex-col mb-2">
                       <h3 className="text-lg font-semibold dark:text-white">
                         Trakt
                       </h3>
 
-                      {traktUser ? (
-                        <div className="flex items-center space-x-4">
-                          <p className="font-semibold dark:text-white">
-                            {traktUser.username}
-                          </p>
-
-                          <button
-                            onClick={() => setIsLogoutModalOpen(true)}
-                            disabled={loading}
-                            className="text-sm text-red hover:text-red-hover cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-                          >
-                            {loading ? "Disconnecting..." : "Disconnect"}
-                          </button>
-
-                          {traktUser.avatar && (
-                            <img
-                              src={traktUser.avatar}
-                              alt={traktUser.username}
-                              className="w-8 h-8 rounded-full"
-                            />
-                          )}
-                        </div>
-                      ) : (
-                        <button
-                          onClick={handleConnectTrakt}
-                          disabled={loading}
-                          className="px-6 py-2 bg-blue text-white rounded-lg transition font-medium cursor-pointer hover:bg-blue-hover disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-blue"
-                        >
-                          {loading ? "Connecting..." : "Connect"}
-                        </button>
-                      )}
+                      <p className="text-sm dark:text-gray-300">
+                        Sync your watched media
+                      </p>
                     </div>
 
-                    <p className="text-sm dark:text-gray-300">
-                      Sync your watched media.
-                    </p>
+                    {traktUser ? (
+                      <div className="flex space-x-4">
+                        <p className="font-semibold dark:text-white">
+                          {traktUser.username}
+                        </p>
+
+                        <button
+                          onClick={() => setIsLogoutModalOpen(true)}
+                          disabled={loading}
+                          className="text-red hover:text-red-hover items-start flex cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          {loading ? "Disconnecting..." : "Disconnect"}
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={handleConnectTrakt}
+                        disabled={loading}
+                        className="px-6 py-2 bg-blue text-white rounded-lg transition font-medium cursor-pointer hover:bg-blue-hover disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-blue"
+                      >
+                        {loading ? "Connecting..." : "Connect"}
+                      </button>
+                    )}
                   </div>
                 </div>
+              </div>
 
-                {traktUser && (
-                  <div className="mt-6 space-y-3">
-                    <div className="mt-4">
-                      <div className="mb-4 flex flex-col lg:flex-row items-start lg:items-center gap-2">
-                        <button
-                          onClick={handleImportAll}
-                          disabled={importingAll || !user}
-                          className="px-4 py-2 bg-blue hover:bg-blue-hover text-white rounded-md text-sm font-medium disabled:opacity-50 disabled:hover:bg-blue disabled:cursor-not-allowed cursor-pointer"
-                        >
-                          {importingAll
-                            ? "Importing..."
-                            : "Import watched media from Trakt"}
-                        </button>
-                        {importResult && (
-                          <span className="text-sm text-green">
-                            {importResult}
-                          </span>
-                        )}
-                      </div>
-
-                      <h5 className="font-medium dark:text-white mt-10">
-                        History
-                      </h5>
-                      {initialHistoryLoading ? (
-                        <div className="overflow-x-auto py-2">
-                          <div className="flex gap-4 w-max">
-                            {Array.from({ length: 4 }).map((_, idx) => (
-                              <div
-                                key={idx}
-                                className="w-[257px] h-66 bg-gray-400 rounded-lg flex flex-col animate-pulse"
-                              >
-                                <div className="flex-1 bg-gray-300 rounded-t-lg"></div>
-
-                                <div className="h-4 bg-gray-200 rounded mt-4 mb-16 mx-2 w-3/4"></div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      ) : history && history.length > 0 ? (
-                        <>
-                          <div className="flex gap-4 overflow-x-auto py-2">
-                            {history.map((item: any, idx: number) => {
-                              const title =
-                                item.movie?.title ||
-                                item.show?.title ||
-                                item.episode?.title ||
-                                item.type;
-                              const tmdbId =
-                                item.movie?.ids?.tmdb ||
-                                item.show?.ids?.tmdb ||
-                                item.episode?.ids?.tmdb;
-                              const mediaType = item.movie
-                                ? "movie"
-                                : item.show
-                                  ? "tv"
-                                  : item.episode
-                                    ? "tv"
-                                    : null;
-                              const time = new Date(
-                                item.started_at ||
-                                  item.listed_at ||
-                                  item.watched_at ||
-                                  item.at ||
-                                  item.timestamp ||
-                                  item.date ||
-                                  item.action_at ||
-                                  Date.now(),
-                              ).toLocaleString();
-
-                              const details = tmdbId
-                                ? tmdbDetails[String(tmdbId)]
-                                : null;
-                              const imagePath =
-                                details?.mediaData?.backdrop_path ||
-                                details?.mediaData?.poster_path;
-                              const imageUrl = imagePath
-                                ? `https://image.tmdb.org/t/p/w780${imagePath}`
-                                : MovieTvPlaceholder;
-                              return (
-                                <Link
-                                  key={idx}
-                                  href={
-                                    tmdbId && mediaType
-                                      ? item.episode
-                                        ? `/tv/${item.show?.ids?.tmdb || item.episode?.ids?.tmdb}/season/${item.episode.season}`
-                                        : `/${mediaType}/${tmdbId}`
-                                      : "#"
-                                  }
-                                  className="w-64 group flex-shrink-0 bg-blue rounded-lg shadow p-3 flex flex-col hover:shadow-lg transition"
-                                >
-                                  <div className="h-40 w-full mb-2 rounded overflow-hidden bg-gray-200">
-                                    <Image
-                                      src={imageUrl}
-                                      alt={title}
-                                      width={1000}
-                                      height={1000}
-                                      className="w-full h-full object-cover"
-                                    />
-                                  </div>
-
-                                  <div className="flex-1">
-                                    <div className="text-md font-semibold text-white group-hover:underline">
-                                      {item.show?.title || title}
-                                    </div>
-
-                                    <p className="text-xs text-white mt-1">
-                                      {time}
-                                    </p>
-                                  </div>
-
-                                  <div className="mt-3">
-                                    {tmdbId ? (
-                                      <div className="flex items-center gap-2">
-                                        {item.episode && (
-                                          <span className="text-xs text-gray-600 dark:text-gray-300">
-                                            S{item.episode.season} • E
-                                            {item.episode.number}
-                                          </span>
-                                        )}
-                                      </div>
-                                    ) : (
-                                      <span className="inline-block px-2 py-1 bg-gray-100 dark:bg-gray-800 text-xs rounded">
-                                        No TMDB ID
-                                      </span>
-                                    )}
-                                  </div>
-                                </Link>
-                              );
-                            })}
-                            {hasMoreHistory && (
-                              <div className="w-64 flex-shrink-0 flex items-center justify-center">
-                                <button
-                                  onClick={async () => {
-                                    const nextPage = historyPage + 1;
-                                    const pageData =
-                                      await fetchHistoryPage(nextPage);
-                                    if (!pageData || pageData.length === 0) {
-                                      setHasMoreHistory(false);
-                                      return;
-                                    }
-                                    setHistory((prev) => [
-                                      ...(prev || []),
-                                      ...pageData,
-                                    ]);
-                                    setHistoryPage(nextPage);
-                                    setHasMoreHistory(pageData.length >= 20);
-                                  }}
-                                  disabled={historyLoading}
-                                  className="px-4 py-2 bg-blue hover:bg-blue-hover text-white rounded-md text-sm cursor-pointer disabled:opacity-50 disabled:hover:bg-blue disabled:cursor-not-allowed"
-                                >
-                                  {historyLoading ? "Loading..." : "Load more"}
-                                </button>
-                              </div>
-                            )}
-                          </div>
-                        </>
-                      ) : (
-                        <div>No history to show</div>
+              {traktUser && (
+                <div className="mt-6 space-y-3">
+                  <div className="mt-4">
+                    <div className="mb-4 flex flex-col lg:flex-row items-start lg:items-center gap-2">
+                      <button
+                        onClick={handleImportAll}
+                        disabled={importingAll || !user}
+                        className="px-4 py-2 bg-blue hover:bg-blue-hover text-white rounded-md text-sm font-medium disabled:opacity-50 transition disabled:hover:bg-blue disabled:cursor-not-allowed cursor-pointer"
+                      >
+                        {importingAll
+                          ? "Importing..."
+                          : "Import watched media from Trakt"}
+                      </button>
+                      {importResult && (
+                        <span className="text-sm text-green">
+                          {importResult}
+                        </span>
                       )}
                     </div>
+
+                    <h5 className="font-medium dark:text-white mt-10">
+                      History
+                    </h5>
+                    {initialHistoryLoading ? (
+                      <div className="overflow-x-auto py-2">
+                        <div className="flex gap-4 w-max">
+                          {Array.from({ length: 4 }).map((_, idx) => (
+                            <div
+                              key={idx}
+                              className="w-[257px] h-66 bg-gray-400 rounded-lg flex flex-col animate-pulse"
+                            >
+                              <div className="flex-1 bg-gray-300 rounded-t-lg"></div>
+
+                              <div className="h-4 bg-gray-200 rounded mt-4 mb-16 mx-2 w-3/4"></div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ) : history && history.length > 0 ? (
+                      <>
+                        <div className="flex gap-4 overflow-x-auto py-2">
+                          {history.map((item: any, idx: number) => {
+                            const title =
+                              item.movie?.title ||
+                              item.show?.title ||
+                              item.episode?.title ||
+                              item.type;
+                            const tmdbId =
+                              item.movie?.ids?.tmdb ||
+                              item.show?.ids?.tmdb ||
+                              item.episode?.ids?.tmdb;
+                            const mediaType = item.movie
+                              ? "movie"
+                              : item.show
+                                ? "tv"
+                                : item.episode
+                                  ? "tv"
+                                  : null;
+                            const time = new Date(
+                              item.started_at ||
+                                item.listed_at ||
+                                item.watched_at ||
+                                item.at ||
+                                item.timestamp ||
+                                item.date ||
+                                item.action_at ||
+                                Date.now(),
+                            ).toLocaleString();
+
+                            const details = tmdbId
+                              ? tmdbDetails[String(tmdbId)]
+                              : null;
+                            const imagePath =
+                              details?.mediaData?.backdrop_path ||
+                              details?.mediaData?.poster_path;
+                            const imageUrl = imagePath
+                              ? `https://image.tmdb.org/t/p/w780${imagePath}`
+                              : MovieTvPlaceholder;
+                            return (
+                              <Link
+                                key={idx}
+                                href={
+                                  tmdbId && mediaType
+                                    ? item.episode
+                                      ? `/tv/${item.show?.ids?.tmdb || item.episode?.ids?.tmdb}/season/${item.episode.season}`
+                                      : `/${mediaType}/${tmdbId}`
+                                    : "#"
+                                }
+                                className="w-64 group flex-shrink-0 bg-blue rounded-lg shadow p-3 flex flex-col hover:shadow-lg transition"
+                              >
+                                <div className="h-40 w-full mb-2 rounded overflow-hidden bg-gray-200">
+                                  <Image
+                                    src={imageUrl}
+                                    alt={title}
+                                    width={1000}
+                                    height={1000}
+                                    className="w-full h-full object-cover"
+                                  />
+                                </div>
+
+                                <div className="flex-1">
+                                  <div className="text-md font-semibold text-white group-hover:underline">
+                                    {item.show?.title || title}
+                                  </div>
+
+                                  <p className="text-xs text-white mt-1">
+                                    {time}
+                                  </p>
+                                </div>
+
+                                <div className="mt-3">
+                                  {tmdbId ? (
+                                    <div className="flex items-center gap-2">
+                                      {item.episode && (
+                                        <span className="text-xs text-gray-600 dark:text-gray-300">
+                                          S{item.episode.season} • E
+                                          {item.episode.number}
+                                        </span>
+                                      )}
+                                    </div>
+                                  ) : (
+                                    <span className="inline-block px-2 py-1 bg-gray-100 dark:bg-gray-800 text-xs rounded">
+                                      No TMDB ID
+                                    </span>
+                                  )}
+                                </div>
+                              </Link>
+                            );
+                          })}
+                          {hasMoreHistory && (
+                            <div className="w-64 flex-shrink-0 flex items-center justify-center">
+                              <button
+                                onClick={async () => {
+                                  const nextPage = historyPage + 1;
+                                  const pageData =
+                                    await fetchHistoryPage(nextPage);
+                                  if (!pageData || pageData.length === 0) {
+                                    setHasMoreHistory(false);
+                                    return;
+                                  }
+                                  setHistory((prev) => [
+                                    ...(prev || []),
+                                    ...pageData,
+                                  ]);
+                                  setHistoryPage(nextPage);
+                                  setHasMoreHistory(pageData.length >= 20);
+                                }}
+                                disabled={historyLoading}
+                                className="px-4 py-2 bg-blue hover:bg-blue-hover text-white rounded-md text-sm cursor-pointer disabled:opacity-50 disabled:hover:bg-blue disabled:cursor-not-allowed"
+                              >
+                                {historyLoading ? "Loading..." : "Load more"}
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      </>
+                    ) : (
+                      <div>No history to show</div>
+                    )}
                   </div>
-                )}
-              </div>
-            </section>
-          </div>
+                </div>
+              )}
+            </div>
+          </section>
         </div>
       )}
     </>

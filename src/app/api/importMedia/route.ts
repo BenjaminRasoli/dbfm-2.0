@@ -37,7 +37,13 @@ export async function POST(req: Request) {
       .collection(subCollectionName);
 
     const promises = data.map(async (item: any) => {
-      return collectionRef.doc(item.id.toString()).set(item);
+      const firestoreItem = {
+        id: item.tmdb_id,
+        type: item.type,
+        createdAt: item.watched_at || new Date().toISOString(),
+      };
+
+      return collectionRef.doc(firestoreItem.id.toString()).set(firestoreItem);
     });
 
     await Promise.all(promises);

@@ -212,14 +212,14 @@ function Header({ genres }: HeaderProps) {
                   >
                     <h3 className="pb-4">{user.userName}</h3>
                     <Link
-                      href={"/connections"}
+                      href={"/profile"}
                       onClick={() => {
                         setIsModalOpen(false);
                       }}
                       className="bg-blue hover:bg-blue-hover text-white mb-4 rounded-lg w-full p-2 flex items-center gap-2 text-sm cursor-pointer"
                       aria-label="Logout from DBFM"
                     >
-                      Connections
+                      Profile
                     </Link>
                     <button
                       onClick={() => {

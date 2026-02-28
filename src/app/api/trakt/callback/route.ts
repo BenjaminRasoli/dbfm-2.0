@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
     const tokenData = await exchangeCodeForToken(code);
     const userProfile = await getTraktUser(tokenData.access_token);
 
-    const redirectUrl = new URL("/connections", request.nextUrl.origin);
+    const redirectUrl = new URL("/profile", request.nextUrl.origin);
     redirectUrl.searchParams.set("trakt_token", tokenData.access_token);
     if (tokenData.refresh_token) {
       redirectUrl.searchParams.set("trakt_refresh", tokenData.refresh_token);
@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error("Trakt OAuth error:", error);
     return NextResponse.redirect(
-      new URL("/connections?error=oauth_failed", request.nextUrl.origin),
+      new URL("/profile?error=oauth_failed", request.nextUrl.origin),
     );
   }
 }
