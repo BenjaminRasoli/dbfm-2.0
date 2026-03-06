@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import clsx from "clsx";
 import { PageSelectorTypes } from "@/app/Types/PageSelectorTypes";
 import { usePathname } from "next/navigation";
+import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 
 function PageSelector({
   currentPage,
@@ -39,7 +40,7 @@ function PageSelector({
         "px-4 lg:px-6 py-2 lg:py-3 font-semibold rounded-lg transition-all duration-300 ease-in-out transform",
         page === currentPage
           ? "bg-gray-300 text-white cursor-not-allowed opacity-50"
-          : "bg-blue text-white hover:bg-blue-hover cursor-pointer"
+          : "bg-blue text-white hover:bg-blue-hover cursor-pointer",
       )}
     >
       {page}
@@ -57,14 +58,14 @@ function PageSelector({
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 1}
         className={clsx(
-          "text-white hidden md:block px-2 lg:px-6 py-1 lg:py-3 font-semibold rounded-lg",
+          "text-white hidden md:block px-2 lg:px-4 py-1 lg:py-2 font-semibold rounded-lg",
           currentPage === 1
             ? "cursor-not-allowed bg-red opacity-50"
-            : "bg-blue  hover:bg-blue-hover cursor-pointer"
+            : "bg-blue  hover:bg-blue-hover cursor-pointer",
         )}
       >
-        Prev
-      </button>
+        <GrFormPrevious size={20} />
+      </button>,
     );
 
     buttons.push(renderPageButton(1));
@@ -81,7 +82,7 @@ function PageSelector({
       buttons.push(
         <span key="next-dots" className="px-2 py-2 text-gray-400">
           ...
-        </span>
+        </span>,
       );
     }
 
@@ -92,14 +93,14 @@ function PageSelector({
         onClick={() => handlePageChange(currentPage + 1)}
         disabled={currentPage === finalTotalPages}
         className={clsx(
-          "text-white hidden md:block px-2 lg:px-6 py-1 lg:py-3 font-semibold rounded-lg",
+          "text-white hidden md:block px-2 lg:px-4 py-1 lg:py-2 font-semibold rounded-lg",
           currentPage === finalTotalPages
             ? "cursor-not-allowed bg-red opacity-50"
-            : "bg-blue  hover:bg-blue-hover cursor-pointer"
+            : "bg-blue  hover:bg-blue-hover cursor-pointer",
         )}
       >
-        Next
-      </button>
+        <GrFormNext size={20} />
+      </button>,
     );
 
     return buttons;

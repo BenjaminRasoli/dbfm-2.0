@@ -12,7 +12,7 @@ function Profile() {
     return (
       <EmptyState
         title="You must be logged in"
-        description="to view your connections."
+        description="to view your Profile."
         linkHref="/login"
         linkText="Login"
         icon={<FiLogIn size={24} />}

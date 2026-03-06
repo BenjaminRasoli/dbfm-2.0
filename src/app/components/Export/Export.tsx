@@ -40,7 +40,7 @@ const Page = () => {
       <button
         onClick={handleExport}
         disabled={loading}
-        className="py-2 px-4 mt-6 bg-blue text-white rounded-lg hover:bg-blue-hover cursor-pointer transition"
+        className="py-2 px-4 mt-6 bg-blue text-md disabled:hover:bg-blue disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg hover:bg-blue-hover cursor-pointer transition"
       >
         {loading ? "Downloading..." : "Download JSON"}
       </button>

@@ -91,7 +91,7 @@ function Connections() {
         );
         setTraktToken(token);
         setTraktUser(JSON.parse(userJson));
-        window.history.replaceState({}, document.title, "/connections");
+        window.history.replaceState({}, document.title, "/profile");
       } else {
         const docSnap = await getDoc(userDocRef);
         if (docSnap.exists()) {
@@ -480,18 +480,6 @@ function Connections() {
         </div>
       ) : (
         <div className="min-h-screen bg-white dark:bg-dark py-8">
-          {error && (
-            <div className="mb-6 p-4 text-white break-all bg-red rounded-lg">
-              {error}
-              <button
-                onClick={() => setError(null)}
-                className="ml-4 text-sm hover:underline cursor-pointer"
-              >
-                Dismiss
-              </button>
-            </div>
-          )}
-
           <section className="p-6 dark:bg-dark rounded-lg border border-gray-200 dark:border-gray-800">
             <h2 className="text-2xl font-semibold mb-6 dark:text-white">
               Connect Third-Party Services
@@ -507,6 +495,17 @@ function Connections() {
               }}
             />
             <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
+              {error && (
+                <div className="mb-6 p-4 text-white break-all bg-red rounded-lg">
+                  {error}
+                  <button
+                    onClick={() => setError(null)}
+                    className="ml-4 text-sm hover:underline cursor-pointer"
+                  >
+                    Dismiss
+                  </button>
+                </div>
+              )}
               <div className="flex items-start space-x-4">
                 <div className="w-14 h-auto rounded-lg flex items-center justify-center">
                   <Image src={TraktLogo} alt="" width={1000} height={1000} />
@@ -558,7 +557,7 @@ function Connections() {
                       <button
                         onClick={handleImportAll}
                         disabled={importingAll || !user}
-                        className="px-4 py-2 bg-blue hover:bg-blue-hover text-white rounded-md text-sm font-medium disabled:opacity-50 transition disabled:hover:bg-blue disabled:cursor-not-allowed cursor-pointer"
+                        className="px-4 py-2 bg-blue hover:bg-blue-hover text-white rounded-md text-md font-medium disabled:opacity-50 transition disabled:hover:bg-blue disabled:cursor-not-allowed cursor-pointer"
                       >
                         {importingAll
                           ? "Importing..."
@@ -577,7 +576,7 @@ function Connections() {
                     {initialHistoryLoading ? (
                       <div className="overflow-x-auto py-2">
                         <div className="flex gap-4 w-max">
-                          {Array.from({ length: 4 }).map((_, idx) => (
+                          {Array.from({ length: 10 }).map((_, idx) => (
                             <div
                               key={idx}
                               className="w-[257px] h-66 bg-gray-400 rounded-lg flex flex-col animate-pulse"
