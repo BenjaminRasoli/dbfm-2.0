@@ -1,11 +1,11 @@
 "use client";
 import Link from "next/link";
-import { FaStar } from "react-icons/fa";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useUser } from "@/app/context/UserProvider";
 import { ImCheckmark } from "react-icons/im";
 import { FiLogIn, FiUserPlus } from "react-icons/fi";
 import { IoIosHome } from "react-icons/io";
+import { MdOutlineFavorite } from "react-icons/md";
 
 function BottomMenu() {
   const pathname = usePathname();
@@ -42,7 +42,7 @@ function BottomMenu() {
               isActive("/favorites") ? "text-blue" : "hover:text-blue"
             }`}
           >
-            <FaStar
+            <MdOutlineFavorite
               size={24}
               color={isActive("/favorites") ? "#2d99ff" : "currentColor"}
             />
