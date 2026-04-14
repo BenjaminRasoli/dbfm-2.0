@@ -15,6 +15,7 @@ import ThemeSwitch from "../ThemeSwitch/ThemeSwitch";
 import { HeaderProps } from "@/app/Types/HeaderProps";
 import { useEscapeListener } from "@/app/utils/HandleEsc";
 import { ClipLoader } from "react-spinners";
+import { useFullPath } from "@/app/utils/fullPath";
 
 function Header({ genres }: HeaderProps) {
   const [searchWord, setSearchWord] = useState<string>("");
@@ -35,10 +36,7 @@ function Header({ genres }: HeaderProps) {
   const { user, logout } = useUser();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const fullPath =
-    searchParams.toString().length > 0
-      ? `${pathname}?${searchParams.toString()}`
-      : pathname;
+  const fullPath = useFullPath();
 
   useEscapeListener(setIsLogoutModalOpen);
 

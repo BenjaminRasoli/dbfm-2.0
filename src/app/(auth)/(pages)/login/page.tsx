@@ -14,11 +14,7 @@ export const metadata: Metadata = {
 };
 
 function Page() {
-  return (
-    <>
-      <Login />
-    </>
-  );
+  return <Login />;
 }
 
 export default Page;

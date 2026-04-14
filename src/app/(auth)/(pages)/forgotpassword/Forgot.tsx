@@ -107,7 +107,7 @@ function Forgot() {
           </form>
 
           <div className="mt-4 text-center">
-            <span className="text-sm ">Remembered your password? </span>
+            <span className="text-sm">Remembered your password?</span>
             <Link href="/login" className="text-blue hover:underline">
               Login
             </Link>

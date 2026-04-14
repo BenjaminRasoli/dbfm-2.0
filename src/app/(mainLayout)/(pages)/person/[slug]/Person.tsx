@@ -2,10 +2,12 @@
 import { ActorTypes } from "@/app/Types/ActorType";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import PersonPoster from "../../../../images/PersonImagePlaceholder.jpg";
 import { ActorKnownForTypes } from "@/app/Types/ActorKnownForTypes";
 import ActorSkeletonLoader from "@/app/components/ActorSkeletonLoader/ActorSkeletonLoader";
+import HandleFavorites from "@/app/components/HandleFavorites/HandleFavorites";
+import HandleWatched from "@/app/components/HandleWacthed/HandleWacthed";
 
 function Person({ params }: { params: { slug: string } }) {
   const [actor, setActor] = useState<ActorTypes | null>(null);
@@ -186,48 +188,55 @@ function Person({ params }: { params: { slug: string } }) {
                   : PersonPoster;
 
                 return (
-                  <Link
-                    href={`/${credit.media_type}/${credit.id}`}
+                  <div
+                    className="relative cursor-pointer flex-shrink-0 rounded-lg bg-blue shadow-lg"
                     key={`${credit.id}-${credit.media_type}-${index}`}
                   >
-                    <div className="w-44 h-[350px] flex-shrink-0 bg-blue rounded-lg shadow-md overflow-hidden">
-                      <div className="relative w-full h-[230px]">
-                        {!isImageLoaded && (
-                          <div className="absolute inset-0 bg-gray-300 animate-pulse z-10" />
-                        )}
-                        <Image
-                          src={imageSrc}
-                          alt={credit.title || credit.name}
-                          className="w-full h-full object-cover"
-                          height={700}
-                          width={700}
-                          onLoad={() =>
-                            setLoadedImages((prev) => ({
-                              ...prev,
-                              [credit.id]: true,
-                            }))
-                          }
-                        />
-                      </div>
-
-                      <div className="pl-1 pt-2 max-h-[120px] overflow-auto text-white">
-                        <div className="flex justify-between items-center gap-2">
-                          <h3 className="text-sm font-semibold truncate">
-                            {credit.title || credit.name}
-                          </h3>
-                          <h3 className="text-gray-300 opacity-80 text-xs mr-1 whitespace-nowrap">
-                            (
-                            {credit.media_type.charAt(0).toUpperCase() +
-                              credit.media_type.slice(1)}
-                            )
-                          </h3>
+                    <HandleFavorites isRecommendations media={credit as any} />
+                    <HandleWatched isRecommendations media={credit as any} />
+                    <Link
+                      href={`/${credit.media_type}/${credit.id}`}
+                      className="group"
+                    >
+                      <div className="w-44 h-[350px] flex-shrink-0 bg-blue rounded-lg shadow-md overflow-hidden">
+                        <div className="relative w-full h-[250px]">
+                          {!isImageLoaded && (
+                            <div className="absolute inset-0 bg-gray-300 animate-pulse z-10" />
+                          )}
+                          <Image
+                            src={imageSrc}
+                            alt={credit.title || credit.name}
+                            className="w-full h-full object-cover"
+                            height={700}
+                            width={700}
+                            onLoad={() =>
+                              setLoadedImages((prev) => ({
+                                ...prev,
+                                [credit.id]: true,
+                              }))
+                            }
+                          />
                         </div>
-                        <p className="text-sm pt-1 pb-2">
-                          Character: {credit.character || "Unknown"}
-                        </p>
+
+                        <div className="pl-1 pt-2 max-h-[120px] overflow-auto text-white">
+                          <div className="flex justify-between items-center gap-2">
+                            <h3 className="text-sm font-semibold truncate group-hover:underline">
+                              {credit.title || credit.name}
+                            </h3>
+                            <h3 className="text-gray-300 opacity-80 text-xs mr-1 whitespace-nowrap">
+                              (
+                              {credit.media_type.charAt(0).toUpperCase() +
+                                credit.media_type.slice(1)}
+                              )
+                            </h3>
+                          </div>
+                          <p className="text-sm pt-1 pb-2">
+                            Character: {credit.character || "Unknown"}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  </Link>
+                    </Link>
+                  </div>
                 );
               })
             ) : (

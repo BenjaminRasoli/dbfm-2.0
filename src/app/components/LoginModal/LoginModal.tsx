@@ -8,9 +8,11 @@ import { LoginModalTypes } from "@/app/Types/LoginModalTypes";
 import { disableOverflow } from "@/app/utils/HandleDOM";
 import { handleOutsideClick } from "@/app/utils/HandleOutsideClick";
 import { useEscapeListener } from "@/app/utils/HandleEsc";
+import { useFullPath } from "@/app/utils/fullPath";
 
 function LoginModal({ isModalOpen, setIsModalOpen }: LoginModalTypes) {
   const modalRef = useRef<HTMLDivElement>(null);
+  const fullPath = useFullPath();
 
   useEffect(() => {
     disableOverflow(isModalOpen);
@@ -53,13 +55,13 @@ function LoginModal({ isModalOpen, setIsModalOpen }: LoginModalTypes) {
         <div className="flex justify-between px-10 mt-6 gap-4">
           <Link
             className="bg-blue hover:bg-blue-hover w-1/2 text-center rounded-lg p-2 text-white"
-            href="/login"
+            href={`/login?redirect=${encodeURIComponent(fullPath)}`}
           >
             Login
           </Link>
           <Link
             className="bg-blue hover:bg-blue-hover w-1/2 text-center rounded-lg p-2 text-white"
-            href="/register"
+            href={`/register?redirect=${encodeURIComponent(fullPath)}`}
           >
             Register
           </Link>

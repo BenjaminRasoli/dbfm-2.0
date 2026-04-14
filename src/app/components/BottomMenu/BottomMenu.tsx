@@ -1,20 +1,16 @@
 "use client";
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useUser } from "@/app/context/UserProvider";
 import { ImCheckmark } from "react-icons/im";
 import { FiLogIn, FiUserPlus } from "react-icons/fi";
 import { IoIosHome } from "react-icons/io";
 import { MdOutlineFavorite } from "react-icons/md";
+import { useFullPath } from "@/app/utils/fullPath";
 
 function BottomMenu() {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  const fullPath =
-    searchParams.toString().length > 0
-      ? `${pathname}?${searchParams.toString()}`
-      : pathname;
+  const fullPath = useFullPath();
   const { user } = useUser();
 
   const isActive = (path: string) => pathname === path;

@@ -24,10 +24,7 @@ const cinzel = Cinzel({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://dbfm.vercel.app"),
-  title: {
-    default: "DBFM | Movies & TV Shows",
-    template: "%s | DBFM",
-  },
+  title: "DBFM | Movies & TV Shows",
   description:
     "DBFM is a movies website where you can check out the latest Movies and TV shows.",
   icons: {
