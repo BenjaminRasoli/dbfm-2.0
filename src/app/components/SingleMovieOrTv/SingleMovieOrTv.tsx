@@ -184,7 +184,7 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
       <div
         className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url('https://image.tmdb.org/t/p/original${mediaData.backdrop_path}')`,
+          backgroundImage: `url('https://image.tmdb.org/t/p/w500${mediaData.backdrop_path}')`,
           backgroundAttachment: "fixed",
         }}
       >
@@ -201,7 +201,7 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
             <Image
               src={
                 mediaData.poster_path
-                  ? `https://image.tmdb.org/t/p/original${mediaData.poster_path}`
+                  ? `https://image.tmdb.org/t/p/w500${mediaData.poster_path}`
                   : MovieTvPlaceholder
               }
               alt={
@@ -357,7 +357,7 @@ function SingleMovieOrTv({ params }: { params: { slug: string } }) {
             <Image
               src={
                 mediaData.belongs_to_collection.poster_path
-                  ? `https://image.tmdb.org/t/p/original${mediaData.belongs_to_collection.poster_path}`
+                  ? `https://image.tmdb.org/t/p/w500${mediaData.belongs_to_collection.poster_path}`
                   : MovieTvPlaceholder
               }
               alt={mediaData.belongs_to_collection.name}

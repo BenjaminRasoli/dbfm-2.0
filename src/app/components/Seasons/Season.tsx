@@ -23,7 +23,7 @@ function Seasons({ mediaData }: { mediaData: TvTypes }) {
         {mediaData.seasons.map((season) => {
           const isImageLoaded = loadedImages[season.id] || false;
           const imageSrc = season.poster_path
-            ? `https://image.tmdb.org/t/p/original${season.poster_path}`
+            ? `https://image.tmdb.org/t/p/w500${season.poster_path}`
             : SeasonPlaceholder;
 
           return (

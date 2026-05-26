@@ -127,7 +127,7 @@ function Person({ params }: { params: { slug: string } }) {
           <Image
             src={
               actor.profile_path
-                ? `https://image.tmdb.org/t/p/original${actor.profile_path}`
+                ? `https://image.tmdb.org/t/p/w500${actor.profile_path}`
                 : PersonPoster
             }
             alt={actor.name}
@@ -184,7 +184,7 @@ function Person({ params }: { params: { slug: string } }) {
               actorKnownFor.map((credit, index) => {
                 const isImageLoaded = loadedImages[credit.id] || false;
                 const imageSrc = credit.poster_path
-                  ? `https://image.tmdb.org/t/p/original${credit.poster_path}`
+                  ? `https://image.tmdb.org/t/p/w500${credit.poster_path}`
                   : PersonPoster;
 
                 return (

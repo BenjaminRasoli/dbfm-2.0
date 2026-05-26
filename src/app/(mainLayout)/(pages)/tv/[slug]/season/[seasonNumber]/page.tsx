@@ -27,7 +27,7 @@ export async function generateMetadata({
     const description =
       data.overview || `Explore all episodes from Season ${seasonNumber}.`;
     const imageUrl = data.poster_path
-      ? `https://image.tmdb.org/t/p/original${data.poster_path}`
+      ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
       : undefined;
 
     return {

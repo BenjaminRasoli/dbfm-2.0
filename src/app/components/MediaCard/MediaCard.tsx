@@ -34,10 +34,10 @@ function MediaCard({
             const imageSrc =
               media.media_type === "person" || media.gender != null
                 ? media.profile_path
-                  ? `https://image.tmdb.org/t/p/original/${media.profile_path}`
+                  ? `https://image.tmdb.org/t/p/w500/${media.profile_path}`
                   : PersonPlaceholder
                 : media.poster_path
-                  ? `https://image.tmdb.org/t/p/original/${media.poster_path}`
+                  ? `https://image.tmdb.org/t/p/w500/${media.poster_path}`
                   : MovieTvPlaceholder;
 
             const href = media.media_type

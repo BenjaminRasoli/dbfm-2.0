@@ -78,7 +78,7 @@ function Episodes({
     <div
       className="relative bg-cover bg-center py-5 min-h-[100dvh]"
       style={{
-        backgroundImage: `url('https://image.tmdb.org/t/p/original${episodes.poster_path}')`,
+        backgroundImage: `url('https://image.tmdb.org/t/p/w500${episodes.poster_path}')`,
       }}
     >
       <div
@@ -133,7 +133,7 @@ function Episodes({
           {episodes.episodes?.map((episode: EpisodeTypes) => {
             const isImageLoaded = loadedImages[episode.id] || false;
             const imageSrc = episode?.still_path
-              ? `https://image.tmdb.org/t/p/original${episode.still_path}`
+              ? `https://image.tmdb.org/t/p/w500${episode.still_path}`
               : EpisodePlaceholder;
 
             return (

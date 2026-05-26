@@ -34,7 +34,7 @@ function WhereToWatch({ whereToWatch }: { whereToWatch: WatchResultsTypes }) {
           >
             <div className="bg-blue rounded-lg h-full w-28 p-2 flex flex-col items-center">
               <Image
-                src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
+                src={`https://image.tmdb.org/t/p/w500${provider.logo_path}`}
                 alt={provider.provider_name}
                 className="w-20 h-20 object-contain mb-2 rounded-2xl"
                 height={80}

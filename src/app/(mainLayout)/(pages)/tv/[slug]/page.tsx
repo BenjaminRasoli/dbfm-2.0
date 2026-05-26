@@ -35,7 +35,7 @@ export async function generateMetadata({
     const title = `${tv.name} | DBFM`;
     const description = tv.overview || "No description available.";
     const imageUrl = tv.poster_path
-      ? `https://image.tmdb.org/t/p/original${tv.poster_path}`
+      ? `https://image.tmdb.org/t/p/w500${tv.poster_path}`
       : undefined;
 
     return {

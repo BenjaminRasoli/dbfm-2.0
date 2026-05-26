@@ -626,7 +626,7 @@ function Connections() {
                               details?.mediaData?.backdrop_path ||
                               details?.mediaData?.poster_path;
                             const imageUrl = imagePath
-                              ? `https://image.tmdb.org/t/p/w780${imagePath}`
+                              ? `https://image.tmdb.org/t/p/w500${imagePath}`
                               : MovieTvPlaceholder;
                             return (
                               <Link

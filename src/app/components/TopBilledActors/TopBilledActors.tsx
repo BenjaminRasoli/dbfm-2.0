@@ -19,7 +19,7 @@ function TopBilledActors({ actors }: { actors: ActorsTypes[] }) {
         {actors?.map((actor: ActorsTypes) => {
           const isImageLoaded = loadedImages[actor.id] || false;
           const imageSrc = actor.profile_path
-            ? `https://image.tmdb.org/t/p/original${actor.profile_path}`
+            ? `https://image.tmdb.org/t/p/w500${actor.profile_path}`
             : PersonPlaceholder;
 
           return (

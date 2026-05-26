@@ -50,7 +50,7 @@ function Reviews({ reviews }: { reviews: ReviewTypes[] }) {
                       <Image
                         width={50}
                         height={50}
-                        src={`https://image.tmdb.org/t/p/original${review.author_details.avatar_path}`}
+                        src={`https://image.tmdb.org/t/p/w500${review.author_details.avatar_path}`}
                         alt={review.author}
                         className="rounded-full"
                       />

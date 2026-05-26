@@ -35,7 +35,7 @@ export async function generateMetadata({
     const description =
       data.overview || "No description available for this collection.";
     const imageUrl = data.poster_path
-      ? `https://image.tmdb.org/t/p/original${data.poster_path}`
+      ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
       : undefined;
 
     return {

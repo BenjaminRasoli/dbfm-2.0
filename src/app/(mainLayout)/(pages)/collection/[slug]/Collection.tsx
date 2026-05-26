@@ -69,9 +69,9 @@ export default function Collection({ params }: { params: { slug: string } }) {
           <Image
             src={
               collectionData.backdrop_path
-                ? `https://image.tmdb.org/t/p/original${collectionData.backdrop_path}`
+                ? `https://image.tmdb.org/t/p/w500${collectionData.backdrop_path}`
                 : collectionData.poster_path
-                  ? `https://image.tmdb.org/t/p/original${collectionData.poster_path}`
+                  ? `https://image.tmdb.org/t/p/w500${collectionData.poster_path}`
                   : MovieTvPlaceholder
             }
             alt={collectionData.name}

@@ -34,7 +34,7 @@ export async function generateMetadata({
     const description =
       data.biography?.slice(0, 160) || "No biography available for this actor.";
     const imageUrl = data.profile_path
-      ? `https://image.tmdb.org/t/p/original${data.profile_path}`
+      ? `https://image.tmdb.org/t/p/w500${data.profile_path}`
       : undefined;
 
     return {
