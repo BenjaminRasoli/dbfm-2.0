@@ -1,5 +1,5 @@
 import { getAdminDB } from "@/app/config/FireBaseAdmin";
-import admin from "firebase-admin";
+import { FieldValue, Timestamp } from "firebase-admin/firestore";
 
 export async function POST(req: Request) {
   try {
@@ -43,7 +43,6 @@ export async function POST(req: Request) {
       try {
         const docId = item.id?.toString();
         if (!docId) {
-          console.warn("Trakt import: skipping item with missing id", item);
           results.push({
             id: String(item.id || "unknown"),
             ok: false,
@@ -54,22 +53,13 @@ export async function POST(req: Request) {
 
         const providedTs = item.createdAt;
 
-        let createdAtValue: any = admin.firestore.FieldValue.serverTimestamp();
+        let createdAtValue: any = FieldValue.serverTimestamp();
 
         if (providedTs) {
           const parsed = new Date(providedTs);
           if (!isNaN(parsed.getTime())) {
-            const ts = admin.firestore.Timestamp.fromDate(parsed);
-            createdAtValue = ts;
+            createdAtValue = Timestamp.fromDate(parsed);
           }
-        }
-
-        try {
-          console.info(
-            `Trakt import: item id=${docId} type=${item.type} providedTs=${!!providedTs}`,
-          );
-        } catch (e) {
-          console.error(e);
         }
 
         const docData = {
@@ -82,13 +72,11 @@ export async function POST(req: Request) {
         written++;
 
         await new Promise((resolve) => setTimeout(resolve, DELAY_MS));
-      } catch (itemErr: any) {
-        const errorMsg =
-          itemErr instanceof Error ? itemErr.message : String(itemErr);
+      } catch (itemErr) {
         results.push({
           id: String(item.id || "unknown"),
           ok: false,
-          error: errorMsg,
+          error: itemErr instanceof Error ? itemErr.message : String(itemErr),
         });
       }
     }
@@ -104,7 +92,12 @@ export async function POST(req: Request) {
     );
   } catch (error) {
     console.error("Trakt import error:", error);
-    const errorMsg = error instanceof Error ? error.message : "Import failed";
-    return new Response(JSON.stringify({ error: errorMsg }), { status: 500 });
+
+    return new Response(
+      JSON.stringify({
+        error: error instanceof Error ? error.message : "Import failed",
+      }),
+      { status: 500 },
+    );
   }
 }
