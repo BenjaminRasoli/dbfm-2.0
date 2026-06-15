@@ -1,7 +1,10 @@
 import { getUserId } from "@/app/utils/cookies";
 import { getAdminDB } from "@/app/config/FireBaseAdmin";
-import { DocumentData, Timestamp } from "firebase-admin/firestore";
-
+import {
+  QueryDocumentSnapshot,
+  DocumentData,
+  Timestamp,
+} from "firebase-admin/firestore";
 export async function GET(req: Request) {
   try {
     const userId = await getUserId();
@@ -14,26 +17,28 @@ export async function GET(req: Request) {
       .collection("watched")
       .get();
 
-    const items = snapshot.docs.map((doc) => {
-      const data = doc.data() as DocumentData;
+    const items = snapshot.docs.map(
+      (doc: QueryDocumentSnapshot<DocumentData>) => {
+        const data = doc.data() as DocumentData;
 
-      let watched_at = "";
-      if (data.createdAt instanceof Timestamp) {
-        watched_at = data.createdAt.toDate().toISOString();
-      } else if (data.createdAt?._seconds) {
-        watched_at = new Date(data.createdAt._seconds * 1000).toISOString();
-      } else {
-        watched_at = new Date().toISOString();
-      }
+        let watched_at = "";
+        if (data.createdAt instanceof Timestamp) {
+          watched_at = data.createdAt.toDate().toISOString();
+        } else if (data.createdAt?._seconds) {
+          watched_at = new Date(data.createdAt._seconds * 1000).toISOString();
+        } else {
+          watched_at = new Date().toISOString();
+        }
 
-      const type = data.type === "movie" ? "movie" : "show";
+        const type = data.type === "movie" ? "movie" : "show";
 
-      return {
-        tmdb_id: data.id,
-        type,
-        watched_at,
-      };
-    });
+        return {
+          tmdb_id: data.id,
+          type,
+          watched_at,
+        };
+      },
+    );
 
     return new Response(JSON.stringify(items, null, 2), {
       status: 200,
